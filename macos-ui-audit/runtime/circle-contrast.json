@@ -1,0 +1,206 @@
+[
+  {
+    "phase": "before-contrast-fix",
+    "theme": "light",
+    "label": "jpg",
+    "image": "macos-ui-audit/screenshots/after/final-circle/light-convert-0.png",
+    "roiPixels": [
+      527,
+      211,
+      567,
+      236
+    ],
+    "foregroundRGB": [
+      121,
+      121,
+      121
+    ],
+    "backgroundRGB": [
+      241,
+      241,
+      241
+    ],
+    "ratio": 3.8541289858531185,
+    "threshold": 4.5,
+    "passed": false
+  },
+  {
+    "phase": "before-contrast-fix",
+    "theme": "light",
+    "label": "esc",
+    "image": "macos-ui-audit/screenshots/after/final-circle/light-convert-0.png",
+    "roiPixels": [
+      380,
+      431,
+      420,
+      451
+    ],
+    "foregroundRGB": [
+      127,
+      127,
+      127
+    ],
+    "backgroundRGB": [
+      253,
+      253,
+      253
+    ],
+    "ratio": 3.9364205805317556,
+    "threshold": 4.5,
+    "passed": false
+  },
+  {
+    "phase": "before-contrast-fix",
+    "theme": "dark",
+    "label": "jpg",
+    "image": "macos-ui-audit/screenshots/after/final-circle/dark-convert-8.png",
+    "roiPixels": [
+      527,
+      211,
+      567,
+      236
+    ],
+    "foregroundRGB": [
+      155,
+      155,
+      155
+    ],
+    "backgroundRGB": [
+      33,
+      33,
+      33
+    ],
+    "ratio": 5.7933860539506465,
+    "threshold": 4.5,
+    "passed": true
+  },
+  {
+    "phase": "before-contrast-fix",
+    "theme": "dark",
+    "label": "esc",
+    "image": "macos-ui-audit/screenshots/after/final-circle/dark-convert-8.png",
+    "roiPixels": [
+      380,
+      431,
+      420,
+      451
+    ],
+    "foregroundRGB": [
+      153,
+      153,
+      153
+    ],
+    "backgroundRGB": [
+      29,
+      29,
+      29
+    ],
+    "ratio": 5.916961894098672,
+    "threshold": 4.5,
+    "passed": true
+  },
+  {
+    "phase": "after-contrast-fix",
+    "theme": "light",
+    "label": "jpg",
+    "image": "macos-ui-audit/screenshots/after/approved-circle/light-convert-0.png",
+    "roiPixels": [
+      527,
+      211,
+      567,
+      236
+    ],
+    "foregroundRGB": [
+      110,
+      110,
+      110
+    ],
+    "backgroundRGB": [
+      253,
+      253,
+      253
+    ],
+    "ratio": 5.012714401766715,
+    "threshold": 4.5,
+    "passed": true,
+    "method": "dominant background and most frequent contrasting glyph-core color in fixed ROI; steady native WindowServer capture"
+  },
+  {
+    "phase": "after-contrast-fix",
+    "theme": "light",
+    "label": "esc",
+    "image": "macos-ui-audit/screenshots/after/approved-circle/light-convert-0.png",
+    "roiPixels": [
+      380,
+      431,
+      420,
+      451
+    ],
+    "foregroundRGB": [
+      110,
+      110,
+      110
+    ],
+    "backgroundRGB": [
+      248,
+      248,
+      248
+    ],
+    "ratio": 4.801159164567868,
+    "threshold": 4.5,
+    "passed": true,
+    "method": "dominant background and most frequent contrasting glyph-core color in fixed ROI; steady native WindowServer capture"
+  },
+  {
+    "phase": "after-contrast-fix",
+    "theme": "dark",
+    "label": "jpg",
+    "image": "macos-ui-audit/screenshots/after/approved-circle/dark-convert-8.png",
+    "roiPixels": [
+      527,
+      211,
+      567,
+      236
+    ],
+    "foregroundRGB": [
+      166,
+      166,
+      166
+    ],
+    "backgroundRGB": [
+      27,
+      27,
+      27
+    ],
+    "ratio": 7.075547019114214,
+    "threshold": 4.5,
+    "passed": true,
+    "method": "dominant background and most frequent contrasting glyph-core color in fixed ROI; steady native WindowServer capture"
+  },
+  {
+    "phase": "after-contrast-fix",
+    "theme": "dark",
+    "label": "esc",
+    "image": "macos-ui-audit/screenshots/after/approved-circle/dark-convert-8.png",
+    "roiPixels": [
+      380,
+      431,
+      420,
+      451
+    ],
+    "foregroundRGB": [
+      166,
+      166,
+      166
+    ],
+    "backgroundRGB": [
+      19,
+      19,
+      19
+    ],
+    "ratio": 7.632455380487399,
+    "threshold": 4.5,
+    "passed": true,
+    "method": "dominant background and most frequent contrasting glyph-core color in fixed ROI; steady native WindowServer capture"
+  }
+]

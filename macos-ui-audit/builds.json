@@ -1,0 +1,35 @@
+[
+  {
+    "app": "MultiShift",
+    "sourceApp": "/Applications/MultiShift.app",
+    "archive": "~/Documents/MultiShift/macos-ui-audit/previews/MultiShift-preview.zip",
+    "archiveSHA256": "efdca19fd6b7a35fd47786f537ca38cd2d787643ee5827ffb7aa062c42c36682",
+    "binarySHA256": "62cdc4efab093b1819ba21e92742211be4a9eea7d53aa2fd6c8f7c3a479466da",
+    "extractedBinaryIdentical": true,
+    "codesignDeepStrictPassed": true,
+    "signatureVerification": "/var/folders/n3/z1f124t95klc4v14q1pt3myh0000gn/T/multi-ui-extracted-o_zdvj2y/MultiShift.app: valid on disk\n/var/folders/n3/z1f124t95klc4v14q1pt3myh0000gn/T/multi-ui-extracted-o_zdvj2y/MultiShift.app: satisfies its Designated Requirement",
+    "bundleIdentifier": "com.multiswitcher.multishift",
+    "version": "0.3.0",
+    "build": "0.3.0",
+    "buildID": "41a8ed9e6bfd-dirty-3343e02662824236",
+    "minimumSystemVersion": "14.0",
+    "distribution": "local development preview; notarization not claimed",
+    "extractedNativeSelftest": "NATIVE SELFTEST OK · 0.3.0 · 41a8ed9e6bfd-dirty-3343e02662824236"
+  },
+  {
+    "app": "MultiSwitcher",
+    "sourceApp": "/Applications/MultiSwitcher.app",
+    "archive": "~/Documents/MultiShift/macos-ui-audit/previews/MultiSwitcher-preview.zip",
+    "archiveSHA256": "6800d24421035571005d5a63cd07bc89a37d07f1c6ebeda87371973eed08a114",
+    "binarySHA256": "01adb77b20b7c60e09ae0bca2b6454e9f9986f66a1deab4cc941331095866532",
+    "extractedBinaryIdentical": true,
+    "codesignDeepStrictPassed": true,
+    "signatureVerification": "/var/folders/n3/z1f124t95klc4v14q1pt3myh0000gn/T/multi-ui-extracted-6ld1y_36/MultiSwitcher.app: valid on disk\n/var/folders/n3/z1f124t95klc4v14q1pt3myh0000gn/T/multi-ui-extracted-6ld1y_36/MultiSwitcher.app: satisfies its Designated Requirement",
+    "bundleIdentifier": "com.multiswitcher.app",
+    "version": "0.4.0",
+    "build": "54",
+    "buildID": null,
+    "minimumSystemVersion": "15.0",
+    "distribution": "local development preview; notarization not claimed"
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "environment": {},
+    "passed": true,
+    "exit": 0,
+    "stdout": "production-default",
+    "invalidPathRejectedBeforeDataAccess": false
+  },
+  {
+    "environment": {
+      "MULTI_AUDIT_DATA_ROOT": "<TMP>/audit-safe"
+    },
+    "passed": true,
+    "exit": 0,
+    "stdout": "<TMP>/audit-safe",
+    "invalidPathRejectedBeforeDataAccess": false
+  },
+  {
+    "environment": {
+      "MULTISWITCHER_UI_REVIEW": "<TMP>/legacy-safe"
+    },
+    "passed": true,
+    "exit": 0,
+    "stdout": "<TMP>/legacy-safe",
+    "invalidPathRejectedBeforeDataAccess": false
+  },
+  {
+    "environment": {
+      "MULTI_AUDIT_DATA_ROOT": "relative-audit"
+    },
+    "passed": true,
+    "exit": -5,
+    "stdout": "",
+    "invalidPathRejectedBeforeDataAccess": true
+  }
+]

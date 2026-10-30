@@ -1,0 +1,7 @@
+{
+  "destination": "/Applications/MultiShift.app",
+  "sha256": "4426fb0b3e487917532ddbbbcbe6ccbc93aaf5e112bd90259c48b64df7260855",
+  "profilePreservedDuringReplacement": true,
+  "signature": "Executable=/Applications/MultiShift.app/Contents/MacOS/MultiShift\n",
+  "process": "79206 /Applications/MultiShift.app/Contents/MacOS/MultiShift"
+}

@@ -1,0 +1,1 @@
+Общий компонент sidebar обновлён и установлен. Проверки: geometry-results.json; история операций сохранена при замене. Полный отчёт: /Users/sokolovmo/Documents/MultiSwitcher/design/sidebar-review-2026-10-24/REPORT.md

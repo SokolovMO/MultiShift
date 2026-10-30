@@ -1,0 +1,93 @@
+{
+  "activePanelAfterClose" : false,
+  "cycles" : 100,
+  "evidence" : "native-window fixture; not physical Finder drag",
+  "inputTimerAfterClose" : false,
+  "systemReduceMotion" : false,
+  "windows" : [
+    {
+      "backingScale" : 2,
+      "cancelRadiusPt" : 64,
+      "framePt" : [
+        535,
+        300,
+        400,
+        400
+      ],
+      "itemCount" : 10,
+      "name" : "light-convert-cancel",
+      "nativeWindowID" : 1212,
+      "outerRadiusPt" : 184
+    },
+    {
+      "backingScale" : 2,
+      "cancelRadiusPt" : 64,
+      "framePt" : [
+        535,
+        300,
+        400,
+        400
+      ],
+      "itemCount" : 10,
+      "name" : "light-convert-0",
+      "nativeWindowID" : 1213,
+      "outerRadiusPt" : 184
+    },
+    {
+      "backingScale" : 2,
+      "cancelRadiusPt" : 64,
+      "framePt" : [
+        535,
+        300,
+        400,
+        400
+      ],
+      "itemCount" : 10,
+      "name" : "dark-convert-cancel",
+      "nativeWindowID" : 1214,
+      "outerRadiusPt" : 184
+    },
+    {
+      "backingScale" : 2,
+      "cancelRadiusPt" : 64,
+      "framePt" : [
+        535,
+        300,
+        400,
+        400
+      ],
+      "itemCount" : 10,
+      "name" : "dark-convert-8",
+      "nativeWindowID" : 1215,
+      "outerRadiusPt" : 184
+    },
+    {
+      "backingScale" : 2,
+      "cancelRadiusPt" : 64,
+      "framePt" : [
+        535,
+        300,
+        400,
+        400
+      ],
+      "itemCount" : 8,
+      "name" : "light-tools-2",
+      "nativeWindowID" : 1216,
+      "outerRadiusPt" : 184
+    },
+    {
+      "backingScale" : 2,
+      "cancelRadiusPt" : 64,
+      "framePt" : [
+        535,
+        300,
+        400,
+        400
+      ],
+      "itemCount" : 8,
+      "name" : "dark-tools-5",
+      "nativeWindowID" : 1218,
+      "outerRadiusPt" : 184
+    }
+  ]
+}

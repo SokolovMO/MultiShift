@@ -1,0 +1,36 @@
+{
+  "learning" : [
+
+  ],
+  "legacyDefaultsMigrated" : true,
+  "rules" : [
+
+  ],
+  "schemaVersion" : 2,
+  "settings" : {
+    "com.multiswitcher.autoConvert" : {
+      "bool" : true,
+      "kind" : "bool"
+    },
+    "com.multiswitcher.autoSwitch" : {
+      "bool" : false,
+      "kind" : "bool"
+    },
+    "com.multiswitcher.debugLog" : {
+      "bool" : false,
+      "kind" : "bool"
+    },
+    "com.multiswitcher.interfaceTheme" : {
+      "kind" : "string",
+      "string" : "dark"
+    },
+    "com.multiswitcher.pauseUntil" : {
+      "integer" : 0,
+      "kind" : "integer"
+    },
+    "com.multiswitcher.paused" : {
+      "bool" : false,
+      "kind" : "bool"
+    }
+  }
+}

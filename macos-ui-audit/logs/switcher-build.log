@@ -1,0 +1,114 @@
+Building MultiSwitcher 0.4.0 (54) for arm64
+Staging directory: <TMP>/multi-ui-after-switcher-v5
+Building for production...
+[0/5] Write sources
+[2/5] Write swift-version--58304C5D6DBC2206.txt
+[4/6] Compiling MultiSwitcherCore AppendedInputPolicy.swift
+[5/7] Compiling MultiSwitcher AppDelegate.swift
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/SettingsWindowController.swift:2334:19: warning: result of call to 'runModal()' is unused [#NoUsage]
+2332 |             alert.informativeText = error.localizedDescription
+2333 |             alert.addButton(withTitle: L10n.commonOkay)
+2334 |             alert.runModal()
+     |                   `- warning: result of call to 'runModal()' is unused [#NoUsage]
+2335 |         }
+2336 |     }
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/SettingsWindowController.swift:2600:19: warning: result of call to 'runModal()' is unused [#NoUsage]
+2598 |             alert.messageText = "log file not found"
+2599 |             alert.informativeText = "enable debug logging first."
+2600 |             alert.runModal()
+     |                   `- warning: result of call to 'runModal()' is unused [#NoUsage]
+2601 |         }
+2602 |     }
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/SettingsWindowController.swift:2646:25: warning: result of call to 'runModal()' is unused [#NoUsage]
+2644 |             unavailable.messageText = L10n.supportReportUnavailable
+2645 |             unavailable.addButton(withTitle: L10n.commonOkay)
+2646 |             unavailable.runModal()
+     |                         `- warning: result of call to 'runModal()' is unused [#NoUsage]
+2647 |             return
+2648 |         }
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/SettingsWindowController.swift:2658:16: warning: result of call to 'runModal()' is unused [#NoUsage]
+2656 |         copied.messageText = L10n.supportReportCopied
+2657 |         copied.addButton(withTitle: L10n.commonOkay)
+2658 |         copied.runModal()
+     |                `- warning: result of call to 'runModal()' is unused [#NoUsage]
+2659 |     }
+2660 | 
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/StatusPopoverController.swift:53:31: warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 51 |         var detail = ""
+ 52 |         // State belongs below the action, never appended to a single truncating label.
+ 53 |         if menuItem.action == Selector(("toggleAutoConvert:")), let range = title.range(of: " — ") {
+    |                               `- warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 54 |             detail = String(title[range.upperBound...]).replacingOccurrences(of: " — ", with: " · ")
+ 55 |             title = String(title[..<range.lowerBound])
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/StatusPopoverController.swift:59:36: warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 57 |         let symbol: String
+ 58 |         if menuItem.submenu != nil { symbol = menuItem.title.contains("—") ? "app" : "chevron.right" }
+ 59 |         else if menuItem.action == Selector(("openSettings")) { symbol = "slider.horizontal.3" }
+    |                                    `- warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 60 |         else if menuItem.action == Selector(("quit")) { symbol = "power" }
+ 61 |         else if menuItem.action == Selector(("showHelp")) { symbol = "questionmark.circle" }
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/StatusPopoverController.swift:60:36: warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 58 |         if menuItem.submenu != nil { symbol = menuItem.title.contains("—") ? "app" : "chevron.right" }
+ 59 |         else if menuItem.action == Selector(("openSettings")) { symbol = "slider.horizontal.3" }
+ 60 |         else if menuItem.action == Selector(("quit")) { symbol = "power" }
+    |                                    `- warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 61 |         else if menuItem.action == Selector(("showHelp")) { symbol = "questionmark.circle" }
+ 62 |         else if menuItem.state == .on { symbol = "checkmark.circle.fill" }
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/StatusPopoverController.swift:61:36: warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 59 |         else if menuItem.action == Selector(("openSettings")) { symbol = "slider.horizontal.3" }
+ 60 |         else if menuItem.action == Selector(("quit")) { symbol = "power" }
+ 61 |         else if menuItem.action == Selector(("showHelp")) { symbol = "questionmark.circle" }
+    |                                    `- warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 62 |         else if menuItem.state == .on { symbol = "checkmark.circle.fill" }
+ 63 |         else { symbol = "circle" }
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/UpdateChecker.swift:594:15: warning: result of call to 'runModal()' is unused [#NoUsage]
+592 |         alert.informativeText = message
+593 |         alert.addButton(withTitle: "ok")
+594 |         alert.runModal()
+    |               `- warning: result of call to 'runModal()' is unused [#NoUsage]
+595 |     }
+596 | 
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/UserRuleEditor.swift:441:23: warning: result of call to 'runModal()' is unused [#NoUsage]
+439 |                 )
+440 |                 alert.addButton(withTitle: L10n.commonOkay)
+441 |                 alert.runModal()
+    |                       `- warning: result of call to 'runModal()' is unused [#NoUsage]
+442 |                 return
+443 |             }
+
+<TMP>/multi-ui-after-switcher-v5/package/Sources/MultiSwitcher/UserRuleEditor.swift:724:15: warning: result of call to 'runModal()' is unused [#NoUsage]
+722 |         alert.informativeText = message
+723 |         alert.addButton(withTitle: L10n.commonOkay)
+724 |         alert.runModal()
+    |               `- warning: result of call to 'runModal()' is unused [#NoUsage]
+725 |     }
+726 | }
+
+[#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+[5/7] Write Objects.LinkFileList
+[6/7] Linking MultiSwitcher
+Build of product 'MultiSwitcher' complete! (48.69s)
+warning: '--build-system native' has been deprecated and will be removed in a future release; please report an issue at https://github.com/swiftlang/swift-package-manager/issues if you are unable to adopt the default build system.
+warning: '--build-system native' has been deprecated and will be removed in a future release; please report an issue at https://github.com/swiftlang/swift-package-manager/issues if you are unable to adopt the default build system.
+/* com.apple.actool.compilation-results */
+<TMP>/multi-ui-after-switcher-v5/asset-info.plist
+/tmp/multi-ui-after-switcher-v5/MultiSwitcher.app/Contents/Resources/AppIcon.icns
+/tmp/multi-ui-after-switcher-v5/MultiSwitcher.app/Contents/Resources/Assets.car
+
+Validated and unpacked 2 language packs
+Validated 8 thematic vocabulary packs
+<TMP>/multi-ui-after-switcher-v5/MultiSwitcher.app/Contents/Info.plist: OK
+<TMP>/multi-ui-after-switcher-v5/MultiSwitcher.app: replacing existing signature
+<TMP>/multi-ui-after-switcher-v5/MultiSwitcher.app: valid on disk
+<TMP>/multi-ui-after-switcher-v5/MultiSwitcher.app: satisfies its Designated Requirement
+Verified app: <TMP>/multi-ui-after-switcher-v5/MultiSwitcher.app
+Build record: <TMP>/multi-ui-after-switcher-v5/BUILD-INFO.txt

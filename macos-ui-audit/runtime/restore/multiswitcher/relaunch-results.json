@@ -1,0 +1,17 @@
+{
+  "actual" : [
+    48,
+    235,
+    880,
+    652
+  ],
+  "autosaveName" : "",
+  "expected" : [
+    48,
+    235,
+    880,
+    652
+  ],
+  "freshProcess" : true,
+  "passed" : true
+}

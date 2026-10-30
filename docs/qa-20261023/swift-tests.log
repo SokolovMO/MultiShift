@@ -1,0 +1,100 @@
+warning: /Users/sokolovmo/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
+warning: /Users/sokolovmo/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
+warning: /Users/sokolovmo/Library/Caches/org.swift.swiftpm is not accessible or not writable, disabling user-level cache features.
+warning: 'macos': failed storing manifest for 'macos' in cache: attempt to write a readonly database
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 95]
+[Planning deferred tasks]
+[19 / 52] MultiShiftCore-product
+[28 / 52]
+[29 / 53] MultiShiftCore
+[38 / 92]
+[39 / 92]
+[41 / 92]
+[44 / 92]
+[46 / 92]
+[47 / 92]
+[48 / 92]
+[51 / 92]
+[52 / 92]
+[53 / 92]
+[54 / 92]
+[55 / 92]
+[57 / 92]
+[60 / 92]
+[61 / 92]
+[62 / 92]
+[63 / 92]
+[68 / 92] MultiShiftCore
+[76 / 92] MultiShiftCoreTests-product
+[76 / 92] MultiShiftCore
+[77 / 92] MultiShiftCore
+[78 / 92] MultiShiftCore
+[82 / 93] MultiShiftCoreTests-product
+[93 / 131]
+[97 / 131]
+[99 / 131]
+[100 / 131]
+[103 / 131]
+[106 / 131]
+[108 / 131]
+[110 / 131]
+[111 / 131]
+[112 / 131]
+[113 / 131]
+[114 / 131]
+[115 / 131]
+[116 / 131]
+[117 / 131]
+[120 / 131] MultiShiftCoreTests-product
+[125 / 131] MultiShiftCoreTests-product
+[127 / 131] MultiShiftCoreTests-product
+[128 / 131] MultiShiftCoreTests-product
+Build complete! (41,32 с)
+Test Suite 'All tests' started at 2026-10-23 09:58:31.876.
+Test Suite 'MultiShiftCoreTests.xctest' started at 2026-10-23 09:58:31.879.
+Test Suite 'EngineClientTests' started at 2026-10-23 09:58:31.879.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testAcceptsStructuredPartialResultOnNonzeroExit]' started.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testAcceptsStructuredPartialResultOnNonzeroExit]' passed (0.344 seconds).
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReportsMalformedJSONAndCrash]' started.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReportsMalformedJSONAndCrash]' passed (0.335 seconds).
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReportsSignalExit]' started.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReportsSignalExit]' passed (0.332 seconds).
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReturnsStructuredFailureWithoutOutputs]' started.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReturnsStructuredFailureWithoutOutputs]' passed (0.334 seconds).
+Test Suite 'EngineClientTests' passed at 2026-10-23 09:58:33.225.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 1.345 (1.346) seconds
+Test Suite 'FileJobCoordinatorTests' started at 2026-10-23 09:58:33.225.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testAccessDenialIsSurfacedAsRecoverableSelectionFailure]' started.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testAccessDenialIsSurfacedAsRecoverableSelectionFailure]' passed (0.005 seconds).
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testCancelledOrMissingSelectionLeavesNoJobDirectory]' started.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testCancelledOrMissingSelectionLeavesNoJobDirectory]' passed (0.004 seconds).
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testPublishFailurePreservesEarlierOutputsAndListsRemaining]' started.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testPublishFailurePreservesEarlierOutputsAndListsRemaining]' passed (0.005 seconds).
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testStagesDuplicateNamesSeparatelyAndPublishesWithoutOverwrite]' started.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testStagesDuplicateNamesSeparatelyAndPublishesWithoutOverwrite]' passed (0.012 seconds).
+Test Suite 'FileJobCoordinatorTests' passed at 2026-10-23 09:58:33.251.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.025 (0.026) seconds
+Test Suite 'InterfaceCopyTests' started at 2026-10-23 09:58:33.251.
+Test Case '-[MultiShiftCoreTests.InterfaceCopyTests testDisplayTransformationDoesNotMutateUserValues]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceCopyTests testDisplayTransformationDoesNotMutateUserValues]' passed (0.001 seconds).
+Test Case '-[MultiShiftCoreTests.InterfaceCopyTests testLowercaseCopyPreservesUnicodeFileNamesAndPaths]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceCopyTests testLowercaseCopyPreservesUnicodeFileNamesAndPaths]' passed (0.000 seconds).
+Test Suite 'InterfaceCopyTests' passed at 2026-10-23 09:58:33.252.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'NotificationDispatcherTests' started at 2026-10-23 09:58:33.252.
+Test Case '-[MultiShiftCoreTests.NotificationDispatcherTests testAuthorizedNotificationIsSubmitted]' started.
+Test Case '-[MultiShiftCoreTests.NotificationDispatcherTests testAuthorizedNotificationIsSubmitted]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.NotificationDispatcherTests testPermissionDenialAndSubmissionErrorAreReported]' started.
+Test Case '-[MultiShiftCoreTests.NotificationDispatcherTests testPermissionDenialAndSubmissionErrorAreReported]' passed (0.000 seconds).
+Test Suite 'NotificationDispatcherTests' passed at 2026-10-23 09:58:33.253.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'MultiShiftCoreTests.xctest' passed at 2026-10-23 09:58:33.253.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 1.372 (1.375) seconds
+Test Suite 'All tests' passed at 2026-10-23 09:58:33.253.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 1.372 (1.377) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

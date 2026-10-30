@@ -1,0 +1,17 @@
+2026-10-25 13:27:48.746 MultiShift[60286:299420] Using your own bundle identifier as an NSUserDefaults suite name does not make sense and will not work. Break on _NSUserDefaults_Log_Nonsensical_Suites to find this
+2026-10-25 13:27:48.760 MultiShift[60286:299420] LAYOUT REVIEW launch: ~/Documents/MultiShift/macos-ui-audit/screenshots/before/multishift
+2026-10-25 13:27:49.176 MultiShift[60286:299420] LAYOUT REVIEW settings ready
+2026-10-25 13:27:50.519 MultiShift[60286:299420] LAYOUT REVIEW multishift sidebar cycle 0
+2026-10-25 13:27:53.698 MultiShift[60286:299420] LAYOUT REVIEW multishift sidebar cycle 5
+2026-10-25 13:27:56.747 MultiShift[60286:299420] LAYOUT REVIEW multishift sidebar cycle 10
+2026-10-25 13:28:00.076 MultiShift[60286:299420] LAYOUT REVIEW multishift sidebar cycle 15
+2026-10-25 13:28:03.393 MultiShift[60286:299420] LAYOUT REVIEW multishift full cycles finished
+2026-10-25 13:28:03.913 MultiShift[60286:299420] LAYOUT REVIEW multishift rapid reversals finished
+2026-10-25 13:28:03.913 MultiShift[60286:299420] LAYOUT REVIEW multishift resize 700 x 480
+2026-10-25 13:28:04.147 MultiShift[60286:299420] LAYOUT REVIEW multishift resize 900 x 760
+2026-10-25 13:28:04.387 MultiShift[60286:299420] LAYOUT REVIEW multishift resize 700 x 760
+2026-10-25 13:28:04.628 MultiShift[60286:299420] LAYOUT REVIEW multishift resize 900 x 480
+2026-10-25 13:28:04.870 MultiShift[60286:299420] LAYOUT REVIEW multishift resize 840 x 580
+2026-10-25 13:28:05.107 MultiShift[60286:299420] LAYOUT REVIEW multishift themes
+2026-10-25 13:28:05.640 MultiShift[60286:299420] LAYOUT REVIEW multishift reduced motion
+2026-10-25 13:30:46.625 MultiShift[60286:299420] ECOSYSTEM multishift geometry=true stable=true

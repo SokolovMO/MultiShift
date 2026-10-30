@@ -1,0 +1,9 @@
+{
+  "evidence" : "real TIS source changes and native menu snapshot; not physical pointer traversal",
+  "failures" : [
+
+  ],
+  "maxNotificationLatencyMS" : 44.592291667868267,
+  "originalSourceRestored" : true,
+  "switches" : 30
+}

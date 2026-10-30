@@ -1,0 +1,34 @@
+{
+  "scope": "Cua/native UI attempts; not human hardware input",
+  "steps": [
+    {
+      "case": "installed-switcher-quit",
+      "result": "passed, restored through LaunchServices after testing"
+    },
+    {
+      "case": "audit-permissions",
+      "result": "AX and Input Monitoring true, normal monitoring active",
+      "evidence": "runtime/input-switcher/permission-runtime.json"
+    },
+    {
+      "case": "settings-page-pointer-navigation",
+      "result": "passed after AX Raise; transient CUA timeout before raising"
+    },
+    {
+      "case": "onboarding-consistency-before-fix",
+      "result": "defect reproduced: stored autoConvert true while checkbox displayed 0; fixed and controller regression passed"
+    },
+    {
+      "case": "TextEdit injected typing",
+      "result": "not verified: ghbdtn remained literal, while actual foreground app was multiswitcher; background target input does not establish global keyboard tap behavior"
+    },
+    {
+      "case": "Dock activation fallback",
+      "result": "blocked: Computer Use server error -10005 timeoutReached; no successful foreground TextEdit acceptance"
+    },
+    {
+      "case": "original-input-source-restored",
+      "result": "TISSelectInputSource returned 0; desired source read from pre-test snapshot"
+    }
+  ]
+}

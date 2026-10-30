@@ -1,0 +1,82 @@
+warning: /Users/sokolovmo/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
+warning: /Users/sokolovmo/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
+warning: /Users/sokolovmo/Library/Caches/org.swift.swiftpm is not accessible or not writable, disabling user-level cache features.
+warning: 'multiswitcher-ecosystem-core-check': failed storing manifest for 'multiswitcher-ecosystem-core-check' in cache: attempt to write a readonly database
+Building for debugging...
+[Planning deferred tasks]
+[27 / 50]
+[28 / 51] MultiSwitcherCore
+[38 / 100]
+[40 / 100]
+[46 / 100]
+[48 / 100]
+[52 / 100]
+[55 / 100]
+[61 / 100]
+[64 / 100]
+[65 / 100]
+[77 / 100] MultiSwitcherCore
+[78 / 100] MultiSwitcherCore
+[87 / 100] MultiSwitcherCore
+[90 / 101] MultiSwitcherCoreUnitTests-product
+[106 / 137]
+[109 / 137]
+[110 / 137]
+[113 / 137]
+[116 / 137]
+[117 / 137]
+[119 / 137]
+[120 / 137]
+[122 / 137]
+[126 / 137] MultiSwitcherCoreUnitTests-product
+[131 / 137] MultiSwitcherCoreUnitTests-product
+[133 / 137] MultiSwitcherCoreUnitTests-product
+Build complete! (10,96 с)
+Test Suite 'All tests' started at 2026-10-23 15:36:06.439.
+Test Suite 'MultiSwitcherCoreUnitTests.xctest' started at 2026-10-23 15:36:06.440.
+Test Suite 'CorrectionReliabilityTests' started at 2026-10-23 15:36:06.440.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testCorrectEnglishWantIsPreserved]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testCorrectEnglishWantIsPreserved]' passed (0.001 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testManualLayoutChangeIsNotOverriddenByQueuedCorrection]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testManualLayoutChangeIsNotOverriddenByQueuedCorrection]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testOneForeignWordKeepsRussianInputSource]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testOneForeignWordKeepsRussianInputSource]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testQueuedReplacementOrderIsStable]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testQueuedReplacementOrderIsStable]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testQueueRefusalReportsDepthAndActiveOperationWithoutText]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testQueueRefusalReportsDepthAndActiveOperationWithoutText]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testRuleRevisionChangesOnlyWhenRuleInputsChange]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testRuleRevisionChangesOnlyWhenRuleInputsChange]' passed (0.007 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testRussianLayoutHelloConvertsToEnglish]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testRussianLayoutHelloConvertsToEnglish]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testRussianLayoutLanguageConvertsToEnglish]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testRussianLayoutLanguageConvertsToEnglish]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testSafeTypedSuffixCanBePreservedAfterBoundary]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testSafeTypedSuffixCanBePreservedAfterBoundary]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testSingleRussianWordAfterEnglishWantKeepsEnglishInputSource]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testSingleRussianWordAfterEnglishWantKeepsEnglishInputSource]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testSuffixWithUntrackedInputIsRejected]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testSuffixWithUntrackedInputIsRejected]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testTwoConsecutiveEnglishWordsAllowInputSourceChange]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testTwoConsecutiveEnglishWordsAllowInputSourceChange]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testTwoConsecutiveRussianWordsAfterEnglishWantAllowInputSourceChange]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.CorrectionReliabilityTests testTwoConsecutiveRussianWordsAfterEnglishWantAllowInputSourceChange]' passed (0.000 seconds).
+Test Suite 'CorrectionReliabilityTests' passed at 2026-10-23 15:36:06.451.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.010 (0.010) seconds
+Test Suite 'InterfaceGeometryTests' started at 2026-10-23 15:36:06.451.
+Test Case '-[MultiSwitcherCoreUnitTests.InterfaceGeometryTests testNegativeOriginDisplayIsPreservedAndPartialFrameClamped]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.InterfaceGeometryTests testNegativeOriginDisplayIsPreservedAndPartialFrameClamped]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.InterfaceGeometryTests testRestoredWindowFitsDisconnectedMonitorAndSmallDisplay]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.InterfaceGeometryTests testRestoredWindowFitsDisconnectedMonitorAndSmallDisplay]' passed (0.000 seconds).
+Test Case '-[MultiSwitcherCoreUnitTests.InterfaceGeometryTests testSidebarHasBoundedContinuousWidthsForReversal]' started.
+Test Case '-[MultiSwitcherCoreUnitTests.InterfaceGeometryTests testSidebarHasBoundedContinuousWidthsForReversal]' passed (0.000 seconds).
+Test Suite 'InterfaceGeometryTests' passed at 2026-10-23 15:36:06.451.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'MultiSwitcherCoreUnitTests.xctest' passed at 2026-10-23 15:36:06.451.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.010 (0.011) seconds
+Test Suite 'All tests' passed at 2026-10-23 15:36:06.451.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.010 (0.012) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

@@ -1,0 +1,155 @@
+Generated /private/tmp/MultiShift-ecosystem-3/.native-build/multishift.icns
+41 INFO: PyInstaller: 6.22.3, contrib hooks: 2026.8
+42 INFO: Python: 3.12.12
+50 INFO: Platform: macOS-27.0.1-arm64-arm-64bit
+50 INFO: Python environment: /Users/sokolovmo/Documents/MultiShift/.venv
+52 INFO: Removing temporary files and cleaning cache in /private/tmp/MultiShift-premium-build/pyinstaller-engine/pyinstaller
+430 INFO: Module search paths (PYTHONPATH):
+['/Users/sokolovmo/Documents/MultiShift',
+ '/Users/sokolovmo/Documents/MultiShift',
+ '/Users/sokolovmo/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python312.zip',
+ '/Users/sokolovmo/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12',
+ '/Users/sokolovmo/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/lib-dynload',
+ '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages',
+ '/Users/sokolovmo/Documents/MultiShift']
+563 INFO: Appending 'binaries' from .spec
+564 INFO: Appending 'datas' from .spec
+565 INFO: checking Analysis
+565 INFO: Building Analysis because Analysis-00.toc is non existent
+565 INFO: Looking for Python shared library...
+567 INFO: Using Python shared library: /Users/sokolovmo/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/libpython3.12.dylib
+567 INFO: Running Analysis Analysis-00.toc
+567 INFO: Target bytecode optimization level: 0
+567 INFO: Initializing module dependency graph...
+568 INFO: Initializing module graph hook caches...
+578 INFO: Analyzing modules for base_library.zip ...
+767 INFO: Processing standard module hook 'hook-encodings.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+1024 INFO: Processing standard module hook 'hook-math.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+1493 INFO: Processing standard module hook 'hook-pickle.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+1841 INFO: Processing standard module hook 'hook-heapq.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+1980 INFO: Caching module dependency graph...
+1995 INFO: Analyzing /Users/sokolovmo/Documents/MultiShift/engine_main.py
+2035 INFO: Processing standard module hook 'hook-platform.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2047 INFO: Processing standard module hook 'hook-xml.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2049 INFO: Processing standard module hook 'hook-PIL.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2089 INFO: Processing standard module hook 'hook-PIL.Image.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2173 INFO: Processing standard module hook 'hook-numpy.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2345 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks/pre_safe_import_module'
+2345 INFO: SetuptoolsInfo: initializing cached setuptools info...
+2610 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2768 INFO: Processing standard module hook 'hook-_ctypes.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+3060 INFO: Processing standard module hook 'hook-sysconfig.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+3065 INFO: Processing standard module hook 'hook-_osx_support.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+3128 INFO: Processing standard module hook 'hook-webbrowser.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+3713 INFO: Processing standard module hook 'hook-difflib.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+4143 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+4234 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+4356 INFO: Processing pre-safe-import-module hook 'hook-win32com.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/pre_safe_import_module'
+5607 INFO: Processing standard module hook 'hook-docx.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+5686 INFO: Processing standard module hook 'hook-lxml.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+5820 INFO: Processing standard module hook 'hook-lxml.etree.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+5979 INFO: Analyzing hidden import 'pillow_heif.HeifImagePlugin'
+5979 INFO: Processing module hooks (post-graph stage)...
+6087 INFO: Processing standard module hook 'hook-lxml.isoschematron.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+6229 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+6257 INFO: Processing standard module hook 'hook-lxml.objectify.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+6261 INFO: Performing binary vs. data reclassification (93 entries)
+6284 INFO: Looking for ctypes DLLs
+6294 INFO: Analyzing run-time hooks ...
+6296 INFO: Including run-time hook 'pyi_rth_inspect.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+6297 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+6298 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from '/Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+6303 INFO: Creating base_library.zip...
+6313 INFO: Looking for dynamic libraries
+6426 INFO: Warnings written to /private/tmp/MultiShift-premium-build/pyinstaller-engine-work/DragShift/warn-DragShift.txt
+6446 INFO: Graph cross-reference written to /private/tmp/MultiShift-premium-build/pyinstaller-engine-work/DragShift/xref-DragShift.html
+6506 INFO: checking PYZ
+6507 INFO: Building PYZ because PYZ-00.toc is non existent
+6507 INFO: Building PYZ (ZlibArchive) /private/tmp/MultiShift-premium-build/pyinstaller-engine-work/DragShift/PYZ-00.pyz
+6981 INFO: Building PYZ (ZlibArchive) /private/tmp/MultiShift-premium-build/pyinstaller-engine-work/DragShift/PYZ-00.pyz completed successfully.
+6985 INFO: EXE target arch: arm64
+6985 INFO: Code signing identity: None
+6986 INFO: checking PKG
+6986 INFO: Building PKG because PKG-00.toc is non existent
+6986 INFO: Building PKG (CArchive) MultiShiftEngine.pkg
+6993 INFO: Building PKG (CArchive) MultiShiftEngine.pkg completed successfully.
+6993 INFO: Bootloader /Users/sokolovmo/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/bootloader/Darwin-64bit/run
+6993 INFO: checking EXE
+6993 INFO: Building EXE because EXE-00.toc is non existent
+6993 INFO: Building EXE from EXE-00.toc
+6993 INFO: Copying bootloader EXE to /private/tmp/MultiShift-premium-build/pyinstaller-engine-work/DragShift/MultiShiftEngine
+6994 INFO: Converting EXE to target arch (arm64)
+7085 INFO: Removing signature(s) from EXE
+7101 INFO: Modifying Mach-O image UUID(s) in EXE
+7105 INFO: Appending PKG archive to EXE
+7107 INFO: Fixing EXE headers for code signing
+7111 INFO: Rewriting the executable's macOS SDK version (26.2.0) to match the SDK version of the Python library (15.5.0) in order to avoid inconsistent behavior and potential UI issues in the frozen application.
+7111 INFO: Re-signing the EXE
+7133 INFO: Building EXE from EXE-00.toc completed successfully.
+7134 INFO: checking COLLECT
+7134 INFO: Building COLLECT because COLLECT-00.toc is non existent
+7134 INFO: Building COLLECT COLLECT-00.toc
+9111 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+9113 INFO: Build complete! The results are available in: /private/tmp/MultiShift-ecosystem-3/.native-build/engine
+ENGINE SELFTEST OK
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/MacOS/MultiShift: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pymupdf/_mupdf.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pymupdf/libmupdfcpp.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pymupdf/libmupdf.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pymupdf/_extra.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/libpython3.12.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/linalg/_umath_linalg.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/_core/_multiarray_tests.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/_core/_multiarray_umath.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/fft/_pocketfft_umath.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/bit_generator.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_pcg64.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_mt19937.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_philox.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_bounded_integers.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/mtrand.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_common.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_sfc64.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_generator.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_webp.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_imagingcms.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_imagingft.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_imaging.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libbrotlicommon.1.2.0.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libbrotlidec.1.2.0.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/liblcms2.2.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libpng16.16.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libxcb.1.1.0.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libjpeg.62.4.0.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libfreetype.6.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libharfbuzz.0.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libsharpyuv.0.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libopenjp2.2.5.4.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libavif.16.4.2.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libz.1.3.1.zlib-ng.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libwebp.7.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libXau.6.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libwebpmux.3.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libwebpdemux.2.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/liblzma.5.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libtiff.6.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_imagingtk.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_avif.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pillow_heif/.dylibs/libheif.1.23.6.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pillow_heif/.dylibs/libde265.0.2.3.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pillow_heif/.dylibs/libx265.217.dylib: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/_pillow_heif.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/builder.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/sax.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/_elementpath.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/html/diff.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/html/_difflib.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/etree.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/objectify.cpython-312-darwin.so: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Resources/MultiShiftEngine/MultiShiftEngine: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app: replacing existing signature
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app: valid on disk
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app: satisfies its Designated Requirement
+/private/tmp/MultiShift-ecosystem-3/MultiShift.app/Contents/Info.plist: OK
+NATIVE SELFTEST OK · 0.3.0 · 88abe0cf392b-dirty-0a8982f91f2dc851
+Built and verified /private/tmp/MultiShift-ecosystem-3/MultiShift.app 0.3.0 (88abe0cf392b-dirty-0a8982f91f2dc851) for arm64 (local ad-hoc signature; not notarized).

@@ -1,0 +1,16 @@
+2026-10-25 13:41:44.658 MultiShift[73277:353205] LAYOUT REVIEW launch: ~/Documents/MultiShift/macos-ui-audit/screenshots/after/multishift
+2026-10-25 13:41:44.960 MultiShift[73277:353205] LAYOUT REVIEW settings ready
+2026-10-25 13:41:46.189 MultiShift[73277:353205] LAYOUT REVIEW multishift sidebar cycle 0
+2026-10-25 13:41:49.389 MultiShift[73277:353205] LAYOUT REVIEW multishift sidebar cycle 5
+2026-10-25 13:41:52.584 MultiShift[73277:353205] LAYOUT REVIEW multishift sidebar cycle 10
+2026-10-25 13:41:55.805 MultiShift[73277:353205] LAYOUT REVIEW multishift sidebar cycle 15
+2026-10-25 13:41:58.955 MultiShift[73277:353205] LAYOUT REVIEW multishift full cycles finished
+2026-10-25 13:41:59.474 MultiShift[73277:353205] LAYOUT REVIEW multishift rapid reversals finished
+2026-10-25 13:41:59.474 MultiShift[73277:353205] LAYOUT REVIEW multishift resize 700 x 480
+2026-10-25 13:41:59.709 MultiShift[73277:353205] LAYOUT REVIEW multishift resize 900 x 760
+2026-10-25 13:41:59.945 MultiShift[73277:353205] LAYOUT REVIEW multishift resize 700 x 760
+2026-10-25 13:42:00.180 MultiShift[73277:353205] LAYOUT REVIEW multishift resize 900 x 480
+2026-10-25 13:42:00.418 MultiShift[73277:353205] LAYOUT REVIEW multishift resize 840 x 580
+2026-10-25 13:42:00.659 MultiShift[73277:353205] LAYOUT REVIEW multishift themes
+2026-10-25 13:42:01.195 MultiShift[73277:353205] LAYOUT REVIEW multishift reduced motion
+2026-10-25 13:44:37.215 MultiShift[73277:353205] ECOSYSTEM multishift geometry=true stable=true

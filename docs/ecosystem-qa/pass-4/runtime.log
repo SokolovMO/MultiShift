@@ -1,0 +1,2 @@
+2026-10-23 15:52:05.516 MultiShift[38121:240657] Using your own bundle identifier as an NSUserDefaults suite name does not make sense and will not work. Break on _NSUserDefaults_Log_Nonsensical_Suites to find this
+2026-10-23 15:52:54.338 MultiShift[38121:240657] ECOSYSTEM multishift geometry=true stable=true

@@ -1,0 +1,46 @@
+{
+  "before-multishift": {
+    "duration_s": 120.00841224999931,
+    "samples": 121,
+    "cpu_one_core_mean_pct": 0.0006942520738409221,
+    "cpu_one_core_p95_pct": 0.0015878942107418424,
+    "rss_start_bytes": 132841472,
+    "rss_end_bytes": 32964608,
+    "rss_max_bytes": 132841472,
+    "idle_wakeups_per_s": 0.0,
+    "interrupt_wakeups_per_s": 0.1833204821856155
+  },
+  "after-multishift": {
+    "duration_s": 120.00841224999931,
+    "samples": 121,
+    "cpu_one_core_mean_pct": 0.000679994137125565,
+    "cpu_one_core_p95_pct": 0.0015175730675189162,
+    "rss_start_bytes": 131547136,
+    "rss_end_bytes": 32145408,
+    "rss_max_bytes": 131547136,
+    "idle_wakeups_per_s": 0.0,
+    "interrupt_wakeups_per_s": 0.17498773299536025
+  },
+  "before-multiswitcher": {
+    "duration_s": 120.00841224999931,
+    "samples": 121,
+    "cpu_one_core_mean_pct": 0.0030408754996744895,
+    "cpu_one_core_p95_pct": 0.0016375749886407707,
+    "rss_start_bytes": 197197824,
+    "rss_end_bytes": 35651584,
+    "rss_max_bytes": 197197824,
+    "idle_wakeups_per_s": 0.0,
+    "interrupt_wakeups_per_s": 0.22498422813689176
+  },
+  "after-multiswitcher": {
+    "duration_s": 120.00841224999931,
+    "samples": 121,
+    "cpu_one_core_mean_pct": 0.003169700990959541,
+    "cpu_one_core_p95_pct": 0.001608901526464868,
+    "rss_start_bytes": 194969600,
+    "rss_end_bytes": 36110336,
+    "rss_max_bytes": 194969600,
+    "idle_wakeups_per_s": 0.0,
+    "interrupt_wakeups_per_s": 0.2499824757076575
+  }
+}

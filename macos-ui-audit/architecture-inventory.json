@@ -1,0 +1,1206 @@
+{
+  "multishift": [
+    {
+      "path": "macos/Sources/AppDelegate.swift",
+      "sha256": "53ea79e1a698a8aa524c0f5a1af26529938461da600068d1871eecaa6019dfbb",
+      "lines": 1125,
+      "imports": [
+        "AppKit",
+        "CoreGraphics",
+        "Darwin",
+        "SwiftUI",
+        "UserNotifications"
+      ],
+      "types": [
+        "AppDelegate",
+        "check",
+        "NonActivatingPanel"
+      ]
+    },
+    {
+      "path": "macos/Sources/Core/EngineClient.swift",
+      "sha256": "eb99e30be9f48885fd272f6b88c5a8fe4015636454929779565d885b214bb287",
+      "lines": 122,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "EngineClientError",
+        "EngineClient",
+        "DataBuffer"
+      ]
+    },
+    {
+      "path": "macos/Sources/Core/FileJobCoordinator.swift",
+      "sha256": "9a7aad513b7bf898410cf63854530880d357f77604d4e1c788a0aece8a867da2",
+      "lines": 148,
+      "imports": [
+        "Foundation",
+        "Darwin"
+      ],
+      "types": [
+        "StagedInput",
+        "StagedJob",
+        "FileJobError",
+        "FilePublishFailure",
+        "FileJobCoordinator"
+      ]
+    },
+    {
+      "path": "macos/Sources/Core/InterfaceCopy.swift",
+      "sha256": "4c7781e500e3a8df40a4f4ed028c494617cb0e2e0c9e1c75634611b28987676e",
+      "lines": 18,
+      "imports": [
+        "Foundation"
+      ],
+      "types": []
+    },
+    {
+      "path": "macos/Sources/Core/MultiAuditEnvironment.swift",
+      "sha256": "9d57179c796383b2ff00631382983fdd521f266d28248943989b1d6caffdef50",
+      "lines": 29,
+      "imports": [
+        "CryptoKit",
+        "Foundation"
+      ],
+      "types": [
+        "MultiAuditEnvironment"
+      ]
+    },
+    {
+      "path": "macos/Sources/Core/MultiInterfaceMetrics.swift",
+      "sha256": "4c64e60f4fcd94713128edee59c76aac5736af80fbff6ac553bc397c41185eca",
+      "lines": 84,
+      "imports": [
+        "CoreGraphics",
+        "Foundation"
+      ],
+      "types": [
+        "MultiInterfaceMetrics",
+        "Radius",
+        "Space"
+      ]
+    },
+    {
+      "path": "macos/Sources/Core/NotificationDispatcher.swift",
+      "sha256": "a8d0a3eae337bd3083dc98f7df8b0983b3195d45fc0f3d474ea9d9e34d9d27dd",
+      "lines": 52,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "NotificationPermission",
+        "NotificationDelivery",
+        "NotificationGateway",
+        "NotificationDispatcher",
+        "OperationFeedbackPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/Core/WheelGeometry.swift",
+      "sha256": "11031e830b3f5d03398c1b64d2f0890b3afa5c0f5abbf1a7cc85beaabd8edea3",
+      "lines": 66,
+      "imports": [
+        "CoreGraphics",
+        "Foundation"
+      ],
+      "types": [
+        "WheelGeometry",
+        "WheelInteractionState"
+      ]
+    },
+    {
+      "path": "macos/Sources/DesignSystem.swift",
+      "sha256": "fc6b6519e64a4001b0b9e30a3d6d2d1b92ac15c909f4313beda1ca39c979d319",
+      "lines": 168,
+      "imports": [
+        "AppKit",
+        "SwiftUI"
+      ],
+      "types": [
+        "Mono",
+        "MonoSurface",
+        "Keycap",
+        "ActionRowStyle",
+        "Row",
+        "AppMark",
+        "PaneHeading",
+        "MonoTextFieldStyle",
+        "Editor"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiDesignKit.swift",
+      "sha256": "91b7994587b8a1e52e06c86b4f457fc7c079bc307bb44ad31c8f3d0da33ab37c",
+      "lines": 844,
+      "imports": [
+        "AppKit",
+        "SwiftUI",
+        "QuartzCore",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "MultiBrandIcon",
+        "MultiMotion",
+        "MultiDesign",
+        "MultiBoundedWindow",
+        "MultiWindowPolicy",
+        "MultiInstructionCard",
+        "MultiActionButtonStyle",
+        "MultiActionButtonBody",
+        "MultiNavigationItem",
+        "MultiNavigationButton",
+        "MultiRail",
+        "MultiRailDocument",
+        "MultiSidebarHost",
+        "MultiSidebarContainer",
+        "MultiSurfaceMetric",
+        "MultiSurfacePreference",
+        "MultiSurfaceMetrics",
+        "MultiMeasurement",
+        "MultiEcosystemProbe"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiPopoverKit.swift",
+      "sha256": "ffc69af68d76b8fa93b3f186f703c04f5564db85367bc9f4059c6c431b3e67db",
+      "lines": 277,
+      "imports": [
+        "AppKit",
+        "MultiSwitcherCore",
+        "QuartzCore"
+      ],
+      "types": [
+        "MultiPopoverItem",
+        "MultiPopoverRow",
+        "MultiPopoverToggle",
+        "MultiPopoverHeader",
+        "MultiPopoverDocument",
+        "MultiPopoverView"
+      ]
+    },
+    {
+      "path": "macos/Sources/NativeModels.swift",
+      "sha256": "983f4da664093a860de7da068f06c2357cc6887a4be621ea216aa20c3b617aa4",
+      "lines": 903,
+      "imports": [
+        "AppKit",
+        "Combine",
+        "Foundation",
+        "ServiceManagement",
+        "SwiftUI",
+        "Darwin"
+      ],
+      "types": [
+        "ActionItem",
+        "PreviewInfo",
+        "OperationStatus",
+        "OperationFailure",
+        "EngineRequestError",
+        "OutputFingerprint",
+        "RecentOperation",
+        "WheelPresentation",
+        "AppModel"
+      ]
+    },
+    {
+      "path": "macos/Sources/NativeViews.swift",
+      "sha256": "1b06959830c3a562412a30e7870a0120d4aa51d412f0ec3d404f522959c3f1cd",
+      "lines": 1120,
+      "imports": [
+        "AppKit",
+        "SwiftUI"
+      ],
+      "types": [
+        "WelcomeView",
+        "SettingsView",
+        "SettingsSection",
+        "SettingsGroup",
+        "SettingsRow",
+        "SettingsValueRow",
+        "WheelView",
+        "WheelSector",
+        "ActionChooserView",
+        "EditorView",
+        "InspectorValue",
+        "Checkerboard",
+        "OperationDetailsView"
+      ]
+    },
+    {
+      "path": "macos/Sources/OperationNotifications.swift",
+      "sha256": "fd33ca073fff824f22579a16db9ee05af1f519d9b919ad6a9d2e8b0886eb2c6a",
+      "lines": 148,
+      "imports": [
+        "Foundation",
+        "UserNotifications"
+      ],
+      "types": [
+        "OperationNotificationHandler",
+        "OperationNotifications"
+      ]
+    },
+    {
+      "path": "macos/Sources/StatusPopover.swift",
+      "sha256": "11c3884732565b0ef1aedbd2ef1284954162ff6687dbb9b680c6247c29df49ac",
+      "lines": 64,
+      "imports": [
+        "AppKit",
+        "Combine"
+      ],
+      "types": [
+        "ShiftStatusPopoverController"
+      ]
+    }
+  ],
+  "multiswitcher": [
+    {
+      "path": "macos/Sources/MultiSwitcher/AppDelegate.swift",
+      "sha256": "ec7a142de706eb0790f66e37e27621aa5d6fad44eb5ec4288ccd894f761097d7",
+      "lines": 2569,
+      "imports": [
+        "AppKit",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "NativeMenuAuditState",
+        "AppDelegate",
+        "AutomaticInputLayoutResult"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/AppRelauncher.swift",
+      "sha256": "9d89486f156445d0ef2661a6555357af6118f5a703648f223abd8e6cdc33c241",
+      "lines": 18,
+      "imports": [
+        "AppKit",
+        "Foundation"
+      ],
+      "types": [
+        "AppRelauncher"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/AutoSwitch.swift",
+      "sha256": "542b8e843a9ae5afef408a608dc6e8c8af26165b360d2906db8428d4fb39f788",
+      "lines": 269,
+      "imports": [
+        "AppKit",
+        "Carbon",
+        "IOKit",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "Dict",
+        "AutoSwitchPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/CaretIndicator.swift",
+      "sha256": "e9ebab5490dfba744a208419f07e05d4a830582665071ab721b6347c2be97369",
+      "lines": 221,
+      "imports": [
+        "MultiSwitcherCore",
+        "AppKit",
+        "ApplicationServices",
+        "CoreGraphics"
+      ],
+      "types": [
+        "CaretIndicator"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/CrashReporter.swift",
+      "sha256": "14059ca8926e4925b2d5f865a7dd33cc79e6eb54b194987069dce8d0d0194566",
+      "lines": 126,
+      "imports": [
+        "Foundation",
+        "MultiSwitcherCore",
+        "Sentry"
+      ],
+      "types": [
+        "CrashReporter"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/DesignSystem.swift",
+      "sha256": "68b2e5b5fbc55b9df16d15aa37fbd90c7c8d0aaf4e55a717b90bc4ba6a56d4d0",
+      "lines": 545,
+      "imports": [
+        "AppKit",
+        "MultiSwitcherCore",
+        "QuartzCore"
+      ],
+      "types": [
+        "DesignPalette",
+        "InterfaceTheme",
+        "DesignTheme",
+        "DesignIcon",
+        "GraphiteToggleButton",
+        "GraphiteButton",
+        "GraphitePopUpButton",
+        "GraphiteTableView",
+        "DesignStyler",
+        "GraphiteSearchField",
+        "GraphiteProgressView",
+        "GraphiteTableHeaderView",
+        "GraphiteTextField",
+        "GraphiteAlert",
+        "GraphiteAlertButtonCell",
+        "GraphiteSearchFieldCell",
+        "GraphiteDialogPanel",
+        "GraphiteMaterialTint"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/DynamicKeyMapping.swift",
+      "sha256": "93d1eccb31c8c602b043a03b49f96269e441a4abc659ff1fba6514b2953ec3ba",
+      "lines": 464,
+      "imports": [
+        "Carbon",
+        "Foundation"
+      ],
+      "types": [
+        "DynamicKeyMapping"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/ExceptionListEditor.swift",
+      "sha256": "090a69da29a367630ef5444a286f6ba361290fe186537e5f9f65788874bb4739",
+      "lines": 273,
+      "imports": [
+        "AppKit",
+        "UniformTypeIdentifiers"
+      ],
+      "types": [
+        "ExceptionListEditor",
+        "Kind"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/HelpWindowController.swift",
+      "sha256": "1704bb9a594ca3530bbd87f982eb1b3444756b2f9559c2a92788485aec5b3a43",
+      "lines": 81,
+      "imports": [
+        "AppKit",
+        "SwiftUI",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "HelpWindowController",
+        "HelpView"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/KeyCodes.swift",
+      "sha256": "59d92da2a6f7eaf0888fc27d05b069c49e0dd7bf401d372d37528db0bbc03432",
+      "lines": 29,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "KC"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/KeyMapping.swift",
+      "sha256": "c3c2416cc87639703d1e89f6d3e36eb8006f721668676f4e122ff591559f07fc",
+      "lines": 71,
+      "imports": [
+        "Carbon"
+      ],
+      "types": [
+        "KeyMapping"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/KeyboardMonitor.swift",
+      "sha256": "41091fc715eda5d11381ca0bfb7693dd48c79e127b73c503056282cd049b1ea0",
+      "lines": 1272,
+      "imports": [
+        "AppKit",
+        "CoreGraphics",
+        "Foundation",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "TypedKey",
+        "WordBoundarySnapshot",
+        "AppendedInputEvent",
+        "ManualConversionSnapshot",
+        "RSLogWriter",
+        "TriggerConfig",
+        "Kind",
+        "KeyboardMonitor"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/LayoutDetector.swift",
+      "sha256": "fbbdc6deb5b928eea8f3dc8a9a74652e9cb9508e35d61cb5febbcd48c71b17d3",
+      "lines": 217,
+      "imports": [
+        "Foundation",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "LayoutVerdict",
+        "LayoutDetector"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/LayoutPresentationState.swift",
+      "sha256": "c3dc2e98f7a62fb3868c8b7b4f02ecfa70551fc157d12d016ee88deab63b626d",
+      "lines": 42,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "LayoutPresentationSnapshot",
+        "Source",
+        "LayoutPresentationState"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/LayoutSwitcher.swift",
+      "sha256": "adc254a901be939365504a56db44ae4683347255e64275295f64a05d0d72e237",
+      "lines": 235,
+      "imports": [
+        "Carbon",
+        "Foundation"
+      ],
+      "types": [
+        "LayoutSwitcher"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/LearningListEditor.swift",
+      "sha256": "a12ae1d77535d53cc1b33be13598b3be77ff4efec536214af4afbff535493faa",
+      "lines": 358,
+      "imports": [
+        "AppKit",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "LearningListEditor",
+        "Column",
+        "Filter"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/LearningNotice.swift",
+      "sha256": "b156cfd6b92fd16b6d916b1d2dbbdab2763c8c24152615146c6d07a05bd0b770",
+      "lines": 97,
+      "imports": [
+        "AppKit",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "LearningNotice"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/Localization.swift",
+      "sha256": "b7fff1dcf26ca8cbe79dee7ced721adc233ddc63464a246286ffef27f3c56141",
+      "lines": 2246,
+      "imports": [
+        "Foundation",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "L10n"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/MultiDesignKit.swift",
+      "sha256": "91b7994587b8a1e52e06c86b4f457fc7c079bc307bb44ad31c8f3d0da33ab37c",
+      "lines": 844,
+      "imports": [
+        "AppKit",
+        "SwiftUI",
+        "QuartzCore",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "MultiBrandIcon",
+        "MultiMotion",
+        "MultiDesign",
+        "MultiBoundedWindow",
+        "MultiWindowPolicy",
+        "MultiInstructionCard",
+        "MultiActionButtonStyle",
+        "MultiActionButtonBody",
+        "MultiNavigationItem",
+        "MultiNavigationButton",
+        "MultiRail",
+        "MultiRailDocument",
+        "MultiSidebarHost",
+        "MultiSidebarContainer",
+        "MultiSurfaceMetric",
+        "MultiSurfacePreference",
+        "MultiSurfaceMetrics",
+        "MultiMeasurement",
+        "MultiEcosystemProbe"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/MultiPopoverKit.swift",
+      "sha256": "ffc69af68d76b8fa93b3f186f703c04f5564db85367bc9f4059c6c431b3e67db",
+      "lines": 277,
+      "imports": [
+        "AppKit",
+        "MultiSwitcherCore",
+        "QuartzCore"
+      ],
+      "types": [
+        "MultiPopoverItem",
+        "MultiPopoverRow",
+        "MultiPopoverToggle",
+        "MultiPopoverHeader",
+        "MultiPopoverDocument",
+        "MultiPopoverView"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/MultiSwitcherApplication.swift",
+      "sha256": "ecd4cf1ba77c040c864c024eb043154118faebc426ab669ef4108368679ab2d5",
+      "lines": 12,
+      "imports": [
+        "AppKit"
+      ],
+      "types": [
+        "MultiSwitcherApplication"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/PerAppLayoutManager.swift",
+      "sha256": "fa0f58079929ebea0222dc4f9f05541d3af95555ef6edc8b41238f30f182588a",
+      "lines": 78,
+      "imports": [
+        "AppKit"
+      ],
+      "types": [
+        "PerAppLayoutManager"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/PermissionsGuideWindowController.swift",
+      "sha256": "493def8c13844a4ab897408500e20c94040946cf22323bed93965cacbfe92ad5",
+      "lines": 337,
+      "imports": [
+        "AppKit",
+        "QuartzCore",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "PermissionsGuideWindowController",
+        "Status",
+        "GuideWindow",
+        "GuideCard",
+        "GuideButton"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/SafariAddressBarAX.swift",
+      "sha256": "5e2efb0d2750ca42e56e750f1a6f41a97535aa720f3268d56dee01daf0e64e64",
+      "lines": 128,
+      "imports": [
+        "AppKit",
+        "ApplicationServices",
+        "CoreGraphics"
+      ],
+      "types": [
+        "SafariAddressBarAX",
+        "Field",
+        "Detection"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/SecureInputNotice.swift",
+      "sha256": "7ef343d8b0d5a4fc467bf80c2bd19ba68a07ae110b6525a658c88ac16c466b03",
+      "lines": 112,
+      "imports": [
+        "AppKit",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "SecureInputNotice"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/SettingsManager.swift",
+      "sha256": "c705f7b7da8875be6d0d39ec687bd294dbc699802c9d885584b52b1b45701d44",
+      "lines": 965,
+      "imports": [
+        "CoreFoundation",
+        "Foundation",
+        "MultiSwitcherCore",
+        "ServiceManagement"
+      ],
+      "types": [
+        "SettingsManager",
+        "LegacyRuleDefaults",
+        "RuleSnapshot",
+        "Keys",
+        "PreparedAutomaticRuleEvaluator"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/SettingsWindowController.swift",
+      "sha256": "45e2f8c55b6e83f71bb3f519075151f1a3c97166c2147f1ffefa63e7c3f933b4",
+      "lines": 2805,
+      "imports": [
+        "AppKit",
+        "ApplicationServices",
+        "Carbon",
+        "MultiSwitcherCore",
+        "QuartzCore",
+        "UniformTypeIdentifiers"
+      ],
+      "types": [
+        "SettingsHelpDisclosure",
+        "SettingsWindow",
+        "SettingsSidebarDivider",
+        "SettingsSidebarRowView",
+        "SettingsNavigationButton",
+        "SettingsCardBackground",
+        "SettingsTopAlignedContainer",
+        "SettingsCardMetrics",
+        "SettingsMotionMetrics",
+        "SettingsBrandMarkView",
+        "SettingsWindowController",
+        "PreviewLayoutChoice",
+        "NavigationItem"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/SmartConvert.swift",
+      "sha256": "661927c8d8d75081e19f99b63b4e04ca648548dd7e4d1600efd2d8e08e03f3d1",
+      "lines": 387,
+      "imports": [
+        "Foundation",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "SmartConvert",
+        "Script",
+        "WordDecision"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/SparkleUpdateChecker.swift",
+      "sha256": "fc488fa843fa58aafd5af4b121c55abdbff91671eb11194c1b97a78102192ac3",
+      "lines": 71,
+      "imports": [
+        "AppKit",
+        "Foundation",
+        "MultiSwitcherCore",
+        "Sparkle"
+      ],
+      "types": [
+        "MultiSwitcherUpdaterDelegate",
+        "UpdateChecker"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/SpotlightAX.swift",
+      "sha256": "6868d0b7e5499db5d12080765810b4728870823b9d499bfe4333e079b66c4d66",
+      "lines": 180,
+      "imports": [
+        "AppKit",
+        "ApplicationServices",
+        "CoreGraphics",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "SpotlightAX",
+        "Field",
+        "Detection"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/StatusPopoverController.swift",
+      "sha256": "eeed8ba4b927b521690272e872fe4d0cd734ab28708d8e2d2ed75cab0335ec52",
+      "lines": 109,
+      "imports": [
+        "AppKit",
+        "ApplicationServices",
+        "CoreGraphics"
+      ],
+      "types": [
+        "StatusPopoverController"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/SystemTypography.swift",
+      "sha256": "30c658b5ea05fabb5113646dbf29220c8686d419d48bed1d5917a1490a01e78d",
+      "lines": 25,
+      "imports": [
+        "AppKit"
+      ],
+      "types": [
+        "SystemTypography"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/TextConverter.swift",
+      "sha256": "400d6256e15a6bb0aa278e034827d822cae8080ffc3f3dbf1a1c38ebf6a2aa1d",
+      "lines": 1577,
+      "imports": [
+        "AppKit",
+        "ApplicationServices",
+        "CoreGraphics",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "TextConverter",
+        "SpotlightUndo",
+        "PendingBufferReplacement",
+        "PendingSerializedReplacement",
+        "PendingTextReplacement",
+        "VerifiedSelection"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/UpdateChecker.swift",
+      "sha256": "2ef7c65b2aee2378c00e405e113104be53439405c96821c3149b75b723ee9cb6",
+      "lines": 682,
+      "imports": [
+        "AppKit",
+        "Foundation",
+        "MultiSwitcherCore"
+      ],
+      "types": [
+        "UpdateChecker",
+        "VersionInfo",
+        "GitHubRelease",
+        "Asset",
+        "CodingKeys",
+        "CodingKeys"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcher/UserRuleEditor.swift",
+      "sha256": "b45e364a967bb75b3a949aaac250b8d8cd23c808c955f14e32e92021c3456b93",
+      "lines": 726,
+      "imports": [
+        "AppKit",
+        "MultiSwitcherCore",
+        "UniformTypeIdentifiers"
+      ],
+      "types": [
+        "RuleTableView",
+        "RuleScrollView",
+        "UserRuleEditor",
+        "Column"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/AppendedInputPolicy.swift",
+      "sha256": "f66eb31cf5a80415391fa5a9662cf4de41c95c2b438bfea339f05603fb78fb0e",
+      "lines": 130,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "AppendedInputRejectionReason",
+        "AppendedInputDecision",
+        "KeyboardUnicodeDisposition",
+        "AppendedInputPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/ApplicationExclusionPolicy.swift",
+      "sha256": "f66c8cf34348145cd326f4c099d431caa1678219818812b8f7aaaa7c773f1a08",
+      "lines": 15,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "ApplicationExclusionPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/AutomaticLayoutTransitionPolicy.swift",
+      "sha256": "399f38198e5523857e398f362a9d6435f94d8f7ac0bb22055abae4bdee855da0",
+      "lines": 25,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "AutomaticLayoutTransitionPolicy",
+        "Decision"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/ClipboardRestorePolicy.swift",
+      "sha256": "4d4e4b7d61ab15fe462319fdea76845a2669ef42dff630425a727d907a87b23d",
+      "lines": 22,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "ClipboardRestorePolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/DiagnosticLogRedactor.swift",
+      "sha256": "73b446940d3774406e5905242e70eeb26aadd6bbfdf57133875b0c432eb3431a",
+      "lines": 61,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "DiagnosticLogRedactor"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/ExactTextUndoState.swift",
+      "sha256": "f9d706fcb773d75dbcdecb3e979ba499a71473f575eeca552b5a48c3234bdd4c",
+      "lines": 51,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "ExactTextUndoState",
+        "Step"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/HyphenatedTokenPolicy.swift",
+      "sha256": "09c739a903c01db682e383c8e1a081c7222468951a03ed00010e4abbc9f38311",
+      "lines": 62,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "HyphenatedTokenPolicy",
+        "Decision"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/InterfaceText.swift",
+      "sha256": "c738808ca74107a2e172422f261a8e258a1b7333769175f4c9562bda53bc7f9a",
+      "lines": 25,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "InterfaceText"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/KeyboardBufferEditPolicy.swift",
+      "sha256": "f4f1532fb228411abec775c9f7aedf23e7963b3d7974034945fab467ebe8a832",
+      "lines": 18,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "BackspaceBufferDisposition",
+        "KeyboardBufferEditPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/KeyboardPunctuationPolicy.swift",
+      "sha256": "bd51bbd216cbb228d2305eb2ef0bb3e0449b5d93e4e8600e50dca73a50546200",
+      "lines": 18,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "KeyboardPunctuationPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/LayoutCorrectionEngine.swift",
+      "sha256": "4716377e04ebac62f09a54c3366740eb1b1aec959c2036da6eabf9967ee924f7",
+      "lines": 217,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "LayoutCorrectionEngine",
+        "DictionaryDecision",
+        "TrustedTermDecision",
+        "Candidate"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/LearningEngine.swift",
+      "sha256": "0b5dcf6f1e632177507b4852d7791bd5335a4c68fc130de05f80e7350c5c8262",
+      "lines": 316,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "LearningEvidence",
+        "ManualOptionLearningEvidence",
+        "LearningEngine"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/MultiAuditEnvironment.swift",
+      "sha256": "9d57179c796383b2ff00631382983fdd521f266d28248943989b1d6caffdef50",
+      "lines": 29,
+      "imports": [
+        "CryptoKit",
+        "Foundation"
+      ],
+      "types": [
+        "MultiAuditEnvironment"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/MultiInterfaceMetrics.swift",
+      "sha256": "4c64e60f4fcd94713128edee59c76aac5736af80fbff6ac553bc397c41185eca",
+      "lines": 84,
+      "imports": [
+        "CoreGraphics",
+        "Foundation"
+      ],
+      "types": [
+        "MultiInterfaceMetrics",
+        "Radius",
+        "Space"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/PauseStatePolicy.swift",
+      "sha256": "e5610b9b9ff2b092df41f4adcf36b414f9c3c64ed6c16fce4b8999407f7a1f14",
+      "lines": 8,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "PauseStatePolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/PerAppLayoutMemory.swift",
+      "sha256": "7deea6b24e70c54b2542c9ce93da17d6d8372617795a70e20591bada13783a4f",
+      "lines": 22,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "PerAppLayoutMemory"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/ProfileModel.swift",
+      "sha256": "22771bc373dcb4da3858bf0fdeaaf0d315497ec676b5ddc1c88f0443235c5990",
+      "lines": 236,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "ProfileSetting",
+        "CodingKeys",
+        "Kind",
+        "ProfileRuleOrigin",
+        "ProfileRuleMatch",
+        "ProfileRuleAction",
+        "RuleSemanticStatus",
+        "ProfileRule",
+        "LearningOrigin",
+        "LearningEntry",
+        "PuntoImportMetadata",
+        "MultiSwitcherProfile",
+        "LearningOutcome",
+        "PuntoAppliedImportReport"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/ProfileRuleEngine.swift",
+      "sha256": "e0dbd12e3bd68f7c8621d30a1e3d6856eb3c7cfa489586751307971123e113f6",
+      "lines": 224,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "ProfileRuleDecision",
+        "PreparedProfileRule",
+        "CompiledProfileRules",
+        "ProfileRuleEngine",
+        "NormalizedCandidate"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/ProfileRuleMaintenance.swift",
+      "sha256": "7777c72fec5007a30ff88f8ba999ba1bbde8c500d36bf93e4043fba95cf2f03a",
+      "lines": 40,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "ProfileRuleMaintenance"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/ProfileStore.swift",
+      "sha256": "65ce32279c86115849e2ccfcd9ddd868eee1a48c70b16a1e56db125e76f1181b",
+      "lines": 370,
+      "imports": [
+        "CryptoKit",
+        "Foundation"
+      ],
+      "types": [
+        "ProfileStoreError",
+        "ProfileStore"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/PuntoProfileImporter.swift",
+      "sha256": "718f4c86bc4e0fba2bff4bd07942410a7fc8ea34da1bf5d5b9de2d31b6c244da",
+      "lines": 222,
+      "imports": [
+        "CoreFoundation",
+        "Foundation"
+      ],
+      "types": [
+        "PuntoUserRule",
+        "PuntoImportReport",
+        "PuntoLearnedEntry",
+        "PuntoProfileImportError",
+        "PuntoProfileImporter"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/PuntoProfileMigration.swift",
+      "sha256": "ff1a7df6169deefcb95997d11d9f9c13e9b680046433d98c9317474f6727fba5",
+      "lines": 205,
+      "imports": [
+        "CoreFoundation",
+        "CryptoKit",
+        "Foundation"
+      ],
+      "types": [
+        "PuntoProfileMigration"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/SerialReplacementQueue.swift",
+      "sha256": "ce8e3d79ef2fc12d3279d769f4937de72e31b777cf3d4bae843214c7a62e34f6",
+      "lines": 94,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "BufferReplacementLifecycle",
+        "SerialReplacementQueueEnqueueResult",
+        "SerialReplacementQueue"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/SettingsCardLayoutPolicy.swift",
+      "sha256": "ade4f6e88863a2e89a9aca3f9c92c1293b22966ccd5955518365eaa2b0f68569",
+      "lines": 69,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "SettingsCardFrame",
+        "SettingsCardLayoutPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/ShortWords.swift",
+      "sha256": "e03cfb73ac70617b0a59b3a2f4c396f4fb44f0038f9f29c68e2c0aea7c9945a9",
+      "lines": 45,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "ShortWords",
+        "ShortWordDecision",
+        "ShortWordPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/SpaceShortcutPolicy.swift",
+      "sha256": "7762fe50b689f65b5a3aa72cb96a9351234b332a0f3f4c04ed21098c63852da9",
+      "lines": 17,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "SpaceKeyDisposition",
+        "SpaceShortcutPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/SpotlightTargetClassifier.swift",
+      "sha256": "a07f97123a60dfacc68b3b243679e854672b76664ede22344abe15f55628c4a7",
+      "lines": 34,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "SpotlightTargetClassifier"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/TextFieldEditSnapshot.swift",
+      "sha256": "024640455f3e27f2e5e1c7c0de66d1b79224d0e7ba45eb4ad6e3b5a5810a593a",
+      "lines": 17,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "TextFieldEditSnapshot"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/TextReplacementPlanner.swift",
+      "sha256": "cffbc033fcd02567ec2b6f370fd6f09fdc3e7435f9c4f044939c9d5e83e0dc7b",
+      "lines": 262,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "TextReplacementPlan",
+        "TextReplacementPlanner"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/UpdateChannelPolicy.swift",
+      "sha256": "d7e41e5789499be402b2ae6b6fb5320571277f41bc772bc0ce7f72f7473a84a7",
+      "lines": 80,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "UpdateChannel",
+        "PublishedRelease",
+        "UpdateChannelPolicy"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/UserRuleFileCodec.swift",
+      "sha256": "36b6cad6c372301d399f1f06431175ad90f1c3ad106028cc16f8547b64cb674a",
+      "lines": 234,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "UserRuleDocument",
+        "UserRuleFileError",
+        "UserRuleTextIntent",
+        "UserRuleImportPreview",
+        "Format",
+        "UserRuleFileCodec"
+      ]
+    },
+    {
+      "path": "macos/Sources/MultiSwitcherCore/WordLexicon.swift",
+      "sha256": "4ee966c1b9d74545d1a769910d026c4ea7f9cb49f72c03820708032a3bf951e9",
+      "lines": 53,
+      "imports": [
+        "Foundation"
+      ],
+      "types": [
+        "WordLexicon"
+      ]
+    }
+  ]
+}

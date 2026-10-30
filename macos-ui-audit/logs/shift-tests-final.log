@@ -1,0 +1,90 @@
+warning: ~/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
+warning: ~/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
+[0/1] Planning build
+Building for debugging...
+[0/3] Write sources
+[1/3] Write swift-version--58304C5D6DBC2206.txt
+[3/5] Compiling MultiShiftCore MultiAuditEnvironment.swift
+[4/5] Emitting module MultiShiftCore
+[5/6] Compiling MultiShiftCore FileJobCoordinator.swift
+[5/7] Write Objects.LinkFileList
+[6/7] Linking MultiShiftCorePackageTests
+Build complete! (1.16s)
+Test Suite 'All tests' started at 2026-10-25 15:51:21.130.
+Test Suite 'MultiShiftCorePackageTests.xctest' started at 2026-10-25 15:51:21.131.
+Test Suite 'EngineClientTests' started at 2026-10-25 15:51:21.131.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testAcceptsStructuredPartialResultOnNonzeroExit]' started.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testAcceptsStructuredPartialResultOnNonzeroExit]' passed (0.283 seconds).
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReportsMalformedJSONAndCrash]' started.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReportsMalformedJSONAndCrash]' passed (0.215 seconds).
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReportsSignalExit]' started.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReportsSignalExit]' passed (0.219 seconds).
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReturnsStructuredFailureWithoutOutputs]' started.
+Test Case '-[MultiShiftCoreTests.EngineClientTests testReturnsStructuredFailureWithoutOutputs]' passed (0.219 seconds).
+Test Suite 'EngineClientTests' passed at 2026-10-25 15:51:22.067.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.935 (0.936) seconds
+Test Suite 'FileJobCoordinatorTests' started at 2026-10-25 15:51:22.068.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testAccessDenialIsSurfacedAsRecoverableSelectionFailure]' started.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testAccessDenialIsSurfacedAsRecoverableSelectionFailure]' passed (0.007 seconds).
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testCancelledOrMissingSelectionLeavesNoJobDirectory]' started.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testCancelledOrMissingSelectionLeavesNoJobDirectory]' passed (0.001 seconds).
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testPublishFailurePreservesEarlierOutputsAndListsRemaining]' started.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testPublishFailurePreservesEarlierOutputsAndListsRemaining]' passed (0.002 seconds).
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testStagesDuplicateNamesSeparatelyAndPublishesWithoutOverwrite]' started.
+Test Case '-[MultiShiftCoreTests.FileJobCoordinatorTests testStagesDuplicateNamesSeparatelyAndPublishesWithoutOverwrite]' passed (0.004 seconds).
+Test Suite 'FileJobCoordinatorTests' passed at 2026-10-25 15:51:22.082.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.014 (0.015) seconds
+Test Suite 'InterfaceCopyTests' started at 2026-10-25 15:51:22.082.
+Test Case '-[MultiShiftCoreTests.InterfaceCopyTests testDisplayTransformationDoesNotMutateUserValues]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceCopyTests testDisplayTransformationDoesNotMutateUserValues]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.InterfaceCopyTests testLowercaseCopyPreservesUnicodeFileNamesAndPaths]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceCopyTests testLowercaseCopyPreservesUnicodeFileNamesAndPaths]' passed (0.000 seconds).
+Test Suite 'InterfaceCopyTests' passed at 2026-10-25 15:51:22.083.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'InterfaceGeometryTests' started at 2026-10-25 15:51:22.083.
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testCompactWindowPreservesTheDetailWidthAtEveryPhase]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testCompactWindowPreservesTheDetailWidthAtEveryPhase]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testNegativeOriginDisplayIsPreservedAndPartialFrameClamped]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testNegativeOriginDisplayIsPreservedAndPartialFrameClamped]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testRestoredWindowFitsDisconnectedMonitorAndSmallDisplay]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testRestoredWindowFitsDisconnectedMonitorAndSmallDisplay]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testSewarning: '--build-system native' has been deprecated and will be removed in a future release; please report an issue at https://github.com/swiftlang/swift-package-manager/issues if you are unable to adopt the default build system.
+manticSurfaceRadiiAreOrderedAndBounded]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testSemanticSurfaceRadiiAreOrderedAndBounded]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testSidebarHasBoundedContinuousWidthsForReversal]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testSidebarHasBoundedContinuousWidthsForReversal]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testSmallWorkingAreaWinsOverNominalMinimum]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testSmallWorkingAreaWinsOverNominalMinimum]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testUsefulMaximumPreventsUnboundedSettingsGrowth]' started.
+Test Case '-[MultiShiftCoreTests.InterfaceGeometryTests testUsefulMaximumPreventsUnboundedSettingsGrowth]' passed (0.000 seconds).
+Test Suite 'InterfaceGeometryTests' passed at 2026-10-25 15:51:22.084.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'NotificationDispatcherTests' started at 2026-10-25 15:51:22.084.
+Test Case '-[MultiShiftCoreTests.NotificationDispatcherTests testAuthorizedNotificationIsSubmitted]' started.
+Test Case '-[MultiShiftCoreTests.NotificationDispatcherTests testAuthorizedNotificationIsSubmitted]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.NotificationDispatcherTests testPermissionDenialAndSubmissionErrorAreReported]' started.
+Test Case '-[MultiShiftCoreTests.NotificationDispatcherTests testPermissionDenialAndSubmissionErrorAreReported]' passed (0.000 seconds).
+Test Suite 'NotificationDispatcherTests' passed at 2026-10-25 15:51:22.084.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'OperationFeedbackPolicyTests' started at 2026-10-25 15:51:22.084.
+Test Case '-[MultiShiftCoreTests.OperationFeedbackPolicyTests testOnlyLongBackgroundWorkRequestsSystemDelivery]' started.
+Test Case '-[MultiShiftCoreTests.OperationFeedbackPolicyTests testOnlyLongBackgroundWorkRequestsSystemDelivery]' passed (0.000 seconds).
+Test Suite 'OperationFeedbackPolicyTests' passed at 2026-10-25 15:51:22.084.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'WheelGeometryTests' started at 2026-10-25 15:51:22.084.
+Test Case '-[MultiShiftCoreTests.WheelGeometryTests testClampedOpeningCannotRunAnActionUntilSixPointsOfMovement]' started.
+Test Case '-[MultiShiftCoreTests.WheelGeometryTests testClampedOpeningCannotRunAnActionUntilSixPointsOfMovement]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.WheelGeometryTests testEntireVisibleCenterAndOutsideCancel]' started.
+Test Case '-[MultiShiftCoreTests.WheelGeometryTests testEntireVisibleCenterAndOutsideCancel]' passed (0.000 seconds).
+Test Case '-[MultiShiftCoreTests.WheelGeometryTests testEveryVisibleSectorCenterAndBothSidesOfItsBoundary]' started.
+Test Case '-[MultiShiftCoreTests.WheelGeometryTests testEveryVisibleSectorCenterAndBothSidesOfItsBoundary]' passed (0.000 seconds).
+Test Suite 'WheelGeometryTests' passed at 2026-10-25 15:51:22.085.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'MultiShiftCorePackageTests.xctest' passed at 2026-10-25 15:51:22.085.
+	 Executed 23 tests, with 0 failures (0 unexpected) in 0.951 (0.954) seconds
+Test Suite 'All tests' passed at 2026-10-25 15:51:22.085.
+	 Executed 23 tests, with 0 failures (0 unexpected) in 0.951 (0.955) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

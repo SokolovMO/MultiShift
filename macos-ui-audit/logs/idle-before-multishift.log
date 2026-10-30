@@ -1,0 +1,3 @@
+2026-10-25 16:04:06.885 MultiShift[32987:675727] Using your own bundle identifier as an NSUserDefaults suite name does not make sense and will not work. Break on _NSUserDefaults_Log_Nonsensical_Suites to find this
+2026-10-25 16:04:06.899 MultiShift[32987:675727] LAYOUT REVIEW launch: ~/Documents/MultiShift/macos-ui-audit/runtime/idle-before-multishift
+2026-10-25 16:04:07.270 MultiShift[32987:675727] LAYOUT REVIEW settings ready

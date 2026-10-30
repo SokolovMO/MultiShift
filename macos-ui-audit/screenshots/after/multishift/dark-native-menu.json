@@ -1,0 +1,10 @@
+{
+  "stableWhileTracking" : true,
+  "nativeMenu" : true,
+  "staleOperationDisabled" : true,
+  "operationCount" : 0,
+  "stateUpdatedInPlace" : true,
+  "rootItems" : 9,
+  "usesPopover" : false,
+  "allOperationIDsValid" : true
+}

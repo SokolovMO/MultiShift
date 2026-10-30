@@ -1,0 +1,18 @@
+2026-10-25 15:15:21.588 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher sidebar cycle 0
+2026-10-25 15:15:26.516 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher sidebar cycle 5
+2026-10-25 15:15:31.254 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher sidebar cycle 10
+2026-10-25 15:15:36.046 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher sidebar cycle 15
+2026-10-25 15:15:40.737 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher full cycles finished
+2026-10-25 15:15:42.051 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher rapid reversals finished
+2026-10-25 15:15:42.051 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher resize 720 x 500
+2026-10-25 15:15:42.305 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher resize 1000 x 800
+2026-10-25 15:15:42.559 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher resize 720 x 800
+2026-10-25 15:15:42.834 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher resize 1000 x 500
+2026-10-25 15:15:43.112 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher resize 880 x 620
+2026-10-25 15:15:43.387 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher themes
+2026-10-25 15:15:44.045 MultiSwitcher[12922:545231] LAYOUT REVIEW multiswitcher reduced motion
+2026-10-25 15:19:14.436 MultiSwitcher[12922:545231] ECOSYSTEM multiswitcher geometry=true stable=true
+2026-10-25 15:19:18.919 MultiSwitcher[12922:545231] UI review rules search/selection/keyboard: PASS
+2026-10-25 15:19:19.577 MultiSwitcher[12922:545231] UI review learning candidate/active actions: PASS
+2026-10-25 15:19:25.177 MultiSwitcher[12922:545231] UI review rules search/selection/keyboard: PASS
+2026-10-25 15:19:25.858 MultiSwitcher[12922:545231] UI review learning candidate/active actions: PASS

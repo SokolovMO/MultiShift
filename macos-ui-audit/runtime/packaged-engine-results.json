@@ -1,0 +1,335 @@
+{
+  "evidence": "actual frozen worker from delivered preview; real fixture files; UI apply/save excluded",
+  "cases": [
+    {
+      "case": "image-PNG",
+      "action": "convert:PNG",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-JPG",
+      "action": "convert:JPG",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-WEBP",
+      "action": "convert:WEBP",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-HEIC",
+      "action": "convert:HEIC",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-TIFF",
+      "action": "convert:TIFF",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-AVIF",
+      "action": "convert:AVIF",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-BMP",
+      "action": "convert:BMP",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-PDF",
+      "action": "convert:PDF",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-ICO",
+      "action": "convert:ICO",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-GIF",
+      "action": "convert:GIF",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-JPG",
+      "action": "convert:JPG",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-PNG",
+      "action": "convert:PNG",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-DOCX",
+      "action": "convert:DOCX",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-TXT",
+      "action": "convert:TXT",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "docx-PDF",
+      "action": "convert:PDF",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "docx-TXT",
+      "action": "convert:TXT",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "txt-PDF",
+      "action": "convert:PDF",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "txt-DOCX",
+      "action": "convert:DOCX",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-tool-Crop",
+      "action": "tool:Crop",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-tool-Add-BG",
+      "action": "tool:Add BG",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-tool-Annotate",
+      "action": "tool:Annotate",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-tool-Redact",
+      "action": "tool:Redact",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-tool-Edit",
+      "action": "tool:Edit",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-tool-Metadata",
+      "action": "tool:Metadata",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-tool-Compress",
+      "action": "tool:Compress",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "image-tool-Resize",
+      "action": "tool:Resize",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-tool-Compress",
+      "action": "tool:Compress",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-tool-Split",
+      "action": "tool:Split",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-tool-Rotate",
+      "action": "tool:Rotate",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-tool-Merge",
+      "action": "tool:Merge",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-tool-Protect",
+      "action": "tool:Protect",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-tool-Extract",
+      "action": "tool:Extract",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "case": "pdf-tool-Metadata",
+      "action": "tool:Metadata",
+      "passed": true,
+      "originalsUnchanged": true,
+      "outputs": 1,
+      "exit": 0,
+      "failures": [],
+      "error": null
+    }
+  ]
+}

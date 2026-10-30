@@ -1,0 +1,66 @@
+{
+  "captures" : [
+    {
+      "capturedWindowServer" : true,
+      "name" : "native-menu-light"
+    },
+    {
+      "capturedWindowServer" : true,
+      "name" : "native-menu-dark"
+    }
+  ],
+  "connectedDisplays" : 1,
+  "cycles" : 100,
+  "evidence" : "native NSMenu and actual controller; programmatic fixture interactions",
+  "failures" : [
+
+  ],
+  "pageTransitions" : [
+    {
+      "alpha" : 1,
+      "case" : "pointer-to-keyboard",
+      "expected" : 2,
+      "passed" : true,
+      "selected" : 2,
+      "sidebar" : "2",
+      "tab" : 2
+    },
+    {
+      "alpha" : 1,
+      "case" : "pointer-reversal",
+      "expected" : 2,
+      "passed" : true,
+      "selected" : 2,
+      "sidebar" : "2",
+      "tab" : 2
+    },
+    {
+      "alpha" : 1,
+      "case" : "same-page-interrupt",
+      "expected" : 1,
+      "passed" : true,
+      "selected" : 1,
+      "sidebar" : "1",
+      "tab" : 1
+    },
+    {
+      "alpha" : 1,
+      "case" : "close-reopen",
+      "expected" : 2,
+      "passed" : true,
+      "selected" : 2,
+      "sidebar" : "2",
+      "tab" : 2
+    },
+    {
+      "alpha" : 1,
+      "case" : "learned-rule-link",
+      "expected" : 3,
+      "passed" : true,
+      "selected" : 3,
+      "sidebar" : "3",
+      "tab" : 3
+    }
+  ],
+  "trackingAfterClose" : false
+}

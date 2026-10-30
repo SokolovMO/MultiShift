@@ -1,0 +1,40 @@
+{
+  "scope": [
+    "MultiShift UI and audit commit, amended after redaction",
+    "MultiSwitcher commit 77d3342"
+  ],
+  "textChecks": {
+    "credentialPatterns": "no user credentials or private keys found",
+    "personalMailboxes": "none found in source or QA text",
+    "machineHomePaths": "redacted from text artifacts",
+    "localContentFingerprints": "omitted from shared baseline and preservation reports"
+  },
+  "imageReview": {
+    "filesScannedWithVision": 1855,
+    "recognizedTextFiles": 1785,
+    "smallImageErrors": 5,
+    "errors": "three files are 2x2 thumbnails with no readable text; two are intentionally broken image fixtures",
+    "emailsPhonesNamesPathsOrCredentialsFound": false,
+    "metadata": "one generic Apple Display profile; XMP contains screenshot dimensions and the word Screenshot"
+  },
+  "videoReview": {
+    "filesSampled": 28,
+    "personalTextPatternsFound": false,
+    "smallFrameErrors": 1,
+    "error": "one 2x4 frame from a short menu animation"
+  },
+  "applicationArchives": {
+    "userHomePathFound": false,
+    "credentialsOrPrivateKeyFound": false,
+    "thirdPartyLibraryContacts": "some packaged open-source components include their authors' public contact addresses and generic CI build paths",
+    "publicUpdaterURL": "MultiSwitcher contains its configured public GitHub Pages feed owner; this is existing application functionality, not a credential"
+  },
+  "excludedFromGit": [
+    "user profile and history snapshots",
+    "per-permission macOS grant values",
+    "the selected keyboard layout identifier",
+    "raw Time Profiler trace with host and process metadata",
+    "user-specific paths and content hashes"
+  ],
+  "result": "No private mailbox, credential, user profile contents, local home path, host serial, or hardware UUID remains in the reviewed payload. The public project updater identity and third-party license attribution remain."
+}

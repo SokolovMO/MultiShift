@@ -1,0 +1,125 @@
+Building MultiSwitcher 0.4.0 (54) for arm64
+Staging directory: <TMP>/multi-ui-baseline-switcher
+2026-10-25 13:20:23.232 xcodebuild[54162:270366]  DVTFilePathFSEvents: Failed to start fs event stream.
+2026-10-25 13:20:23.335 xcodebuild[54162:270365] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 "Input/output error". Using NSCachesDirectory instead.
+2026-10-25 13:20:23.749 xcodebuild[54166:270387]  DVTFilePathFSEvents: Failed to start fs event stream.
+2026-10-25 13:20:23.854 xcodebuild[54166:270386] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 "Input/output error". Using NSCachesDirectory instead.
+Building for production...
+[Planning deferred tasks]
+[22 / 34]
+[23 / 35] MultiSwitcherCore
+[34 / 74]
+[42 / 74]
+[44 / 74]
+[48 / 74]
+[51 / 74]
+[57 / 74]
+[59 / 74]
+[60 / 74]
+[61 / 74]
+[63 / 74] MultiSwitcherCore
+[70 / 75] MultiSwitcher-product
+[87 / 110]
+[92 / 110]
+[95 / 110]
+[99 / 110]
+[101 / 110]
+[102 / 110]
+[103 / 110]
+[104 / 110]
+[105 / 110]
+[106 / 110] MultiSwitcher-product
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/SettingsWindowController.swift:2270:19: warning: result of call to 'runModal()' is unused [#NoUsage]
+2268 |             alert.informativeText = error.localizedDescription
+2269 |             alert.addButton(withTitle: L10n.commonOkay)
+2270 |             alert.runModal()
+     |                   `- warning: result of call to 'runModal()' is unused [#NoUsage]
+2271 |         }
+2272 |     }
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/SettingsWindowController.swift:2536:19: warning: result of call to 'runModal()' is unused [#NoUsage]
+2534 |             alert.messageText = "log file not found"
+2535 |             alert.informativeText = "enable debug logging first."
+2536 |             alert.runModal()
+     |                   `- warning: result of call to 'runModal()' is unused [#NoUsage]
+2537 |         }
+2538 |     }
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/SettingsWindowController.swift:2582:25: warning: result of call to 'runModal()' is unused [#NoUsage]
+2580 |             unavailable.messageText = L10n.supportReportUnavailable
+2581 |             unavailable.addButton(withTitle: L10n.commonOkay)
+2582 |             unavailable.runModal()
+     |                         `- warning: result of call to 'runModal()' is unused [#NoUsage]
+2583 |             return
+2584 |         }
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/SettingsWindowController.swift:2594:16: warning: result of call to 'runModal()' is unused [#NoUsage]
+2592 |         copied.messageText = L10n.supportReportCopied
+2593 |         copied.addButton(withTitle: L10n.commonOkay)
+2594 |         copied.runModal()
+     |                `- warning: result of call to 'runModal()' is unused [#NoUsage]
+2595 |     }
+2596 | 
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/StatusPopoverController.swift:53:31: warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 51 |         var detail = ""
+ 52 |         // State belongs below the action, never appended to a single truncating label.
+ 53 |         if menuItem.action == Selector(("toggleAutoConvert:")), let range = title.range(of: " — ") {
+    |                               `- warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 54 |             detail = String(title[range.upperBound...]).replacingOccurrences(of: " — ", with: " · ")
+ 55 |             title = String(title[..<range.lowerBound])
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/StatusPopoverController.swift:59:36: warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 57 |         let symbol: String
+ 58 |         if menuItem.submenu != nil { symbol = menuItem.title.contains("—") ? "app" : "chevron.right" }
+ 59 |         else if menuItem.action == Selector(("openSettings")) { symbol = "slider.horizontal.3" }
+    |                                    `- warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 60 |         else if menuItem.action == Selector(("quit")) { symbol = "power" }
+ 61 |         else if menuItem.action == Selector(("showHelp")) { symbol = "questionmark.circle" }
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/StatusPopoverController.swift:60:36: warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 58 |         if menuItem.submenu != nil { symbol = menuItem.title.contains("—") ? "app" : "chevron.right" }
+ 59 |         else if menuItem.action == Selector(("openSettings")) { symbol = "slider.horizontal.3" }
+ 60 |         else if menuItem.action == Selector(("quit")) { symbol = "power" }
+    |                                    `- warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 61 |         else if menuItem.action == Selector(("showHelp")) { symbol = "questionmark.circle" }
+ 62 |         else if menuItem.state == .on { symbol = "checkmark.circle.fill" }
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/StatusPopoverController.swift:61:36: warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 59 |         else if menuItem.action == Selector(("openSettings")) { symbol = "slider.horizontal.3" }
+ 60 |         else if menuItem.action == Selector(("quit")) { symbol = "power" }
+ 61 |         else if menuItem.action == Selector(("showHelp")) { symbol = "questionmark.circle" }
+    |                                    `- warning: use '#selector' instead of explicitly constructing a 'Selector'
+ 62 |         else if menuItem.state == .on { symbol = "checkmark.circle.fill" }
+ 63 |         else { symbol = "circle" }
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/UpdateChecker.swift:592:15: warning: result of call to 'runModal()' is unused [#NoUsage]
+590 |         alert.informativeText = message
+591 |         alert.addButton(withTitle: "ok")
+592 |         alert.runModal()
+    |               `- warning: result of call to 'runModal()' is unused [#NoUsage]
+593 |     }
+594 | 
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/UserRuleEditor.swift:441:23: warning: result of call to 'runModal()' is unused [#NoUsage]
+439 |                 )
+440 |                 alert.addButton(withTitle: L10n.commonOkay)
+441 |                 alert.runModal()
+    |                       `- warning: result of call to 'runModal()' is unused [#NoUsage]
+442 |                 return
+443 |             }
+
+<TMP>/multi-ui-baseline-switcher/package/Sources/MultiSwitcher/UserRuleEditor.swift:724:15: warning: result of call to 'runModal()' is unused [#NoUsage]
+722 |         alert.informativeText = message
+723 |         alert.addButton(withTitle: L10n.commonOkay)
+724 |         alert.runModal()
+    |               `- warning: result of call to 'runModal()' is unused [#NoUsage]
+725 |     }
+726 | }
+
+[#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+[108 / 110] MultiSwitcher-product
+error: Operation not permitted
+error: GenerateDSYMFile <TMP>/multi-ui-baseline-switcher/swiftpm/out/Products/Release/MultiSwitcher.dSYM <TMP>/multi-ui-baseline-switcher/swiftpm/out/Products/Release/MultiSwitcher failed with a nonzero exit code. Command line:     cd <TMP>/multi-ui-baseline-switcher/package
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil <TMP>/multi-ui-baseline-switcher/swiftpm/out/Products/Release/MultiSwitcher -o <TMP>/multi-ui-baseline-switcher/swiftpm/out/Products/Release/MultiSwitcher.dSYM
+error: Build failed

@@ -1,0 +1,6 @@
+Validated and unpacked 2 language packs
+2026-10-25 13:36:54.932 SelectionConversionChecks[69757:336196] Error received in message reply handler: Connection invalid
+2026-10-25 13:36:54.932 SelectionConversionChecks[69757:336277] Connection Invalid error for service com.apple.hiservices-xpcservice.
+Lexicon en: 30000 base words, 356 thematic words
+Lexicon ru: 50000 base words, 262 thematic words
+Selection conversion: PASS (106 assertions, 0 failures)

@@ -1,0 +1,44 @@
+{
+  "multishift": {
+    "save": 0,
+    "check": 0,
+    "result": {
+      "actual": [
+        48,
+        269,
+        840,
+        618
+      ],
+      "autosaveName": "",
+      "expected": [
+        48,
+        269,
+        840,
+        618
+      ],
+      "freshProcess": true,
+      "passed": true
+    }
+  },
+  "multiswitcher": {
+    "save": 0,
+    "check": 0,
+    "result": {
+      "actual": [
+        48,
+        235,
+        880,
+        652
+      ],
+      "autosaveName": "",
+      "expected": [
+        48,
+        235,
+        880,
+        652
+      ],
+      "freshProcess": true,
+      "passed": true
+    }
+  }
+}

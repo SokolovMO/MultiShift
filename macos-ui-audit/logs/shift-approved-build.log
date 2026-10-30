@@ -1,0 +1,155 @@
+Generated <TMP>/multi-ui-approved-shift/.native-build/multishift.icns
+46 INFO: PyInstaller: 6.22.3, contrib hooks: 2026.8
+46 INFO: Python: 3.12.12
+55 INFO: Platform: macOS-27.0.1-arm64-arm-64bit
+55 INFO: Python environment: ~/Documents/MultiShift/.venv
+59 INFO: Removing temporary files and cleaning cache in <TMP>/multi-ui-after-shift-cache/pyinstaller-engine/pyinstaller
+471 INFO: Module search paths (PYTHONPATH):
+['~/Documents/MultiShift',
+ '~/Documents/MultiShift',
+ '~/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python312.zip',
+ '~/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12',
+ '~/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/lib-dynload',
+ '~/Documents/MultiShift/.venv/lib/python3.12/site-packages',
+ '~/Documents/MultiShift']
+608 INFO: Appending 'binaries' from .spec
+608 INFO: Appending 'datas' from .spec
+609 INFO: checking Analysis
+609 INFO: Building Analysis because Analysis-00.toc is non existent
+609 INFO: Looking for Python shared library...
+611 INFO: Using Python shared library: ~/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/libpython3.12.dylib
+611 INFO: Running Analysis Analysis-00.toc
+611 INFO: Target bytecode optimization level: 0
+611 INFO: Initializing module dependency graph...
+612 INFO: Initializing module graph hook caches...
+622 INFO: Analyzing modules for base_library.zip ...
+902 INFO: Processing standard module hook 'hook-heapq.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+937 INFO: Processing standard module hook 'hook-encodings.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+1470 INFO: Processing standard module hook 'hook-math.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+1557 INFO: Processing standard module hook 'hook-pickle.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2159 INFO: Caching module dependency graph...
+2179 INFO: Analyzing ~/Documents/MultiShift/engine_main.py
+2216 INFO: Processing standard module hook 'hook-platform.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2227 INFO: Processing standard module hook 'hook-xml.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2229 INFO: Processing standard module hook 'hook-PIL.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2268 INFO: Processing standard module hook 'hook-PIL.Image.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2351 INFO: Processing standard module hook 'hook-numpy.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+2546 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks/pre_safe_import_module'
+2546 INFO: SetuptoolsInfo: initializing cached setuptools info...
+2901 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+3141 INFO: Processing standard module hook 'hook-_ctypes.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+3545 INFO: Processing standard module hook 'hook-sysconfig.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+3551 INFO: Processing standard module hook 'hook-_osx_support.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+3633 INFO: Processing standard module hook 'hook-webbrowser.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+4332 INFO: Processing standard module hook 'hook-difflib.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+4792 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+4869 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+5013 INFO: Processing pre-safe-import-module hook 'hook-win32com.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/pre_safe_import_module'
+6247 INFO: Processing standard module hook 'hook-docx.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+6289 INFO: Processing standard module hook 'hook-lxml.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+6385 INFO: Processing standard module hook 'hook-lxml.etree.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+6540 INFO: Analyzing hidden import 'pillow_heif.HeifImagePlugin'
+6540 INFO: Processing module hooks (post-graph stage)...
+6643 INFO: Processing standard module hook 'hook-lxml.isoschematron.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+6776 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks'
+6804 INFO: Processing standard module hook 'hook-lxml.objectify.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/_pyinstaller_hooks_contrib/stdhooks'
+6808 INFO: Performing binary vs. data reclassification (93 entries)
+6824 INFO: Looking for ctypes DLLs
+6835 INFO: Analyzing run-time hooks ...
+6836 INFO: Including run-time hook 'pyi_rth_inspect.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+6838 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+6838 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from '~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/hooks/rthooks'
+6844 INFO: Creating base_library.zip...
+6852 INFO: Looking for dynamic libraries
+6947 INFO: Warnings written to <TMP>/multi-ui-after-shift-cache/pyinstaller-engine-work/DragShift/warn-DragShift.txt
+6959 INFO: Graph cross-reference written to <TMP>/multi-ui-after-shift-cache/pyinstaller-engine-work/DragShift/xref-DragShift.html
+6999 INFO: checking PYZ
+6999 INFO: Building PYZ because PYZ-00.toc is non existent
+6999 INFO: Building PYZ (ZlibArchive) <TMP>/multi-ui-after-shift-cache/pyinstaller-engine-work/DragShift/PYZ-00.pyz
+7408 INFO: Building PYZ (ZlibArchive) <TMP>/multi-ui-after-shift-cache/pyinstaller-engine-work/DragShift/PYZ-00.pyz completed successfully.
+7412 INFO: EXE target arch: arm64
+7412 INFO: Code signing identity: None
+7413 INFO: checking PKG
+7413 INFO: Building PKG because PKG-00.toc is non existent
+7413 INFO: Building PKG (CArchive) MultiShiftEngine.pkg
+7421 INFO: Building PKG (CArchive) MultiShiftEngine.pkg completed successfully.
+7421 INFO: Bootloader ~/Documents/MultiShift/.venv/lib/python3.12/site-packages/PyInstaller/bootloader/Darwin-64bit/run
+7421 INFO: checking EXE
+7421 INFO: Building EXE because EXE-00.toc is non existent
+7421 INFO: Building EXE from EXE-00.toc
+7421 INFO: Copying bootloader EXE to <TMP>/multi-ui-after-shift-cache/pyinstaller-engine-work/DragShift/MultiShiftEngine
+7422 INFO: Converting EXE to target arch (arm64)
+7438 INFO: Removing signature(s) from EXE
+7450 INFO: Modifying Mach-O image UUID(s) in EXE
+7454 INFO: Appending PKG archive to EXE
+7456 INFO: Fixing EXE headers for code signing
+7458 INFO: Rewriting the executable's macOS SDK version (26.2.0) to match the SDK version of the Python library (15.5.0) in order to avoid inconsistent behavior and potential UI issues in the frozen application.
+7459 INFO: Re-signing the EXE
+7479 INFO: Building EXE from EXE-00.toc completed successfully.
+7480 INFO: checking COLLECT
+7480 INFO: Building COLLECT because COLLECT-00.toc is non existent
+7480 INFO: Building COLLECT COLLECT-00.toc
+9133 INFO: Building COLLECT COLLECT-00.toc completed successfully.
+9135 INFO: Build complete! The results are available in: <TMP>/multi-ui-approved-shift/.native-build/engine
+ENGINE SELFTEST OK
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/MacOS/MultiShift: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pymupdf/_mupdf.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pymupdf/libmupdfcpp.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pymupdf/libmupdf.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pymupdf/_extra.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/libpython3.12.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/linalg/_umath_linalg.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/_core/_multiarray_tests.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/_core/_multiarray_umath.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/fft/_pocketfft_umath.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/bit_generator.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_pcg64.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_mt19937.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_philox.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_bounded_integers.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/mtrand.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_common.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_sfc64.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/numpy/random/_generator.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_webp.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_imagingcms.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_imagingft.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_imaging.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libbrotlicommon.1.2.0.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libbrotlidec.1.2.0.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/liblcms2.2.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libpng16.16.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libxcb.1.1.0.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libjpeg.62.4.0.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libfreetype.6.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libharfbuzz.0.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libsharpyuv.0.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libopenjp2.2.5.4.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libavif.16.4.2.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libz.1.3.1.zlib-ng.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libwebp.7.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libXau.6.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libwebpmux.3.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libwebpdemux.2.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/liblzma.5.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/.dylibs/libtiff.6.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_imagingtk.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/PIL/_avif.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pillow_heif/.dylibs/libheif.1.23.6.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pillow_heif/.dylibs/libde265.0.2.3.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/pillow_heif/.dylibs/libx265.217.dylib: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/_pillow_heif.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/builder.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/sax.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/_elementpath.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/html/diff.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/html/_difflib.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/etree.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/_internal/lxml/objectify.cpython-312-darwin.so: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Resources/MultiShiftEngine/MultiShiftEngine: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app: replacing existing signature
+<TMP>/multi-ui-approved-shift/MultiShift.app: valid on disk
+<TMP>/multi-ui-approved-shift/MultiShift.app: satisfies its Designated Requirement
+<TMP>/multi-ui-approved-shift/MultiShift.app/Contents/Info.plist: OK
+NATIVE SELFTEST OK · 0.3.0 · 41a8ed9e6bfd-dirty-d82f2f520ab0f354
+Built and verified <TMP>/multi-ui-approved-shift/MultiShift.app 0.3.0 (41a8ed9e6bfd-dirty-d82f2f520ab0f354) for arm64 (local ad-hoc signature; not notarized).

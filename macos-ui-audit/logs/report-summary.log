@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-25",
+  "implementationComplete": false,
+  "codeChangesComplete": true,
+  "manualAcceptanceComplete": false,
+  "settingsStates": 432,
+  "settingsGeometryPassed": true,
+  "nativeMenuFailures": [],
+  "pageRegressionPassed": true,
+  "circleCycles": 100,
+  "editorWindows": 22,
+  "frozenWorkerCases": 33,
+  "frozenWorkerPassed": 33,
+  "featureRows": 56,
+  "sharedSourcesIdentical": true,
+  "nativeCheckExitCodes": {
+    "sidebar_layout": 0,
+    "popover_layout": 0,
+    "layout_state": 0,
+    "selection_conversion": 0
+  },
+  "minimumMeasuredCircleContrast": 4.801159164567868,
+  "remainingIssues": [
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "U05",
+    "U06",
+    "U07",
+    "U08",
+    "U09"
+  ]
+}
