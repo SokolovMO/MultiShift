@@ -312,6 +312,7 @@ struct SettingsView: View {
                         .padding(.top, 4)
                 }.font(.system(size: 11)).foregroundStyle(secondaryInk)
             }
+            SettingsGroup { UpdateSettingsView(russian: model.language == "ru") }
             reassurance
         }
     }

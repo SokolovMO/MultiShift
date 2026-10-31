@@ -17,6 +17,10 @@ PYTHON="${PYTHON:-$DEFAULT_PYTHON}"
 OUTPUT_DIR="${MULTISHIFT_OUTPUT_DIR:-$ROOT/dist}"
 BUILD_CACHE="${MULTISHIFT_BUILD_CACHE_DIR:-$ROOT/build}"
 APP_VERSION="$($PYTHON -c 'from dragshift import __version__; print(__version__)')"
+UPDATE_CHANNEL="${MULTISHIFT_UPDATE_CHANNEL:-stable}"
+[[ "$UPDATE_CHANNEL" == "stable" || "$UPDATE_CHANNEL" == "beta" ]] || { echo "Invalid update channel" >&2; exit 1; }
+BUILD_NUMBER="${MULTISHIFT_BUILD_NUMBER:-$(cat macos/build-number.txt)}"
+[[ "$BUILD_NUMBER" =~ ^[1-9][0-9]{0,8}$ ]] || { echo "Invalid build number" >&2; exit 1; }
 COMMIT="$(git rev-parse --short=12 HEAD 2>/dev/null || echo no-git)"
 if [[ -n "$(git status --porcelain 2>/dev/null || true)" ]]; then DIRTY="dirty"; else DIRTY="clean"; fi
 SOURCE_FINGERPRINT="$( { find dragshift macos/Sources scripts -type f ! -name '*.pyc' ! -name '.DS_Store' ! -path '*/__pycache__/*' -print; printf '%s\n' DragShift.spec requirements-macos.lock engine_main.py; } | LC_ALL=C sort | while IFS= read -r file; do shasum -a 256 "$file"; done | shasum -a 256 | awk '{print $1}')"
@@ -49,6 +53,8 @@ fi
 
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources/MultiShiftEngine"
 cp -R "$STAGING/engine/MultiShiftEngine/." "$APP/Contents/Resources/MultiShiftEngine/"
+mkdir -p "$APP/Contents/Resources/Licenses"
+cp LICENSE THIRD-PARTY-NOTICES.md "$APP/Contents/Resources/Licenses/"
 cp "$STAGING/multishift.icns" "$APP/Contents/Resources/multishift.icns"
 cp "$BUILD_CACHE/icon-light.png" "$BUILD_CACHE/icon-dark.png" "$APP/Contents/Resources/"
 # Python runtime metadata is not needed to execute the frozen worker and confuses
@@ -67,12 +73,25 @@ fi
 mkdir -p "$BUILD_CACHE/swift-module-cache"
 export CLANG_MODULE_CACHE_PATH="$BUILD_CACHE/swift-module-cache"
 export SWIFT_MODULE_CACHE_PATH="$BUILD_CACHE/swift-module-cache"
-"$SWIFTC" -target "$TARGET" -sdk "$SDK" \
+SWIFT_FLAGS=(-module-name MultiShift)
+if [[ "${MULTISHIFT_ENABLE_UPDATES:-0}" == "1" ]]; then
+  : "${MULTISHIFT_SPARKLE_FRAMEWORK:?Provide verified Sparkle 2.10.0 framework}"
+  : "${MULTISHIFT_SPARKLE_PUBLIC_KEY:?Provide EdDSA public key}"
+  "$PYTHON" -c 'import base64,os; assert len(base64.b64decode(os.environ["MULTISHIFT_SPARKLE_PUBLIC_KEY"],validate=True)) == 32'
+  SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$MULTISHIFT_SPARKLE_FRAMEWORK/Resources/Info.plist")
+  [[ "$SPARKLE_VERSION" == "2.10.0" ]] || { echo "Unexpected Sparkle version" >&2; exit 1; }
+  mkdir -p "$APP/Contents/Frameworks"
+  ditto "$MULTISHIFT_SPARKLE_FRAMEWORK" "$APP/Contents/Frameworks/Sparkle.framework"
+  mkdir -p "$APP/Contents/Resources/Licenses"
+  cp "$(dirname "$MULTISHIFT_SPARKLE_FRAMEWORK")/LICENSE" "$APP/Contents/Resources/Licenses/Sparkle.txt"
+  SWIFT_FLAGS+=(-F "$APP/Contents/Frameworks" -framework Sparkle -Xlinker -rpath -Xlinker @executable_path/../Frameworks)
+fi
+"$SWIFTC" "${SWIFT_FLAGS[@]}" -target "$TARGET" -sdk "$SDK" \
   -disable-sandbox \
   -module-cache-path "$BUILD_CACHE/swift-module-cache" \
   -framework AppKit -framework SwiftUI -framework CoreGraphics -framework ServiceManagement -framework UserNotifications \
-  macos/Sources/Core/MultiInterfaceMetrics.swift macos/Sources/Core/MultiAuditEnvironment.swift macos/Sources/Core/WheelGeometry.swift macos/Sources/Core/InterfaceCopy.swift macos/Sources/Core/EngineClient.swift macos/Sources/Core/FileJobCoordinator.swift macos/Sources/Core/NotificationDispatcher.swift \
-  macos/Sources/MultiDesignKit.swift macos/Sources/MultiPopoverKit.swift macos/Sources/DesignSystem.swift macos/Sources/StatusPopover.swift macos/Sources/NativeModels.swift macos/Sources/NativeViews.swift macos/Sources/OperationNotifications.swift macos/Sources/AppDelegate.swift \
+  macos/Sources/Core/UpdateChannel.swift macos/Sources/Core/MultiInterfaceMetrics.swift macos/Sources/Core/MultiAuditEnvironment.swift macos/Sources/Core/WheelGeometry.swift macos/Sources/Core/InterfaceCopy.swift macos/Sources/Core/EngineClient.swift macos/Sources/Core/FileJobCoordinator.swift macos/Sources/Core/NotificationDispatcher.swift \
+  macos/Sources/MultiDesignKit.swift macos/Sources/MultiPopoverKit.swift macos/Sources/DesignSystem.swift macos/Sources/StatusPopover.swift macos/Sources/NativeModels.swift macos/Sources/NativeViews.swift macos/Sources/OperationNotifications.swift macos/Sources/UpdateController.swift macos/Sources/AppDelegate.swift \
   -o "$APP/Contents/MacOS/MultiShift"
 
 cat > "$APP/Contents/Info.plist" <<PLIST
@@ -88,7 +107,8 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundleDisplayName</key><string>multishift</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>$APP_VERSION</string>
-  <key>CFBundleVersion</key><string>$APP_VERSION</string>
+  <key>CFBundleVersion</key><string>$BUILD_NUMBER</string>
+  <key>MultiShiftUpdateChannel</key><string>$UPDATE_CHANNEL</string>
   <key>MultiShiftBuildID</key><string>$BUILD_ID</string>
   <key>MultiShiftSourceFingerprint</key><string>$SOURCE_FINGERPRINT</string>
   <key>MultiShiftEngineVersion</key><string>$APP_VERSION</string>
@@ -111,8 +131,17 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 </plist>
 PLIST
 
+if [[ "${MULTISHIFT_ENABLE_UPDATES:-0}" == "1" ]]; then
+  /usr/libexec/PlistBuddy -c "Add :SUPublicEDKey string $MULTISHIFT_SPARKLE_PUBLIC_KEY" "$APP/Contents/Info.plist"
+  /usr/libexec/PlistBuddy -c 'Add :SUFeedURL string https://sokolovmo.github.io/multi-releases/MultiShift/appcast.xml' "$APP/Contents/Info.plist"
+  /usr/libexec/PlistBuddy -c 'Add :SUEnableAutomaticChecks bool true' "$APP/Contents/Info.plist"
+  /usr/libexec/PlistBuddy -c 'Add :SURequireSignedFeed bool true' "$APP/Contents/Info.plist"
+  /usr/libexec/PlistBuddy -c 'Add :SUVerifyUpdateBeforeExtraction bool true' "$APP/Contents/Info.plist"
+  /usr/libexec/PlistBuddy -c 'Add :SUAllowsAutomaticUpdates bool false' "$APP/Contents/Info.plist"
+  /usr/libexec/PlistBuddy -c 'Add :SUAutomaticallyUpdate bool false' "$APP/Contents/Info.plist"
+fi
 cat > "$APP/Contents/Resources/BUILD.json" <<BUILD
-{"version":"$APP_VERSION","build_id":"$BUILD_ID","commit":"$COMMIT","worktree":"$DIRTY","source_fingerprint":"$SOURCE_FINGERPRINT"}
+{"version":"$APP_VERSION","build_number":"$BUILD_NUMBER","build_id":"$BUILD_ID","commit":"$COMMIT","worktree":"$DIRTY","source_fingerprint":"$SOURCE_FINGERPRINT"}
 BUILD
 
 # Finder and LaunchServices still consult PkgInfo for classic application
@@ -128,9 +157,14 @@ xattr -d com.apple.FinderInfo "$APP" 2>/dev/null || true
 xattr -d com.apple.ResourceFork "$APP" 2>/dev/null || true
 while IFS= read -r -d '' binary; do
   if file -b "$binary" | grep -q 'Mach-O'; then
-    codesign --force --sign - "$binary"
+    codesign --force --preserve-metadata=identifier,entitlements --sign - "$binary"
   fi
 done < <(find "$APP/Contents" -type f -print0)
+if [[ -d "$APP/Contents/Frameworks" ]]; then
+  while IFS= read -r bundle; do
+    codesign --force --preserve-metadata=identifier,entitlements --sign - "$bundle"
+  done < <(find "$APP/Contents/Frameworks" -depth \( -name '*.xpc' -o -name '*.app' -o -name '*.framework' \) -type d)
+fi
 codesign --force --sign - "$APP"
 codesign --verify --strict --verbose=2 "$APP"
 [[ "$(cat "$APP/Contents/PkgInfo")" == "APPL????" ]]
