@@ -71,7 +71,7 @@ fi
 mkdir -p "$BUILD_CACHE/swift-module-cache"
 export CLANG_MODULE_CACHE_PATH="$BUILD_CACHE/swift-module-cache"
 export SWIFT_MODULE_CACHE_PATH="$BUILD_CACHE/swift-module-cache"
-SPARKLE_FLAGS=()
+SWIFT_FLAGS=(-module-name MultiShift)
 if [[ "${MULTISHIFT_ENABLE_UPDATES:-0}" == "1" ]]; then
   : "${MULTISHIFT_SPARKLE_FRAMEWORK:?Provide verified Sparkle 2.10.0 framework}"
   : "${MULTISHIFT_SPARKLE_PUBLIC_KEY:?Provide EdDSA public key}"
@@ -82,9 +82,9 @@ if [[ "${MULTISHIFT_ENABLE_UPDATES:-0}" == "1" ]]; then
   ditto "$MULTISHIFT_SPARKLE_FRAMEWORK" "$APP/Contents/Frameworks/Sparkle.framework"
   mkdir -p "$APP/Contents/Resources/Licenses"
   cp "$(dirname "$MULTISHIFT_SPARKLE_FRAMEWORK")/LICENSE" "$APP/Contents/Resources/Licenses/Sparkle.txt"
-  SPARKLE_FLAGS=(-F "$APP/Contents/Frameworks" -framework Sparkle -Xlinker -rpath -Xlinker @executable_path/../Frameworks)
+  SWIFT_FLAGS+=(-F "$APP/Contents/Frameworks" -framework Sparkle -Xlinker -rpath -Xlinker @executable_path/../Frameworks)
 fi
-"$SWIFTC" "${SPARKLE_FLAGS[@]}" -target "$TARGET" -sdk "$SDK" \
+"$SWIFTC" "${SWIFT_FLAGS[@]}" -target "$TARGET" -sdk "$SDK" \
   -disable-sandbox \
   -module-cache-path "$BUILD_CACHE/swift-module-cache" \
   -framework AppKit -framework SwiftUI -framework CoreGraphics -framework ServiceManagement -framework UserNotifications \
