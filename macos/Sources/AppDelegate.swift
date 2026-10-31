@@ -112,8 +112,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
             NSLog("LAYOUT REVIEW launch: %@", directory)
             app.setActivationPolicy(.regular)
             model.delegate = self
-            installStatusItem()
-        UpdateController.shared.start(); observeAppearance()
+            installStatusItem(); observeAppearance()
             if ProcessInfo.processInfo.environment["MULTI_AUDIT_SCENARIO"] == "circle" {
                 runCircleAudit(directory: directory)
                 return
@@ -153,6 +152,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         operationNotifications.handler = self
         operationNotifications.install()
         installStatusItem()
+        UpdateController.shared.start()
         observeAppearance()
         systemAppearanceObservation = app.observe(\.effectiveAppearance, options: [.new]) { [weak self] _, _ in
             DispatchQueue.main.async { self?.updateApplicationIcon() }
