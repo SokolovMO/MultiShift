@@ -17,6 +17,8 @@ PYTHON="${PYTHON:-$DEFAULT_PYTHON}"
 OUTPUT_DIR="${MULTISHIFT_OUTPUT_DIR:-$ROOT/dist}"
 BUILD_CACHE="${MULTISHIFT_BUILD_CACHE_DIR:-$ROOT/build}"
 APP_VERSION="$($PYTHON -c 'from dragshift import __version__; print(__version__)')"
+UPDATE_CHANNEL="${MULTISHIFT_UPDATE_CHANNEL:-stable}"
+[[ "$UPDATE_CHANNEL" == "stable" || "$UPDATE_CHANNEL" == "beta" ]] || { echo "Invalid update channel" >&2; exit 1; }
 BUILD_NUMBER="${MULTISHIFT_BUILD_NUMBER:-$(cat macos/build-number.txt)}"
 [[ "$BUILD_NUMBER" =~ ^[1-9][0-9]{0,8}$ ]] || { echo "Invalid build number" >&2; exit 1; }
 COMMIT="$(git rev-parse --short=12 HEAD 2>/dev/null || echo no-git)"
@@ -88,7 +90,7 @@ fi
   -disable-sandbox \
   -module-cache-path "$BUILD_CACHE/swift-module-cache" \
   -framework AppKit -framework SwiftUI -framework CoreGraphics -framework ServiceManagement -framework UserNotifications \
-  macos/Sources/Core/MultiInterfaceMetrics.swift macos/Sources/Core/MultiAuditEnvironment.swift macos/Sources/Core/WheelGeometry.swift macos/Sources/Core/InterfaceCopy.swift macos/Sources/Core/EngineClient.swift macos/Sources/Core/FileJobCoordinator.swift macos/Sources/Core/NotificationDispatcher.swift \
+  macos/Sources/Core/UpdateChannel.swift macos/Sources/Core/MultiInterfaceMetrics.swift macos/Sources/Core/MultiAuditEnvironment.swift macos/Sources/Core/WheelGeometry.swift macos/Sources/Core/InterfaceCopy.swift macos/Sources/Core/EngineClient.swift macos/Sources/Core/FileJobCoordinator.swift macos/Sources/Core/NotificationDispatcher.swift \
   macos/Sources/MultiDesignKit.swift macos/Sources/MultiPopoverKit.swift macos/Sources/DesignSystem.swift macos/Sources/StatusPopover.swift macos/Sources/NativeModels.swift macos/Sources/NativeViews.swift macos/Sources/OperationNotifications.swift macos/Sources/UpdateController.swift macos/Sources/AppDelegate.swift \
   -o "$APP/Contents/MacOS/MultiShift"
 
@@ -106,6 +108,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>$APP_VERSION</string>
   <key>CFBundleVersion</key><string>$BUILD_NUMBER</string>
+  <key>MultiShiftUpdateChannel</key><string>$UPDATE_CHANNEL</string>
   <key>MultiShiftBuildID</key><string>$BUILD_ID</string>
   <key>MultiShiftSourceFingerprint</key><string>$SOURCE_FINGERPRINT</string>
   <key>MultiShiftEngineVersion</key><string>$APP_VERSION</string>

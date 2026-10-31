@@ -11,7 +11,8 @@ final class UpdateController: NSObject, ObservableObject {
     @Published var automaticChecks = AppModel.defaults.object(forKey: "updates.checks") as? Bool ?? true {
         didSet { AppModel.defaults.set(automaticChecks, forKey: "updates.checks"); configure() }
     }
-    @Published var channel = AppModel.defaults.string(forKey: "updates.channel") ?? "stable" {
+    @Published var channel = UpdateChannel.initial(saved: AppModel.defaults.string(forKey: "updates.channel"),
+        distribution: Bundle.main.object(forInfoDictionaryKey: "MultiShiftUpdateChannel") as? String).rawValue {
         didSet {
             AppModel.defaults.set(channel, forKey: "updates.channel")
             #if canImport(Sparkle)

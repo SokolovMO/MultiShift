@@ -12,7 +12,7 @@ The separate private `multi-release-console` project is pushed to https://github
 
 ## Verified
 
-- MultiShift: 25 Core tests; Python 49 passed / 3 skipped, five dependency warnings.
+- MultiShift: 28 Core tests; Python 49 passed / 3 skipped, five dependency warnings.
 - Full updater-enabled arm64 MultiShift bundle built in /tmp/MultiShift-updater-candidate, strict signature verification and native/engine selftests passed. This is an ad-hoc local signature, not Developer ID.
 - MultiSwitcher: 313 Core checks and 109 actual-source selected-text assertions passed; updater-enabled native target compiled successfully.
 - Console: production Next.js build passed, five authorization/dispatch tests passed. Real desktop/mobile setup screen and unauthenticated endpoints checked; authenticated local route rejects cross-origin requests, wrong CSRF and unknown app.
@@ -20,6 +20,8 @@ The separate private `multi-release-console` project is pushed to https://github
 - Feed tooling: three tests passed including signing with real Sparkle and rejection after XML tampering.
 - Hosted delivery workflow completed successfully. Both deployed feed signatures verified after downloading the public URLs. Both feeds currently contain zero releases; no installers were published.
 - YAML parsing, shell syntax and whitespace checks passed.
+
+Pilot bundles default to beta; explicit saved channel choices survive distribution-channel changes. Three channel regression tests cover fresh pilot, explicit stable/beta overrides and invalid preferences.
 
 ## Additional hosted/runtime validation
 

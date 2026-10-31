@@ -21,6 +21,7 @@ jobs:
   macos:
     environment: ${{ startsWith(github.ref, 'refs/tags/') && 'multishift-release' || 'ci' }}
     env:
+      MULTISHIFT_UPDATE_CHANNEL: ${{ startsWith(github.ref, 'refs/tags/beta-v') && 'beta' || 'stable' }}
       MULTISHIFT_ENABLE_UPDATES: ${{ startsWith(github.ref, 'refs/tags/') && '1' || '0' }}
       MULTISHIFT_SPARKLE_PUBLIC_KEY: ${{ vars.MULTISHIFT_SPARKLE_PUBLIC_KEY }}
     strategy:
