@@ -57,6 +57,20 @@ final class UpdateController: NSObject, ObservableObject {
 #if canImport(Sparkle)
 extension UpdateController: SPUUpdaterDelegate {
     func allowedChannels(for updater: SPUUpdater) -> Set<String> { channel == "beta" ? ["beta"] : [] }
+
+    @objc(updater:shouldPostponeRelaunchForUpdate:untilInvokingBlock:)
+    func updater(_ updater: SPUUpdater, shouldPostponeRelaunchForUpdate item: SUAppcastItem,
+                 untilInvokingBlock installHandler: @escaping () -> Void) -> Bool {
+        guard let delegate = NSApplication.shared.delegate as? AppDelegate,
+              delegate.model.hasActiveFileOperations else { return false }
+        Task { @MainActor [weak delegate] in
+            while delegate?.model.hasActiveFileOperations == true {
+                try? await Task.sleep(nanoseconds: 200_000_000)
+            }
+            installHandler()
+        }
+        return true
+    }
 }
 #endif
 
