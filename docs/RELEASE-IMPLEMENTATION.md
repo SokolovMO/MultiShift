@@ -21,6 +21,14 @@ The separate private `multi-release-console` project is pushed to https://github
 - Hosted delivery workflow completed successfully. Both deployed feed signatures verified after downloading the public URLs. Both feeds currently contain zero releases; no installers were published.
 - YAML parsing, shell syntax and whitespace checks passed.
 
+## Additional hosted/runtime validation
+
+- MultiShift hosted PR CI passed after fixing the Bash 3 empty-array expansion and explicitly typing sidebar spring arithmetic.
+- MultiSwitcher hosted CI passed on macOS 15, macOS 26 and Xcode 27 after guarding the macOS 27-only menu API at compile time and explicitly converting CGFloat/Double spring values.
+- Official Sparkle postpone-relaunch callbacks are implemented in both apps, in addition to normal termination guards. Signed end-to-end relaunch remains a separate acceptance gate.
+- Actual AppKit sidebar components: 393 checks passed in each app (1x/2x rendering, four sizes, forty reversals). The Switcher runner uses an immutable color-preference fixture; production preference behavior and VoiceOver are not inferred from these geometry checks.
+- Console hosted CI and both signed-feed deployment runs passed. Authentication/hosting provisioning still requires the owner.
+
 ## Configured externally
 
 - Public distribution repository and private console repository exist.
