@@ -3,28 +3,61 @@ name: MultiShift macOS checks and release
 on:
   push:
     branches: [main]
-    tags: ["v*"]
+    tags: ["v*", "beta-v*"]
     paths-ignore: ["**.md", "docs/**"]
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: multishift-${{ github.ref }}
+  cancel-in-progress: false
+  queue: max
+
 permissions:
   contents: read
+  actions: read
 
 jobs:
   macos:
+    environment: ${{ startsWith(github.ref, 'refs/tags/') && 'multishift-release' || 'ci' }}
+    env:
+      MULTISHIFT_ENABLE_UPDATES: ${{ startsWith(github.ref, 'refs/tags/') && '1' || '0' }}
+      MULTISHIFT_SPARKLE_PUBLIC_KEY: ${{ vars.MULTISHIFT_SPARKLE_PUBLIC_KEY }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - runner: macos-15
             arch: apple-silicon
-          - runner: macos-15-intel
-            arch: intel
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check exact main CI
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(uname -m)" = arm64
+          python3 scripts/check_release_source.py
+
+      - name: Validate release tag and reviewed source
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          git fetch origin main
+          git merge-base --is-ancestor HEAD origin/main
+          python3 - <<'PYCODE'
+          import os
+          from scripts.prepare_candidate import metadata
+          version, build = metadata("MultiShift")
+          tag = os.environ["TAG"]
+          expected = f"{'beta-v' if tag.startswith('beta-') else 'v'}{version}-build{build}"
+          if tag != expected:
+              raise SystemExit(f"Expected {expected}")
+          PYCODE
 
       - uses: actions/setup-python@v5
         with:
@@ -45,6 +78,10 @@ jobs:
       - name: Run native core tests
         run: swift test --package-path macos --scratch-path "$RUNNER_TEMP/multishift-swiftpm"
 
+      - name: Prepare verified updater framework
+        if: startsWith(github.ref, 'refs/tags/')
+        run: bash scripts/prepare_sparkle.sh
+
       - name: Build MultiShift.app
         env:
           MULTISHIFT_OUTPUT_DIR: ${{ github.workspace }}/dist
@@ -58,11 +95,11 @@ jobs:
           APP="dist/MultiShift.app"
           "$APP/Contents/MacOS/MultiShift" --selftest
           /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Contents/Info.plist" | grep -Fx 'com.multiswitcher.multishift'
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$APP/Contents/Info.plist" | grep -Fx 'MultiShift'
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$APP/Contents/Info.plist" | grep -Fx 'multishift'
           /usr/libexec/PlistBuddy -c 'Print :LSMinimumSystemVersion' "$APP/Contents/Info.plist" | grep -Fx '14.0'
 
       - name: Require release credentials
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
           MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
@@ -79,7 +116,7 @@ jobs:
           done
 
       - name: Sign, notarize, and package the release DMG
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
           MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
@@ -114,9 +151,12 @@ jobs:
 
           while IFS= read -r -d '' file; do
             if file -b "$file" | grep -q 'Mach-O'; then
-              codesign --force --timestamp --options runtime --sign "$MACOS_SIGN_IDENTITY" "$file"
+              codesign --force --timestamp --options runtime --preserve-metadata=identifier,entitlements --sign "$MACOS_SIGN_IDENTITY" "$file"
             fi
           done < <(find "$APP/Contents" -type f -print0)
+          while IFS= read -r bundle; do
+            codesign --force --timestamp --options runtime --preserve-metadata=identifier,entitlements --sign "$MACOS_SIGN_IDENTITY" "$bundle"
+          done < <(find "$APP/Contents/Frameworks" -depth \( -name '*.xpc' -o -name '*.app' -o -name '*.framework' \) -type d)
           codesign --force --timestamp --options runtime --entitlements installer/entitlements.plist \
             --sign "$MACOS_SIGN_IDENTITY" "$APP"
           codesign --verify --strict --verbose=2 "$APP"
@@ -143,18 +183,35 @@ jobs:
           spctl --assess --type open --context context:primary-signature --verbose=2 "$DMG"
           shasum -a 256 "$DMG" > "${DMG}.sha256"
 
+      - name: Attach immutable identity and corresponding source
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          VERSION=$(python3 -c 'from dragshift import __version__; print(__version__)')
+          BUILD=$(cat macos/build-number.txt)
+          CHANNEL=stable
+          if [[ "$TAG" == beta-* ]]; then CHANNEL=beta; fi
+          python3 scripts/release_manifest.py create --app MultiShift --version "$VERSION" --build "$BUILD" --commit "$GITHUB_SHA" --channel "$CHANNEL" --minimum-os 14.0 --updater-key "$MULTISHIFT_SPARKLE_PUBLIC_KEY" --artifact dist/MultiShift-mac-apple-silicon.dmg > dist/manifest.json
+          git archive --format=tar.gz --output=dist/source.tar.gz HEAD dragshift macos scripts installer licenses requirements.txt requirements-macos.lock engine_main.py DragShift.spec LICENSE UPSTREAM-LICENSE-MIT THIRD-PARTY-NOTICES.md README.md
+          cp LICENSE THIRD-PARTY-NOTICES.md dist/
+
       - uses: actions/upload-artifact@v4
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           name: MultiShift-mac-${{ matrix.arch }}
           path: |
             dist/MultiShift-mac-${{ matrix.arch }}.dmg
             dist/MultiShift-mac-${{ matrix.arch }}.dmg.sha256
+            dist/manifest.json
+            dist/source.tar.gz
+            dist/LICENSE
+            dist/THIRD-PARTY-NOTICES.md
           if-no-files-found: error
 
   publish:
     needs: macos
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -171,15 +228,21 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           name: MultiShift ${{ github.ref_name }}
-          make_latest: true
+          draft: true
+          prerelease: ${{ startsWith(github.ref_name, 'beta-') }}
+          make_latest: false
           generate_release_notes: true
           body: |
             MultiShift for macOS, built from `${{ github.sha }}`.
 
-            Both Apple Silicon and Intel builds passed the repository checks and were signed and notarized before publication. Minimum supported macOS: 14.
+            The Apple Silicon build passed the repository checks and was signed and notarized before publication. Minimum supported macOS: 14.
 
             Verify downloads with `SHA256SUMS`.
           files: |
             release/**/*.dmg
             release/SHA256SUMS
+            release/**/manifest.json
+            release/**/source.tar.gz
+            release/**/LICENSE
+            release/**/THIRD-PARTY-NOTICES.md
           fail_on_unmatched_files: true

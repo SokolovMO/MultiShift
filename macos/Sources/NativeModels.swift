@@ -124,6 +124,7 @@ final class AppModel: ObservableObject {
 
     weak var delegate: AppDelegate?
     let helperURL: URL
+    var hasActiveFileOperations: Bool { !activeOperations.isEmpty || !undoOperations.isEmpty }
     private var activeOperations: [UUID: [URL]] = [:]
     private var operationStartTimes: [UUID: TimeInterval] = [:]
     private var progressOperations = Set<UUID>()

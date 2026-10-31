@@ -63,7 +63,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
               info["CFBundleExecutable"] as? String == "MultiShift",
               info["CFBundlePackageType"] as? String == "APPL",
               let version = info["CFBundleShortVersionString"] as? String,
-              info["CFBundleVersion"] as? String == version,
+              let buildNumber = info["CFBundleVersion"] as? String,
+              buildNumber.range(of: "^[1-9][0-9]{0,8}$", options: .regularExpression) != nil,
               info["MultiShiftEngineVersion"] as? String == version,
               let buildID = info["MultiShiftBuildID"] as? String, !buildID.isEmpty,
               let sourceFingerprint = info["MultiShiftSourceFingerprint"] as? String, !sourceFingerprint.isEmpty,
@@ -87,6 +88,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
             let buildInfoURL = contents.appendingPathComponent("Resources/BUILD.json")
             guard let buildInfoData = try? Data(contentsOf: buildInfoURL),
                   let buildInfo = try? JSONSerialization.jsonObject(with: buildInfoData) as? [String: String],
+                  buildInfo["build_number"] == buildNumber,
                   buildInfo["build_id"] == buildID,
                   buildInfo["source_fingerprint"] == sourceFingerprint else {
                 fputs("NATIVE SELFTEST FAILED: build fingerprint is inconsistent\n", stderr)
@@ -110,7 +112,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
             NSLog("LAYOUT REVIEW launch: %@", directory)
             app.setActivationPolicy(.regular)
             model.delegate = self
-            installStatusItem(); observeAppearance()
+            installStatusItem()
+        UpdateController.shared.start(); observeAppearance()
             if ProcessInfo.processInfo.environment["MULTI_AUDIT_SCENARIO"] == "circle" {
                 runCircleAudit(directory: directory)
                 return
@@ -182,6 +185,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         if !quietLaunch && !AppModel.defaults.bool(forKey: "welcomed") {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in self?.showWelcome() }
         }
+    }
+
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        guard model.hasActiveFileOperations else { return .terminateNow }
+        Task { @MainActor [weak self] in
+            while self?.model.hasActiveFileOperations == true {
+                try? await Task.sleep(nanoseconds: 200_000_000)
+            }
+            sender.reply(toApplicationShouldTerminate: true)
+        }
+        return .terminateLater
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
