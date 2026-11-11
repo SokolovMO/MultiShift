@@ -1,46 +1,48 @@
 # MultiShift
 
-**MultiShift** is a macOS application: hold a file in Finder, press the chosen modifier key, and drop it on a radial action to convert or edit a copy.
+macOS-приложение для конвертации и обработки копий файлов прямо из Finder:
+удерживайте файл, нажмите выбранную клавишу и отпустите его на нужном действии.
+Оригиналы не перезаписываются. Есть пакетная обработка, история, отмена через
+Корзину, русский/английский язык и системное/светлое/тёмное оформление.
 
-MultiShift provides a radial menu, Russian and English interfaces, system/light/dark appearance, batch feedback and operation history. Original files are not overwritten.
+## Установка
 
-## Состояние проекта
+Загрузка DMG с перетаскиванием в «Программы» и команда установки: https://sokolovmo.ru/multishift/ .
+macOS 14+, Apple Silicon. Приложение пока без нотарификации Apple: при ручной
+установке из DMG/ZIP macOS может потребовать разрешить открытие в настройках безопасности.
+Опубликованный установщик проверяет загрузку, устанавливает приложение и снимает
+карантин только с проверенной копии MultiShift.
 
-Первая версия готовится для macOS. В репозитории есть исходный код и сборка для локальной проверки. Публичных установочных сборок пока нет.
+Обновления проверяются автоматически через Sparkle и устанавливаются после
+подтверждения. Apple Developer и платная панель для выпуска не требуются.
 
-Интерфейс запускается на русском языке. Язык и оформление можно поменять в настройках:
+## Сборка и проверка
 
-- русский и английский;
-- оформление macOS, светлое или тёмное;
-- форматы изображений, PDF, Word и текста;
-- обработка нескольких файлов с отчётом о частичных ошибках;
-- отмена результата перемещает созданные файлы в системную Корзину.
-
-MultiShift — независимое приложение с отдельным bundle ID, LaunchAgent, настройками и папкой результатов.
-
-## Проверка из исходников
-
-Нужны macOS 14 или новее и Python 3.12.
+Нужны macOS 14+ и Python 3.12.
 
 ```sh
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-macos.lock -r requirements.txt
 QT_QPA_PLATFORM=offscreen python -m pytest -q
+swift test --package-path macos
 bash scripts/build_macos.sh
 ```
 
-Приложение появится в `dist/MultiShift.app`. Если репозиторий хранится в iCloud Drive или другой управляемой папке, задайте для сборки отдельный локальный путь, например `MULTISHIFT_OUTPUT_DIR=/tmp/MultiShift-build bash scripts/build_macos.sh`. Локальная сборка получает временную ad-hoc подпись для проверки, но не подписана Developer ID и не нотарифицирована. Для публичных загрузок настроена отдельная сборка с подписью Developer ID и нотарификацией Apple. Релизный workflow завершится ошибкой, если данные подписи не настроены; неподписанные сборки не будут публиковаться вместо неё.
-
-`install-mac.sh` ничего не устанавливает. Используйте локальную сборку или подписанный DMG MultiShift после публикации.
+Локальная сборка: `dist/MultiShift.app`, без обновлений по умолчанию.
+Для управляемых папок можно задать `MULTISHIFT_OUTPUT_DIR=/tmp/MultiShift-build`.
+Самостоятельная сборка и публикация: [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md).
+`install-mac.sh` в исходниках — шаблон; готовый `install.sh` создаёт сборщик релиза.
 
 ## Лицензии
 
-Лицензии используемых компонентов и библиотек включаются в собранное приложение. Смотрите [LICENSE](LICENSE) и [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+[LICENSE](LICENSE), [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+Каждый релиз содержит соответствующий архив исходников и лицензии компонентов.
 
 ## English
 
-MultiShift is a macOS application with a radial file-action menu, Russian/English localization, system/light/dark appearance, batch feedback, operation history and trash-only undo for generated files.
-
-The first release is being prepared. No public installer is available yet. Build and run the checks with the commands above. The release workflow requires Developer ID signing and Apple notarization credentials and fails closed if they are missing.
-
+MultiShift converts and edits copies of files using a Finder action menu.
+Requires macOS 14+ and Apple Silicon. Download from https://sokolovmo.ru/multishift/ .
+The app is not Apple-notarized. Updates use Sparkle and Ed25519-signed archives
+and feeds. No Apple Developer account or release dashboard is required to build
+and publish; see the distribution guide above.

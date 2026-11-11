@@ -102,12 +102,13 @@ final class AppModel: ObservableObject {
     static let defaults: UserDefaults = MultiAuditEnvironment.root == nil
         ? (UserDefaults(suiteName: bundleID) ?? .standard)
         : MultiAuditEnvironment.defaults(appID: bundleID)
-    static let settingsKeys = ["language", "appearance", "trigger", "output", "jpg_quality", "pdf_dpi", "welcomed"]
+    static let settingsKeys = ["language", "appearance", "trigger", "output", "jpg_quality", "pdf_dpi", "welcomed", OutputFolderPreference.bookmarkKey, OutputFolderPreference.pathKey]
 
     @Published var enabled = true
     @Published var language: String
     @Published var appearance: String
     @Published var trigger: String
+    @Published var customOutputPath: String
     @Published var output: String
     @Published var jpgQuality: Int
     @Published var pdfDPI: Int
@@ -137,6 +138,7 @@ final class AppModel: ObservableObject {
         appearance = Self.defaults.string(forKey: "appearance") ?? "system"
         trigger = Self.defaults.string(forKey: "trigger") ?? "shift"
         output = Self.defaults.string(forKey: "output") ?? "next"
+        customOutputPath = Self.defaults.string(forKey: OutputFolderPreference.pathKey) ?? ""
         jpgQuality = Self.defaults.object(forKey: "jpg_quality") as? Int ?? 90
         pdfDPI = Self.defaults.object(forKey: "pdf_dpi") as? Int ?? 200
         loginEnabled = Self.hasLegacyLoginAgent()
@@ -315,6 +317,31 @@ final class AppModel: ObservableObject {
             "File": "Файл",
             "Originals are never modified.": "Исходные файлы не меняются.",
         ][key] ?? key).lowercased()
+    }
+
+    @MainActor func chooseOutputFolder() {
+        delegate?.requestOutputFolder { [weak self] folder in
+            guard let self, let folder else { return }
+            do {
+                try OutputFolderPreference.store(folder, defaults: Self.defaults)
+                self.customOutputPath = folder.path
+                self.output = "custom"
+                self.saveSettings()
+            } catch {
+                let alert = NSAlert()
+                alert.messageText = self.language == "ru" ? "не удалось сохранить папку" : "could not save the folder"
+                alert.informativeText = EngineClient.safeDetail(error.localizedDescription)
+                alert.addButton(withTitle: self.language == "ru" ? "закрыть" : "close")
+                alert.runModal()
+            }
+        }
+    }
+
+    @MainActor func showOutputFolder() {
+        guard let url = try? OutputFolderPreference.resolve(defaults: Self.defaults) else { return }
+        let scoped = url.startAccessingSecurityScopedResource()
+        NSWorkspace.shared.open(url)
+        if scoped { url.stopAccessingSecurityScopedResource() }
     }
 
     func saveSettings() {
@@ -504,15 +531,20 @@ final class AppModel: ObservableObject {
                                    retriedAccessIndices: Set<Int>, progress: DispatchWorkItem,
                                    completion: (([String]) -> Void)?) {
         let coordinator = FileJobCoordinator()
+        // Freeze destination/quality for this operation; settings can change while it runs.
+        let outputMode = self.output
+        let quality = self.jpgQuality
+        let dpi = self.pdfDPI
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self else { return }
             do {
+                let destination = outputMode == "custom" ? try OutputFolderPreference.resolve(defaults: Self.defaults) : nil
                 let job = try coordinator.stage(files, id: id)
                 let request: [String: Any] = [
                     "request_id": id.uuidString, "action": action,
                     "files": job.inputs.map { $0.stagedURL.path },
                     "parameters": parameters,
-                    "settings": ["output": self.output, "jpg_quality": self.jpgQuality, "pdf_dpi": self.pdfDPI],
+                    "settings": ["output": outputMode == "custom" ? "next" : outputMode, "jpg_quality": quality, "pdf_dpi": dpi],
                 ]
                 let response = try EngineClient().execute(executable: self.helperURL, request: request)
                 let rawOutputs = response["outputs"] as? [String] ?? []
@@ -526,7 +558,7 @@ final class AppModel: ObservableObject {
                                      message: EngineClient.safeDetail(value["message"] as? String ?? "The file could not be processed."))
                 }
                 do {
-                    let published = try coordinator.publish(rawOutputs, from: job)
+                    let published = try coordinator.publish(rawOutputs, from: job, alternateDestination: destination)
                     coordinator.remove(job)
                     DispatchQueue.main.async {
                         self.finishOperation(id: id, action: action, files: files, outputs: published,

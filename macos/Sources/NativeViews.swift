@@ -142,14 +142,8 @@ struct SettingsView: View {
                 Task { @MainActor in MultiSurfaceMetrics.frames = frames }
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .navigation) {
-                Button { sidebarCollapsed.toggle() } label: { Image(systemName: "sidebar.left") }
-                    .help(model.text(sidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"))
-                    .accessibilityLabel(model.text(sidebarCollapsed ? "Show Sidebar" : "Hide Sidebar"))
-            }
-        }
-        .tint(graphite)
+        .tint(Color(nsColor: MultiDesign.accent))
+        .onReceive(NotificationCenter.default.publisher(for: .multiSidebarToggle)) { _ in sidebarCollapsed.toggle() }
         .onChange(of: model.language) { model.saveSettings() }
         .onChange(of: model.appearance) { model.saveSettings() }
         .onChange(of: model.trigger) { model.saveSettings() }
@@ -159,6 +153,13 @@ struct SettingsView: View {
         .onChange(of: model.loginEnabled) { _, value in model.setLoginItem(value) }
     }
 
+    private static var architecture: String {
+        #if arch(arm64)
+        "Apple Silicon (arm64)"
+        #else
+        "Intel (x86_64)"
+        #endif
+    }
     private func copy(_ ru: String, _ en: String) -> String { model.language == "ru" ? ru : en }
     private func moveSidebar(_ delta: Int) {
         let all = SettingsSection.allCases
@@ -190,11 +191,9 @@ struct SettingsView: View {
                     Label(model.text("Open the menu with"), systemImage: "keyboard").font(.system(size: 12, weight: .medium))
                     HStack(spacing: 8) {
                         Keycap(text: model.trigger == "ctrl" ? "⌃" : model.trigger == "alt" ? "⌥" : "⇧", active: true)
-                        Picker("", selection: $model.trigger) {
-                            Text("shift").tag("shift")
-                            Text("control").tag("ctrl")
-                            Text("option").tag("alt")
-                        }.labelsHidden().frame(width: 150).accessibilityLabel(model.text("Open the menu with"))
+                        MultiNativePopUp(title: model.text("Open the menu with"), selection: $model.trigger,
+                            options: [.init("shift", "shift"), .init("control", "ctrl"), .init("option", "alt")])
+                            .frame(width: 150, height: 28)
                         Spacer()
                     }
                     Text(copy("перетащите файл и удерживайте выбранную клавишу. нажмите её ещё раз, чтобы перейти к инструментам.", "drag a file and hold the selected key. press it again to switch to tools."))
@@ -211,10 +210,28 @@ struct SettingsView: View {
             SettingsGroup {
                 VStack(alignment: .leading, spacing: 10) {
                     Label(model.text("Save results"), systemImage: "folder").font(.system(size: 12, weight: .medium))
-                    Picker("", selection: $model.output) {
-                        Text(model.text("Next to the original")).tag("next")
-                        Text(model.text("In a MultiShift folder")).tag("folder")
-                    }.labelsHidden().accessibilityLabel(model.text("Save results"))
+                    MultiNativePopUp(title: model.text("Save results"), selection: $model.output, options: [
+                        .init(model.text("Next to the original"), "next"),
+                        .init(model.text("In a MultiShift folder"), "folder"),
+                        .init(copy("выбранная папка", "chosen folder"), "custom")])
+                        .frame(height: 28)
+                    Text(model.output == "folder"
+                        ? copy("папка MultiShift создаётся рядом с каждым исходным файлом: <папка исходного файла>/MultiShift. это не единая папка на маке.", "a MultiShift subfolder is created next to each original: <original folder>/MultiShift. there is no single global folder.")
+                        : model.output == "next"
+                            ? copy("готовые копии сохраняются в той же папке, где находится исходный файл.", "completed copies are saved in the same folder as each original.")
+                            : copy("все готовые копии сохраняются в выбранной папке.", "all completed copies are saved in the chosen folder."))
+                        .font(.system(size: 11)).foregroundStyle(secondaryInk).fixedSize(horizontal: false, vertical: true)
+                    if model.output == "custom" {
+                        Text(model.customOutputPath.isEmpty ? copy("папка ещё не выбрана", "no folder selected") : model.customOutputPath)
+                            .font(.system(size: 11, design: .monospaced)).textSelection(.enabled)
+                            .fixedSize(horizontal: false, vertical: true)
+                        HStack(spacing: 8) {
+                            MultiNativeAction(title: copy("выбрать папку…", "choose folder…"), action: model.chooseOutputFolder)
+                            MultiNativeAction(title: copy("открыть в finder", "open in finder"), action: model.showOutputFolder)
+                                .disabled(model.customOutputPath.isEmpty)
+                        }
+                    }
+
                 }
                 Divider()
                 VStack(alignment: .leading, spacing: 12) {
@@ -247,45 +264,32 @@ struct SettingsView: View {
                 }
                 Divider()
                 SettingsRow(model.text("Language"), icon: "character.bubble") {
-                    Picker("", selection: $model.language) {
-                        Text(model.text("Russian")).tag("ru"); Text(model.text("English")).tag("en")
-                    }.labelsHidden().frame(width: 150).accessibilityLabel(model.text("Language"))
+                    MultiNativePopUp(title: model.text("Language"), selection: $model.language,
+                        options: [.init(model.text("Russian"), "ru"), .init(model.text("English"), "en")])
+                        .frame(width: 150, height: 28)
                 }
             }
+            Text(copy("новый язык окна обновления применяется после перезапуска приложения.", "restart the app to apply the new language to update dialogs."))
+                .font(.system(size: 11)).foregroundStyle(secondaryInk).fixedSize(horizontal: false, vertical: true)
             Text(copy("анимации и прозрачность следуют настройкам универсального доступа macos.", "motion and transparency follow macos accessibility settings."))
                 .font(.system(size: 11)).foregroundStyle(secondaryInk).fixedSize(horizontal: false, vertical: true)
         }
     }
     private func themeOption(_ value: String, title: String, symbol: String) -> some View {
-        Button {
-            model.appearance = value
-        } label: {
-            VStack(spacing: 12) {
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.xs).fill(value == "dark" ? Color(white: 0.09) : Color(white: 0.96))
-                    RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.xs).fill(value == "dark" ? Color(white: 0.18) : Color(white: 0.87)).frame(width: 25)
-                    Image(systemName: symbol).font(.system(size: 16)).foregroundStyle(value == "dark" ? Color.white : Color.black).frame(maxWidth: .infinity).padding(.leading, 20)
-                }.frame(height: 55).clipShape(RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.xs)).overlay(RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.xs).strokeBorder(Mono.line))
-                HStack(spacing: 4) {
-                    Text(title).lineLimit(1)
-                    if model.appearance == value { Image(systemName: "checkmark.circle.fill").font(.system(size: 10)) }
-                }.font(.system(size: 11, weight: .medium))
-            }.padding(8).frame(maxWidth: .infinity)
-                .contentShape(Rectangle())
-                .background(model.appearance == value ? Mono.selection : .clear, in: RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.sm))
-        }.buttonStyle(.plain).accessibilityLabel(title).accessibilityAddTraits(model.appearance == value ? .isSelected : [])
+        MultiThemeChoiceView(value: value, title: title, selection: $model.appearance)
+            .frame(maxWidth: .infinity).frame(height: 98)
     }
     private var notifications: some View {
         Group {
-            PaneHeading(title: model.text("Notifications"), subtitle: copy("результат всегда остаётся внутри приложения", "your results always stay in the app"), symbol: "bell")
+            PaneHeading(title: model.text("Notifications"), subtitle: copy("по завершении каждой фоновой операции", "after every background operation"), symbol: "bell")
             SettingsGroup {
                 SettingsValueRow(title: model.text("Permission"), value: model.notificationPermission)
                 Divider()
                 SettingsValueRow(title: model.text("Last send"), value: model.notificationLastResult.isEmpty ? model.text("Not sent") : model.notificationLastResult)
                 Divider()
                 HStack(spacing: 8) {
-                    Button(model.text("Test notification"), action: model.testNotification).buttonStyle(MonoButtonStyle(primary: true))
-                    Button(model.text("Open macOS settings"), action: model.openNotificationSettings).buttonStyle(MonoButtonStyle())
+                    MultiNativeAction(title: model.text("Test notification"), action: model.testNotification)
+                    MultiNativeAction(title: model.text("Open macOS settings"), action: model.openNotificationSettings)
                 }
             }
             Text(model.text("macOS may hide banners during Focus or screen sharing. Operation results remain available in MultiShift."))
@@ -296,20 +300,29 @@ struct SettingsView: View {
         Group {
             PaneHeading(title: model.text("About"), subtitle: copy("маленькая утилита для повседневных файлов", "a small utility for everyday files"), symbol: "info.circle")
             SettingsGroup {
-                HStack(spacing: 14) {
+                HStack(spacing: 12) {
                     AppMark(size: 40)
                     VStack(alignment: .leading, spacing: 5) {
                         Text("multishift").font(.system(size: 17, weight: .semibold)).tracking(-0.3)
-                        Text("\(model.text("Version")) \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0")")
+                        Text("\(model.text("Version")) \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0.0") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"))")
                             .font(.system(size: 11)).foregroundStyle(secondaryInk)
                     }
                     Spacer()
                 }.padding(.vertical, 2)
                 Divider()
                 MultiDisclosure(title: copy("техническая информация", "technical information")) {
-                    Text(Bundle.main.infoDictionary?["MultiShiftBuildID"] as? String ?? "")
-                        .font(.system(size: 10, design: .monospaced)).textSelection(.enabled)
-                        .padding(.top, 4)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(copy("обработка файлов выполняется локально. исходные файлы сохраняются; результаты создаются как копии.", "files are processed locally. originals are preserved and results are created as copies."))
+                        Text(copy("движок: ", "engine: ") + (Bundle.main.infoDictionary?["MultiShiftEngineVersion"] as? String ?? "—"))
+                        Text(copy("система: macOS ", "system: macOS ") + ProcessInfo.processInfo.operatingSystemVersionString)
+                        Text(copy("архитектура: ", "architecture: ") + Self.architecture)
+                        Text(copy("приложение: ", "application: ") + Bundle.main.bundleURL.path)
+                        Text(copy("данные: ", "data: ") + (MultiAuditEnvironment.root?.path ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support/MultiShift").path))
+                        Text(copy("сборка: ", "build: ") + (Bundle.main.infoDictionary?["MultiShiftBuildID"] as? String ?? "—"))
+                            .font(.system(size: 10, design: .monospaced))
+                        Text(copy("обновления: Sparkle · установка после подтверждения", "updates: Sparkle · installation requires confirmation"))
+                    }.font(.system(size: 11)).textSelection(.enabled)
+                        .fixedSize(horizontal: false, vertical: true).padding(.top, 4)
                 }.font(.system(size: 11)).foregroundStyle(secondaryInk)
             }
             SettingsGroup { UpdateSettingsView(russian: model.language == "ru") }
@@ -1135,3 +1148,5 @@ struct OperationDetailsView: View {
         }
     }
 }
+
+extension Notification.Name { static let multiSidebarToggle = Notification.Name("multi.settings.sidebar.toggle") }

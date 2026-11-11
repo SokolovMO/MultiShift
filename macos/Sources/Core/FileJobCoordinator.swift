@@ -146,3 +146,30 @@ public final class FileJobCoordinator {
         }
     }
 }
+
+
+/// Persist the chosen folder's identity rather than relying on a displayed path.
+public enum OutputFolderPreference {
+    public static let bookmarkKey = "output.custom.bookmark"
+    public static let pathKey = "output.custom.path"
+    public static func store(_ url: URL, defaults: UserDefaults) throws {
+        guard try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else {
+            throw CocoaError(.fileReadUnsupportedScheme)
+        }
+        let scoped = url.startAccessingSecurityScopedResource()
+        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+        let bookmark = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
+        defaults.set(bookmark, forKey: bookmarkKey)
+        defaults.set(url.path, forKey: pathKey)
+    }
+    public static func resolve(defaults: UserDefaults) throws -> URL {
+        guard let data = defaults.data(forKey: bookmarkKey) else { throw CocoaError(.fileNoSuchFile) }
+        var stale = false
+        let url = try URL(resolvingBookmarkData: data, options: [.withSecurityScope, .withoutUI], relativeTo: nil, bookmarkDataIsStale: &stale)
+        let scoped = url.startAccessingSecurityScopedResource()
+        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+        guard try url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory == true else { throw CocoaError(.fileNoSuchFile) }
+        if stale { try store(url, defaults: defaults) }
+        return url
+    }
+}

@@ -17,13 +17,11 @@ PYTHON="${PYTHON:-$DEFAULT_PYTHON}"
 OUTPUT_DIR="${MULTISHIFT_OUTPUT_DIR:-$ROOT/dist}"
 BUILD_CACHE="${MULTISHIFT_BUILD_CACHE_DIR:-$ROOT/build}"
 APP_VERSION="$($PYTHON -c 'from dragshift import __version__; print(__version__)')"
-UPDATE_CHANNEL="${MULTISHIFT_UPDATE_CHANNEL:-stable}"
-[[ "$UPDATE_CHANNEL" == "stable" || "$UPDATE_CHANNEL" == "beta" ]] || { echo "Invalid update channel" >&2; exit 1; }
 BUILD_NUMBER="${MULTISHIFT_BUILD_NUMBER:-$(cat macos/build-number.txt)}"
 [[ "$BUILD_NUMBER" =~ ^[1-9][0-9]{0,8}$ ]] || { echo "Invalid build number" >&2; exit 1; }
 COMMIT="$(git rev-parse --short=12 HEAD 2>/dev/null || echo no-git)"
 if [[ -n "$(git status --porcelain 2>/dev/null || true)" ]]; then DIRTY="dirty"; else DIRTY="clean"; fi
-SOURCE_FINGERPRINT="$( { find dragshift macos/Sources scripts -type f ! -name '*.pyc' ! -name '.DS_Store' ! -path '*/__pycache__/*' -print; printf '%s\n' DragShift.spec requirements-macos.lock engine_main.py; } | LC_ALL=C sort | while IFS= read -r file; do shasum -a 256 "$file"; done | shasum -a 256 | awk '{print $1}')"
+SOURCE_FINGERPRINT="$( { find dragshift macos/Sources macos/Assets.xcassets scripts -type f ! -name '*.pyc' ! -name '.DS_Store' ! -path '*/__pycache__/*' -print; printf '%s\n' DragShift.spec requirements-macos.lock engine_main.py; } | LC_ALL=C sort | while IFS= read -r file; do shasum -a 256 "$file"; done | shasum -a 256 | awk '{print $1}')"
 BUILD_ID="${COMMIT}-${DIRTY}-${SOURCE_FINGERPRINT:0:16}"
 STAGING="$OUTPUT_DIR/.native-build"
 APP="$OUTPUT_DIR/MultiShift.app"
@@ -73,7 +71,10 @@ fi
 mkdir -p "$BUILD_CACHE/swift-module-cache"
 export CLANG_MODULE_CACHE_PATH="$BUILD_CACHE/swift-module-cache"
 export SWIFT_MODULE_CACHE_PATH="$BUILD_CACHE/swift-module-cache"
-SWIFT_FLAGS=(-module-name MultiShift)
+# Record the actual linked SDK, independently from the minimum supported OS.
+# Leaving this implicit makes ld record SDK 14 and enables legacy AppKit rendering.
+SDK_VERSION="$(xcrun --sdk macosx --show-sdk-version)"
+SWIFT_FLAGS=(-module-name MultiShift -Xlinker -platform_version -Xlinker macos -Xlinker 14.0 -Xlinker "$SDK_VERSION")
 if [[ "${MULTISHIFT_ENABLE_UPDATES:-0}" == "1" ]]; then
   : "${MULTISHIFT_SPARKLE_FRAMEWORK:?Provide verified Sparkle 2.10.0 framework}"
   : "${MULTISHIFT_SPARKLE_PUBLIC_KEY:?Provide EdDSA public key}"
@@ -90,7 +91,7 @@ fi
   -disable-sandbox \
   -module-cache-path "$BUILD_CACHE/swift-module-cache" \
   -framework AppKit -framework SwiftUI -framework CoreGraphics -framework ServiceManagement -framework UserNotifications \
-  macos/Sources/Core/UpdateChannel.swift macos/Sources/Core/MultiInterfaceMetrics.swift macos/Sources/Core/MultiAuditEnvironment.swift macos/Sources/Core/WheelGeometry.swift macos/Sources/Core/InterfaceCopy.swift macos/Sources/Core/EngineClient.swift macos/Sources/Core/FileJobCoordinator.swift macos/Sources/Core/NotificationDispatcher.swift \
+  macos/Sources/Core/MultiInterfaceMetrics.swift macos/Sources/Core/MultiAuditEnvironment.swift macos/Sources/Core/WheelGeometry.swift macos/Sources/Core/InterfaceCopy.swift macos/Sources/Core/EngineClient.swift macos/Sources/Core/FileJobCoordinator.swift macos/Sources/Core/NotificationDispatcher.swift \
   macos/Sources/MultiDesignKit.swift macos/Sources/MultiPopoverKit.swift macos/Sources/DesignSystem.swift macos/Sources/StatusPopover.swift macos/Sources/NativeModels.swift macos/Sources/NativeViews.swift macos/Sources/OperationNotifications.swift macos/Sources/UpdateController.swift macos/Sources/AppDelegate.swift \
   -o "$APP/Contents/MacOS/MultiShift"
 
@@ -99,7 +100,9 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>CFBundleDevelopmentRegion</key><string>en</string>
+  <key>CFBundleDevelopmentRegion</key><string>ru</string>
+  <key>CFBundleAllowMixedLocalizations</key><true/>
+  <key>CFBundleLocalizations</key><array><string>ru</string><string>en</string></array>
   <key>CFBundleExecutable</key><string>MultiShift</string>
   <key>CFBundleIdentifier</key><string>com.multiswitcher.multishift</string>
   <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
@@ -108,13 +111,13 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>$APP_VERSION</string>
   <key>CFBundleVersion</key><string>$BUILD_NUMBER</string>
-  <key>MultiShiftUpdateChannel</key><string>$UPDATE_CHANNEL</string>
   <key>MultiShiftBuildID</key><string>$BUILD_ID</string>
   <key>MultiShiftSourceFingerprint</key><string>$SOURCE_FINGERPRINT</string>
   <key>MultiShiftEngineVersion</key><string>$APP_VERSION</string>
   <key>CFBundleIconFile</key><string>multishift.icns</string>
   <key>LSMinimumSystemVersion</key><string>14.0</string>
   <key>LSUIElement</key><true/>
+  <key>NSAccentColorName</key><string>AccentColor</string>
   <key>NSHighResolutionCapable</key><true/>
   <key>NSPrincipalClass</key><string>NSApplication</string>
   <key>NSRequiresAquaSystemAppearance</key><false/>
@@ -133,13 +136,19 @@ PLIST
 
 if [[ "${MULTISHIFT_ENABLE_UPDATES:-0}" == "1" ]]; then
   /usr/libexec/PlistBuddy -c "Add :SUPublicEDKey string $MULTISHIFT_SPARKLE_PUBLIC_KEY" "$APP/Contents/Info.plist"
-  /usr/libexec/PlistBuddy -c 'Add :SUFeedURL string https://sokolovmo.github.io/multi-releases/MultiShift/appcast.xml' "$APP/Contents/Info.plist"
+  : "${MULTISHIFT_RELEASE_URL:?Set the HTTPS directory for downloads and updates}"
+  "$PYTHON" -c 'from urllib.parse import urlsplit; import os; u=urlsplit(os.environ["MULTISHIFT_RELEASE_URL"]); assert u.scheme == "https" and u.hostname and not u.username and not u.password and not u.query and not u.fragment'
+  /usr/libexec/PlistBuddy -c "Add :SUFeedURL string ${MULTISHIFT_RELEASE_URL%/}/appcast.xml" "$APP/Contents/Info.plist"
   /usr/libexec/PlistBuddy -c 'Add :SUEnableAutomaticChecks bool true' "$APP/Contents/Info.plist"
   /usr/libexec/PlistBuddy -c 'Add :SURequireSignedFeed bool true' "$APP/Contents/Info.plist"
   /usr/libexec/PlistBuddy -c 'Add :SUVerifyUpdateBeforeExtraction bool true' "$APP/Contents/Info.plist"
   /usr/libexec/PlistBuddy -c 'Add :SUAllowsAutomaticUpdates bool false' "$APP/Contents/Info.plist"
   /usr/libexec/PlistBuddy -c 'Add :SUAutomaticallyUpdate bool false' "$APP/Contents/Info.plist"
 fi
+# Compile the same native grayscale accent as MultiSwitcher before signing.
+xcrun actool --compile "$APP/Contents/Resources" --platform macosx \
+  --minimum-deployment-target 14.0 --accent-color AccentColor \
+  --output-partial-info-plist "$BUILD_CACHE/asset-info.plist" --output-format human-readable-text "$ROOT/macos/Assets.xcassets"
 cat > "$APP/Contents/Resources/BUILD.json" <<BUILD
 {"version":"$APP_VERSION","build_number":"$BUILD_NUMBER","build_id":"$BUILD_ID","commit":"$COMMIT","worktree":"$DIRTY","source_fingerprint":"$SOURCE_FINGERPRINT"}
 BUILD

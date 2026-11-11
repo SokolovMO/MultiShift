@@ -3,16 +3,14 @@ import SwiftUI
 
 /// Independent neutral tokens shared by every owned surface. No accent-color dependency.
 enum Mono {
-    static let ink = Color(nsColor: .labelColor)
-    static let secondary = Color(nsColor: .secondaryLabelColor)
-    static let windowColor = NSColor(name: nil) { appearance in
-        NSColor(white: appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua ? 0.075 : 0.965, alpha: 1)
-    }
-    static let canvas = Color(nsColor: windowColor)
-    static let card = color(light: 0.99, dark: 0.115)
-    static let inset = color(light: 0.935, dark: 0.15)
-    static let line = color(light: 0.0, dark: 1.0, lightAlpha: 0.075, darkAlpha: 0.12)
-    static let selection = color(light: 0.0, dark: 1.0, lightAlpha: 0.075, darkAlpha: 0.105)
+    static let ink = Color(nsColor: MultiDesign.ink)
+    static let secondary = Color(nsColor: MultiDesign.secondary)
+    static let windowColor = MultiDesign.canvas
+    static let canvas = Color(nsColor: MultiDesign.canvas)
+    static let card = Color(nsColor: MultiDesign.card)
+    static let inset = Color(nsColor: MultiDesign.inset)
+    static let line = Color(nsColor: MultiDesign.line)
+    static let selection = Color(nsColor: MultiDesign.selected)
     static let sidebarExpanded = MultiInterfaceMetrics.sidebarExpanded
     static let sidebarCollapsed = MultiInterfaceMetrics.sidebarCollapsed
     static let sidebarMotion = Animation.timingCurve(1.0 / 3, 1, 2.0 / 3, 1, duration: MultiInterfaceMetrics.sidebarDuration)
@@ -43,15 +41,12 @@ struct MonoSurface: ViewModifier {
             .background {
                 if floating && !opaque {
                     RoundedRectangle(cornerRadius: radius, style: .continuous).fill(.regularMaterial)
-                    RoundedRectangle(cornerRadius: radius, style: .continuous).fill(Mono.card.opacity(0.65))
                 } else {
                     RoundedRectangle(cornerRadius: radius, style: .continuous).fill(Mono.card)
                 }
             }
             .overlay(RoundedRectangle(cornerRadius: radius, style: .continuous)
                 .strokeBorder(contrast == .increased ? Mono.ink.opacity(0.45) : Mono.line, lineWidth: 1))
-            .shadow(color: .black.opacity(floating ? (scheme == .dark ? 0.22 : 0.07) : 0.025),
-                    radius: floating ? 14 : 3, x: 0, y: floating ? 6 : 1)
     }
 }
 
@@ -99,14 +94,8 @@ struct ActionRowStyle: ButtonStyle {
 struct AppMark: View {
     var size: CGFloat = 36
     var body: some View {
-        Image(systemName: "arrow.up")
-            .font(.system(size: size * 0.56, weight: .black))
-            .foregroundStyle(Mono.ink)
+        Image(nsImage: MultiBrandIcon.flatMark(appName: "multishift", size: size))
             .frame(width: size, height: size)
-            .background(LinearGradient(colors: [Mono.card, Mono.inset], startPoint: .top, endPoint: .bottom),
-                        in: RoundedRectangle(cornerRadius: size * 0.24, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: size * 0.24).strokeBorder(Mono.line, lineWidth: 0.7))
-            .shadow(color: .black.opacity(0.08), radius: size * 0.13, y: size * 0.05)
             .accessibilityHidden(true)
     }
 }
@@ -150,19 +139,6 @@ extension OperationStatus {
 /// Native editing and keyboard traversal with an explicit neutral focus indicator.
 struct MonoTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
-        Editor(configuration: configuration)
-    }
-    private struct Editor<Content: View>: View {
-        let configuration: Content
-        @FocusState private var focused: Bool
-        @Environment(\.isEnabled) private var enabled
-        var body: some View {
-            configuration.textFieldStyle(.plain).focused($focused)
-                .padding(.horizontal, 8).padding(.vertical, 6)
-                .background(Mono.inset, in: RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.sm))
-                .overlay(RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.sm)
-                    .strokeBorder(focused ? Mono.ink.opacity(0.65) : Mono.line, lineWidth: focused ? 1.5 : 0.7))
-                .opacity(enabled ? 1 : 0.5)
-        }
+        configuration.textFieldStyle(.roundedBorder)
     }
 }

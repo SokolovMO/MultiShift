@@ -11,3 +11,6 @@ e2e_*_out/
 # Independent release infrastructure repositories
 /release-infra/
 /multi-release-console/
+
+# Local design inspection artifacts
+/.taste-skill/

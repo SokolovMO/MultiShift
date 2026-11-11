@@ -119,6 +119,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
             }
             if ProcessInfo.processInfo.environment["MULTI_POPOVER_ONLY"] == "1" { captureEcosystemExtras(directory: directory); return }
             showSettings()
+            if ProcessInfo.processInfo.environment["MULTI_AUDIT_SCENARIO"] == "native-feedback" {
+                MultiNativeStyleAudit.write(to: URL(fileURLWithPath: directory))
+                operationNotifications.handler = self
+                operationNotifications.install()
+            }
             NSLog("LAYOUT REVIEW settings ready")
             guard let window = settingsWindow else { app.terminate(nil); return }
             if ProcessInfo.processInfo.environment["MULTI_ECOSYSTEM_INTERACTIVE"] == "1" {
@@ -180,6 +185,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
             DispatchQueue.main.async { [weak self] in
                 guard let self, let button = self.statusItem?.button else { return }
                 self.toggleStatusPopover(button)
+            }
+        }
+        // Installer handshake is restricted to a private directory in the user's temp folder.
+        let arguments = CommandLine.arguments
+        if let index = arguments.firstIndex(of: "--install-health"), index + 1 < arguments.count {
+            let marker = URL(fileURLWithPath: arguments[index + 1]).standardizedFileURL
+            let directory = marker.deletingLastPathComponent()
+            let temporary = URL(fileURLWithPath: NSTemporaryDirectory()).standardizedFileURL
+            if marker.lastPathComponent == "ready",
+               directory.deletingLastPathComponent() == temporary,
+               directory.lastPathComponent.hasPrefix("multishift-install-"),
+               (try? directory.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink) == false {
+                let identity = ["version": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "",
+                                "build": Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""]
+                if let data = try? JSONSerialization.data(withJSONObject: identity) {
+                    try? data.write(to: marker, options: .atomic)
+                }
             }
         }
         if !quietLaunch && !AppModel.defaults.bool(forKey: "welcomed") {
@@ -384,12 +406,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         if panel.runModal() == .OK { showChooser(files: panel.urls) }
     }
 
+    @objc private func toggleSettingsSidebar() { NotificationCenter.default.post(name: .multiSidebarToggle, object: nil) }
+
     @objc private func showSettings() {
         if settingsWindow == nil {
             settingsWindow = makeWindow(title: model.text("Settings"), size: MultiInterfaceMetrics.settingsSize(MultiInterfaceMetrics.shiftDefault, progress: AppModel.defaults.bool(forKey: "ecosystem.sidebarCollapsed") ? 0 : 1), resizable: true,
                                         autosaveName: settingsAutosaveName, root: SettingsView(model: model))
         }
         if let settingsWindow {
+            if settingsWindow.titlebarAccessoryViewControllers.isEmpty {
+                let accessory = MultiSidebarAccessory.install(on: settingsWindow, target: self, action: #selector(toggleSettingsSidebar))
+                let title = model.text("Hide Sidebar")
+                (accessory.view.subviews.first as? NSButton)?.setAccessibilityLabel(title)
+                (accessory.view.subviews.first as? NSButton)?.toolTip = title
+            }
             MultiWindowPolicy.configure(settingsWindow, minimum: MultiInterfaceMetrics.shiftMinimum, maximum: MultiInterfaceMetrics.shiftMaximum)
             settingsWindow.collectionBehavior = [.managed, .fullScreenNone]
             settingsWindow.tabbingMode = .disallowed
@@ -521,7 +551,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         })
         if let operationWindow {
             operationWindow.title = operation.title.lowercased()
-            operationWindow.contentView = NSHostingView(rootView: root.tint(Mono.ink))
+            operationWindow.contentView = NSHostingView(rootView: root)
         } else {
             operationWindow = makeWindow(title: operation.title.lowercased(), size: NSSize(width: 560, height: 420),
                                          resizable: false, root: root)
@@ -556,7 +586,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
     }
 
     func testNotification() {
-        guard MultiAuditEnvironment.root == nil else { return }
+        guard MultiAuditEnvironment.root == nil || ProcessInfo.processInfo.environment["MULTI_AUDIT_SCENARIO"] == "native-feedback" else { return }
         operationNotifications.testNotification()
     }
 
@@ -691,7 +721,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         window.toolbarStyle = .unifiedCompact
         window.backgroundColor = Mono.windowColor
         window.isReleasedWhenClosed = false
-        let hostingView = NSHostingView(rootView: root.tint(Mono.ink))
+        let hostingView = NSHostingView(rootView: root)
         // A settings animation changes the ideal size of its view tree. Let the
         // window own its size; propagating every intermediate intrinsic size to
         // AppKit can progressively enlarge it during repeated sidebar toggles.
@@ -1044,6 +1074,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         updateEnabled(true)
         results.append(["case": "pause-resume", "passed": activeTimer && pausedTimer && inputTimer?.isValid == true])
         model.trigger = "ctrl"; model.jpgQuality = 83; model.pdfDPI = 220; model.saveSettings()
+        let chosen = root.appendingPathComponent("chosen-results")
+        do {
+            try FileManager.default.createDirectory(at: chosen, withIntermediateDirectories: true)
+            try OutputFolderPreference.store(chosen, defaults: AppModel.defaults)
+            model.output = "custom"; model.saveSettings()
+        } catch { fatalError("Cannot prepare custom output audit: \(error)") }
         var step = 0
         var deadline = Date().addingTimeInterval(20)
         model.perform(action: "convert:JPG", files: [input])
@@ -1056,6 +1092,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
                 let outputsExist = !operation.outputPaths.isEmpty && operation.outputPaths.allSatisfy { FileManager.default.fileExists(atPath: $0) }
                 results.append(["case": "packaged-conversion", "status": operation.status.rawValue,
                     "passed": operation.status == .completed && outputsExist])
+                results.append(["case": "custom-output-folder", "paths": operation.outputPaths,
+                    "passed": operation.outputPaths.count == 1 && operation.outputPaths.allSatisfy {
+                        URL(fileURLWithPath: $0).deletingLastPathComponent().resolvingSymlinksInPath().path == chosen.resolvingSymlinksInPath().path
+                    }])
                 self.model.undoOperation(id: operation.id)
                 let undo = self.model.operation(id: operation.id)
                 results.append(["case": "trash-only-undo", "status": undo?.status.rawValue ?? "missing", "passed": undo?.status == .undone])

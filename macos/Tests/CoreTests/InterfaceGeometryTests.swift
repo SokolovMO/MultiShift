@@ -86,9 +86,9 @@ final class InterfaceGeometryTests: XCTestCase {
 }
 
 final class OperationFeedbackPolicyTests: XCTestCase {
-    func testOnlyLongBackgroundWorkRequestsSystemDelivery() {
-        XCTAssertFalse(OperationFeedbackPolicy.shouldNotify(elapsed: 0.2, applicationActive: false))
-        XCTAssertFalse(OperationFeedbackPolicy.shouldNotify(elapsed: 4.99, applicationActive: false))
+    func testEveryBackgroundCompletionRequestsDeliveryWithoutFiveSecondThreshold() {
+        XCTAssertTrue(OperationFeedbackPolicy.shouldNotify(elapsed: 0.2, applicationActive: false))
+        XCTAssertTrue(OperationFeedbackPolicy.shouldNotify(elapsed: 4.99, applicationActive: false))
         XCTAssertFalse(OperationFeedbackPolicy.shouldNotify(elapsed: 60, applicationActive: true))
         XCTAssertTrue(OperationFeedbackPolicy.shouldNotify(elapsed: 5, applicationActive: false))
         XCTAssertTrue(OperationFeedbackPolicy.shouldNotify(elapsed: 60, applicationActive: false))

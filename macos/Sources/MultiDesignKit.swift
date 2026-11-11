@@ -9,16 +9,39 @@ import MultiSwitcherCore
 @MainActor enum MultiBrandIcon {
     static let switcher = render(externalEffects: true)
     static let embeddedSwitcher = render(externalEffects: false)
+    /// App-owned marks share one transparent canvas; Dock artwork stays separate.
+    static func flatMark(appName: String, size: CGFloat) -> NSImage {
+        NSImage(size: NSSize(width: size, height: size), flipped: false) { rect in
+            let color = MultiDesign.ink
+            if appName == "multiswitcher" {
+                let attrs: [NSAttributedString.Key: Any] = [.font: NSFont.systemFont(ofSize: size * 0.52, weight: .semibold),
+                    .foregroundColor: color, .kern: -size * 0.025]
+                let mark = "AЯ" as NSString; let measured = mark.size(withAttributes: attrs)
+                mark.draw(at: NSPoint(x: rect.midX - measured.width / 2, y: rect.midY - measured.height / 2), withAttributes: attrs)
+            } else if let symbol = NSImage(systemSymbolName: "arrow.up", accessibilityDescription: nil)?
+                .withSymbolConfiguration(.init(pointSize: size * 0.54, weight: .heavy))?
+                .withSymbolConfiguration(.init(paletteColors: [color])) {
+                symbol.isTemplate = false
+                symbol.draw(in: MultiDesign.symbolRect(size: symbol.size, center: NSPoint(x: rect.midX, y: rect.midY), extent: size * 0.55))
+            }
+            return true
+        }
+    }
     private static func render(externalEffects: Bool) -> NSImage { NSImage(size: NSSize(width: 1024, height: 1024), flipped: false) { rect in
         NSColor.clear.setFill(); rect.fill(using: .copy)
         let size = rect.width
+        // Keep the white rounded tile for the in-app identity, but omit its
+        // shadow and outline so they cannot form a gray square at sidebar scale.
         let tile = rect.insetBy(dx: size * 0.075, dy: size * 0.075)
         let shadow = NSShadow(); shadow.shadowColor = NSColor.black.withAlphaComponent(0.16)
         shadow.shadowBlurRadius = size * 0.045; shadow.shadowOffset = NSSize(width: 0, height: -size * 0.015)
-        NSGraphicsContext.saveGraphicsState(); if externalEffects { shadow.set() }
         let path = NSBezierPath(roundedRect: tile, xRadius: size * 0.19, yRadius: size * 0.19)
-        NSColor(white: 0.985, alpha: 1).setFill(); path.fill(); NSGraphicsContext.restoreGraphicsState()
-        if externalEffects { NSColor.black.withAlphaComponent(0.08).setStroke(); path.lineWidth = max(1, size / 512); path.stroke() }
+        if externalEffects { NSGraphicsContext.saveGraphicsState(); shadow.set() }
+        NSColor(white: 0.985, alpha: 1).setFill(); path.fill()
+        if externalEffects {
+            NSGraphicsContext.restoreGraphicsState()
+            NSColor.black.withAlphaComponent(0.08).setStroke(); path.lineWidth = max(1, size / 512); path.stroke()
+        }
         let markSize = size * 0.77
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: markSize * 0.68, weight: .semibold),
@@ -50,12 +73,16 @@ enum MultiDesign {
     static func neutral(_ light: CGFloat, _ dark: CGFloat) -> NSColor {
         NSColor(name: nil) { appearance in NSColor(white: appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua ? dark : light, alpha: 1) }
     }
+    // Canonical semantic colors used by both frameworks and both applications.
     static let canvas = neutral(0.972, 0.075)
     static let rail = neutral(0.94, 0.12)
     static let card = neutral(0.99, 0.105)
+    static let inset = neutral(0.945, 0.145)
     static let ink = neutral(0.10, 0.94)
-    static let secondary = neutral(0.43, 0.65)
-    static let selected = neutral(0.88, 0.22)
+    static let secondary = neutral(0.38, 0.66)
+    static let line = neutral(0.20, 0.85).withAlphaComponent(0.12)
+    static let selected = neutral(0.89, 0.22)
+    static let accent = neutral(0.14, 0.88)
     /// Keep SF Symbols at their native aspect ratio in a fixed optical slot.
     static func symbolRect(size: NSSize, center: NSPoint, extent: CGFloat = 18) -> NSRect {
         guard size.width > 0, size.height > 0 else { return .zero }
@@ -231,35 +258,15 @@ struct MultiInstructionCard: View {
     }
 }
 
-struct MultiActionButtonStyle: ButtonStyle {
+struct MultiActionButtonStyle: PrimitiveButtonStyle {
     var primary = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.isEnabled) private var enabled
 
+    @ViewBuilder
     func makeBody(configuration: Configuration) -> some View {
-        MultiActionButtonBody(configuration: configuration, primary: primary, enabled: enabled, reduceMotion: reduceMotion)
-    }
-
-    private struct MultiActionButtonBody: View {
-        let configuration: Configuration
-        let primary: Bool
-        let enabled: Bool
-        let reduceMotion: Bool
-        @State private var hovered = false
-
-        var body: some View {
-            configuration.label
-                .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(primary ? Color(nsColor: MultiDesign.canvas) : Color(nsColor: MultiDesign.ink))
-                .padding(.horizontal, 13).padding(.vertical, 8)
-                .background(primary ? Color(nsColor: MultiDesign.ink) : (hovered || configuration.isPressed ? Color(nsColor: MultiDesign.selected) : Color(nsColor: MultiDesign.rail)),
-                            in: RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.sm, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: MultiInterfaceMetrics.Radius.sm).strokeBorder(Color(nsColor: MultiDesign.secondary).opacity(0.13), lineWidth: 1))
-                .opacity(enabled ? (configuration.isPressed ? 0.8 : 1) : 0.4)
-                .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
-                .animation(reduceMotion ? nil : .timingCurve(0.23, 1, 0.32, 1, duration: MultiInterfaceMetrics.navigationDuration), value: configuration.isPressed)
-                .animation(.easeOut(duration: MultiInterfaceMetrics.hoverDuration), value: hovered)
-                .onHover { hovered = $0 }
+        if primary {
+            Button(configuration).buttonStyle(.borderedProminent).controlSize(.regular).tint(Color(nsColor: MultiDesign.accent))
+        } else {
+            Button(configuration).buttonStyle(.bordered).controlSize(.regular).tint(Color(nsColor: MultiDesign.accent))
         }
     }
 }
@@ -330,16 +337,8 @@ struct MultiNavigationItem: Equatable {
     override func draw(_ dirtyRect: NSRect) {
         MultiDesign.rail.setFill(); bounds.fill()
         let mark = NSRect(x: 16, y: 20, width: 28, height: 28)
-        if appName != "multiswitcher" {
-            MultiDesign.card.setFill(); NSBezierPath(roundedRect: mark, xRadius: MultiInterfaceMetrics.Radius.sm, yRadius: MultiInterfaceMetrics.Radius.sm).fill()
-        }
-        if appName == "multiswitcher" {
-            MultiBrandIcon.switcher.draw(in: mark.insetBy(dx: -3, dy: -3), from: .zero, operation: .sourceOver,
-                fraction: 1, respectFlipped: true, hints: nil)
-        }
-        let text = appName == "multiswitcher" ? "" : "↑"
-        let paragraph = NSMutableParagraphStyle(); paragraph.alignment = .center
-        (text as NSString).draw(in: mark.insetBy(dx: 1, dy: 5), withAttributes: [.font: NSFont.systemFont(ofSize: 13, weight: .semibold), .foregroundColor: MultiDesign.ink, .paragraphStyle: paragraph])
+        MultiBrandIcon.flatMark(appName: appName, size: 28).draw(in: mark, from: .zero,
+            operation: .sourceOver, fraction: 1, respectFlipped: true, hints: nil)
         let alpha = min(1, max(0, (phase - 0.65) / 0.35))
         if alpha > 0 {
             (appName as NSString).draw(in: NSRect(x: 54, y: 26, width: max(0, bounds.width - 62), height: 20), withAttributes: [.font: NSFont.systemFont(ofSize: 13, weight: .semibold), .foregroundColor: MultiDesign.ink.withAlphaComponent(alpha)])
@@ -608,7 +607,7 @@ struct MultiNavigationItem: Equatable {
         (host.detail as? NSHostingView<Detail>)?.rootView = detail()
         host.onSelect = onSelect
         host.configure(appName: appName, items: items, selected: selected)
-        if !host.collectSamples && ProcessInfo.processInfo.environment["MULTI_ECOSYSTEM_REVIEW"] == nil { host.setCollapsed(collapsed) }
+        if !host.collectSamples && (ProcessInfo.processInfo.environment["MULTI_ECOSYSTEM_REVIEW"] == nil || ProcessInfo.processInfo.environment["MULTI_ECOSYSTEM_INTERACTIVE"] == "1") { host.setCollapsed(collapsed) }
     }
 }
 
@@ -887,6 +886,7 @@ struct MultiMeasurement: View {
     }
 }
 
+
 /// One sheet per parent; the captured identity belongs to the caller, never a row index.
 @MainActor enum MultiDeletionConfirmation {
     static func request(window: NSWindow?, defaults: UserDefaults, kind: String,
@@ -897,6 +897,7 @@ struct MultiMeasurement: View {
             do { try completion(); return true }
             catch {
                 let alert = NSAlert()
+                if Bundle.main.bundleIdentifier == "com.multiswitcher.app" { alert.icon = MultiBrandIcon.embeddedSwitcher }
                 alert.messageText = russian ? "не удалось сохранить изменение" : "could not save the change"
                 alert.informativeText = error.localizedDescription
                 alert.addButton(withTitle: russian ? "закрыть" : "close")
@@ -907,6 +908,7 @@ struct MultiMeasurement: View {
         if !isEnabled(defaults) { _ = execute(); return }
         let responder = window.firstResponder
         let alert = NSAlert()
+        if Bundle.main.bundleIdentifier == "com.multiswitcher.app" { alert.icon = MultiBrandIcon.embeddedSwitcher }
         alert.alertStyle = .warning
         alert.messageText = title; alert.informativeText = detail
         alert.addButton(withTitle: russian ? "подтвердить" : "confirm").keyEquivalent = "\r"
@@ -990,5 +992,243 @@ struct MultiDeletionPreference: NSViewRepresentable {
     func updateNSView(_ view: MultiDeletionCheckbox, context: Context) {
         view.title = russian ? "спрашивать перед удалением" : "ask before deleting"
         view.state = MultiDeletionConfirmation.isEnabled(defaults) ? .on : .off
+    }
+}
+
+/// Standard AppKit control shared with SwiftUI; AppKit keeps menu, focus and keys.
+@MainActor class MultiNativePopUpButton: NSPopUpButton {
+    override init(frame: NSRect, pullsDown: Bool) {
+        super.init(frame: frame, pullsDown: pullsDown)
+        bezelStyle = .rounded
+        controlSize = .regular
+        font = .systemFont(ofSize: 12)
+    }
+    required init?(coder: NSCoder) { super.init(coder: coder) }
+    override var alignmentRectInsets: NSEdgeInsets { NSEdgeInsetsZero }
+}
+
+struct MultiPopUpOption<Value: Hashable> {
+    let title: String
+    let value: Value
+    init(_ title: String, _ value: Value) { self.title = title; self.value = value }
+}
+
+struct MultiNativePopUp<Value: Hashable>: NSViewRepresentable {
+    let title: String
+    @Binding var selection: Value
+    let options: [MultiPopUpOption<Value>]
+    @Environment(\.isEnabled) private var isEnabled
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeNSView(context: Context) -> MultiNativePopUpButton {
+        let view = MultiNativePopUpButton(frame: .zero, pullsDown: false)
+        view.target = context.coordinator; view.action = #selector(Coordinator.changed(_:))
+        return view
+    }
+    func updateNSView(_ view: MultiNativePopUpButton, context: Context) {
+        context.coordinator.owner = self
+        if view.itemTitles != options.map(\.title) {
+            view.removeAllItems(); view.addItems(withTitles: options.map(\.title))
+        }
+        if let index = options.firstIndex(where: { $0.value == selection }) { view.selectItem(at: index) }
+        view.isEnabled = isEnabled; view.setAccessibilityLabel(title)
+    }
+    @MainActor final class Coordinator: NSObject {
+        var owner: MultiNativePopUp
+        init(_ owner: MultiNativePopUp) { self.owner = owner }
+        @objc func changed(_ sender: NSPopUpButton) {
+            guard owner.options.indices.contains(sender.indexOfSelectedItem) else { return }
+            owner.selection = owner.options[sender.indexOfSelectedItem].value
+        }
+    }
+}
+
+/// Settings actions use the same NSButton bezel in both products.
+struct MultiNativeAction: NSViewRepresentable {
+    let title: String
+    let action: () -> Void
+    @Environment(\.isEnabled) private var isEnabled
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeNSView(context: Context) -> NSButton {
+        let view = NSButton(title: title, target: context.coordinator, action: #selector(Coordinator.invoke))
+        view.bezelStyle = .rounded; view.controlSize = .regular
+        view.font = .systemFont(ofSize: NSFont.systemFontSize(for: .regular))
+        view.setContentHuggingPriority(.required, for: .horizontal)
+        return view
+    }
+    func updateNSView(_ view: NSButton, context: Context) {
+        context.coordinator.owner = self
+        view.title = title; view.isEnabled = isEnabled; view.setAccessibilityLabel(title)
+    }
+    @MainActor final class Coordinator: NSObject {
+        var owner: MultiNativeAction
+        init(_ owner: MultiNativeAction) { self.owner = owner }
+        @objc func invoke() { owner.action() }
+    }
+}
+
+
+@MainActor enum MultiNativeStyleAudit {
+    static func write(to directory: URL) {
+        var report: [String: Any] = ["bundle": Bundle.main.bundleIdentifier ?? "",
+            "version": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "",
+            "build": Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") ?? "",
+            "accentAssetPresent": NSColor(named: "AccentColor") != nil]
+        for name in [NSAppearance.Name.aqua, .darkAqua] {
+            NSAppearance(named: name)?.performAsCurrentDrawingAppearance {
+                if let color = NSColor.controlAccentColor.usingColorSpace(.deviceRGB) {
+                    report[name.rawValue] = [color.redComponent, color.greenComponent, color.blueComponent]
+                }
+            }
+        }
+        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        if let data = try? JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys]) {
+            try? data.write(to: directory.appendingPathComponent("native-style.json"))
+        }
+    }
+}
+/// Theme previews use the same geometry and symbols as MultiShift's appearance pane.
+@MainActor
+private final class MultiThemeChoiceCell: NSButtonCell {
+    override func hitTest(for event: NSEvent, in cellFrame: NSRect, of controlView: NSView) -> NSCell.HitResult {
+        let point = controlView.convert(event.locationInWindow, from: nil)
+        return cellFrame.contains(point) ? [.contentArea, .trackableArea] : []
+    }
+}
+
+@MainActor
+class MultiThemeChoiceButton: NSButton {
+    override var isFlipped: Bool { false }
+    let value: String
+    var selected = false {
+        didSet { state = selected ? .on : .off; needsDisplay = true }
+    }
+    init(value: String, title: String, target: AnyObject, action: Selector) {
+        self.value = value
+        super.init(frame: .zero)
+        cell = MultiThemeChoiceCell(textCell: title)
+        self.title = title; self.target = target; self.action = action
+        setButtonType(.radio)
+        isBordered = false; focusRingType = .none
+        setAccessibilityLabel(title)
+        setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    }
+    required init?(coder: NSCoder) { fatalError("not implemented") }
+    override var intrinsicContentSize: NSSize { NSSize(width: 130, height: 98) }
+    override func becomeFirstResponder() -> Bool { let result = super.becomeFirstResponder(); needsDisplay = true; return result }
+    override func resignFirstResponder() -> Bool { let result = super.resignFirstResponder(); needsDisplay = true; return result }
+    override func viewDidChangeEffectiveAppearance() { super.viewDidChangeEffectiveAppearance(); needsDisplay = true }
+    override func draw(_ dirtyRect: NSRect) {
+        let outer = NSBezierPath(roundedRect: bounds.insetBy(dx: 0.5, dy: 0.5), xRadius: MultiInterfaceMetrics.Radius.sm, yRadius: MultiInterfaceMetrics.Radius.sm)
+        if selected || isHighlighted {
+            MultiDesign.selected.setFill(); outer.fill()
+        }
+        let preview = NSRect(x: 8, y: bounds.height - 63, width: max(1, bounds.width - 16), height: 55)
+        let clip = NSBezierPath(roundedRect: preview, xRadius: MultiInterfaceMetrics.Radius.xs, yRadius: MultiInterfaceMetrics.Radius.xs)
+        NSGraphicsContext.saveGraphicsState()
+        clip.addClip()
+        NSColor(white: value == "dark" ? 0.09 : 0.96, alpha: 1).setFill(); clip.fill()
+        NSColor(white: value == "dark" ? 0.18 : 0.87, alpha: 1).setFill()
+        NSBezierPath(roundedRect: NSRect(x: preview.minX, y: preview.minY, width: 25, height: 55), xRadius: MultiInterfaceMetrics.Radius.xs, yRadius: MultiInterfaceMetrics.Radius.xs).fill()
+        let symbol = value == "dark" ? "moon" : (value == "light" ? "sun.max" : "circle.lefthalf.filled")
+        let ink: NSColor = value == "dark" ? .white : .black
+        if value == "light" {
+            // Keep the light preview black even when its containing button inherits dark Aqua.
+            ink.setStroke()
+            let center = NSPoint(x: preview.midX + 10, y: preview.midY)
+            let sun = NSBezierPath(ovalIn: NSRect(x: center.x - 3, y: center.y - 3, width: 6, height: 6))
+            for ray in 0..<8 {
+                let angle = CGFloat(ray) * .pi / 4
+                sun.move(to: NSPoint(x: center.x + cos(angle) * 6, y: center.y + sin(angle) * 6))
+                sun.line(to: NSPoint(x: center.x + cos(angle) * 8, y: center.y + sin(angle) * 8))
+            }
+            sun.lineWidth = 1.2; sun.lineCapStyle = .round; sun.stroke()
+        } else if let image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)?.withSymbolConfiguration(.init(pointSize: 16, weight: .regular))?.withSymbolConfiguration(.init(paletteColors: [ink])) {
+            image.isTemplate = false
+            let size = image.size
+            image.draw(in: NSRect(x: preview.midX + 10 - size.width / 2, y: preview.midY - size.height / 2, width: size.width, height: size.height))
+        }
+        NSGraphicsContext.restoreGraphicsState()
+        MultiDesign.line.setStroke(); clip.lineWidth = 0.6; clip.stroke()
+        let font = NSFont.systemFont(ofSize: 11, weight: .medium)
+        let width = (title as NSString).size(withAttributes: [.font: font]).width
+        let groupWidth = width + (selected ? 14 : 0)
+        let x = bounds.midX - groupWidth / 2
+        (title as NSString).draw(at: NSPoint(x: x, y: 9), withAttributes: [.font: font, .foregroundColor: MultiDesign.ink])
+        if selected {
+            let mark = NSRect(x: x + width + 4, y: 10, width: 10, height: 10)
+            MultiDesign.ink.setFill(); NSBezierPath(ovalIn: mark).fill()
+            MultiDesign.canvas.setStroke()
+            let check = NSBezierPath()
+            check.move(to: NSPoint(x: mark.minX + 2.6, y: mark.minY + 5))
+            check.line(to: NSPoint(x: mark.minX + 4.3, y: mark.minY + 3.2))
+            check.line(to: NSPoint(x: mark.minX + 7.5, y: mark.minY + 6.8))
+            check.lineWidth = 1.1; check.lineCapStyle = .round; check.lineJoinStyle = .round; check.stroke()
+        }
+        if window?.firstResponder === self {
+            MultiDesign.ink.setStroke(); outer.lineWidth = 1.5; outer.stroke()
+        }
+    }
+}
+
+
+struct MultiThemeChoiceView: NSViewRepresentable {
+    let value: String
+    let title: String
+    @Binding var selection: String
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeNSView(context: Context) -> MultiThemeChoiceButton {
+        MultiThemeChoiceButton(value: value, title: title, target: context.coordinator, action: #selector(Coordinator.select))
+    }
+    func updateNSView(_ view: MultiThemeChoiceButton, context: Context) {
+        context.coordinator.owner = self
+        view.title = title; view.selected = selection == value; view.setAccessibilityLabel(title)
+    }
+    @MainActor final class Coordinator: NSObject {
+        var owner: MultiThemeChoiceView
+        init(_ owner: MultiThemeChoiceView) { self.owner = owner }
+        @objc func select() { owner.selection = owner.value }
+    }
+}
+
+
+/// Native checkbox shared with app-owned AppKit preference rows.
+struct MultiNativeCheckbox: NSViewRepresentable {
+    let title: String
+    @Binding var isOn: Bool
+    @Environment(\.isEnabled) private var isEnabled
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeNSView(context: Context) -> NSButton {
+        let view = NSButton(checkboxWithTitle: title, target: context.coordinator, action: #selector(Coordinator.changed(_:)))
+        view.font = .systemFont(ofSize: 12)
+        return view
+    }
+    func updateNSView(_ view: NSButton, context: Context) {
+        context.coordinator.owner = self
+        view.title = title; view.state = isOn ? .on : .off
+        view.isEnabled = isEnabled; view.setAccessibilityLabel(title)
+    }
+    @MainActor final class Coordinator: NSObject {
+        var owner: MultiNativeCheckbox
+        init(_ owner: MultiNativeCheckbox) { self.owner = owner }
+        @objc func changed(_ sender: NSButton) { owner.isOn = sender.state == .on }
+    }
+}
+
+
+/// Identical native titlebar accessory in both frameworks; no SwiftUI toolbar bezel.
+@MainActor enum MultiSidebarAccessory {
+    static func install(on window: NSWindow, target: AnyObject, action: Selector) -> NSTitlebarAccessoryViewController {
+        let accessory = NSTitlebarAccessoryViewController()
+        accessory.layoutAttribute = .left
+        let container = NSView(frame: NSRect(x: 0, y: 0, width: 34, height: 28))
+        let image = NSImage(systemSymbolName: "sidebar.left", accessibilityDescription: nil)!
+        let button = NSButton(image: image, target: target, action: action)
+        button.frame = NSRect(x: 2, y: 2, width: 28, height: 24)
+        button.autoresizingMask = [.minYMargin, .maxYMargin]
+        button.bezelStyle = .accessoryBarAction; button.isBordered = false
+        button.toolTip = "sidebar"; button.setAccessibilityLabel("sidebar")
+        container.addSubview(button); accessory.view = container
+        window.addTitlebarAccessoryViewController(accessory)
+        return accessory
     }
 }

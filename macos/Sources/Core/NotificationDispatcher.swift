@@ -44,9 +44,9 @@ public struct NotificationDispatcher {
     }
 }
 
-/// Quick and foreground work stays in the existing operation history/details.
+/// Every background completion is eligible, including sub-second conversions.
 public enum OperationFeedbackPolicy {
     public static func shouldNotify(elapsed: TimeInterval, applicationActive: Bool) -> Bool {
-        elapsed >= 5 && !applicationActive
+        !applicationActive
     }
 }

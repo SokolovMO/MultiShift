@@ -162,3 +162,49 @@ final class NotificationDispatcherTests: XCTestCase {
         XCTAssertEqual(failing.submitted, 1)
     }
 }
+
+
+final class CustomOutputFolderTests: XCTestCase {
+    func testChosenFolderSurvivesPreferencesReloadAndDoesNotOverwrite() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let destination = root.appendingPathComponent("Chosen Results")
+        try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: true)
+        let suite = "multishift.test.output." + UUID().uuidString
+        let defaults = UserDefaults(suiteName: suite)!
+        defer { defaults.removePersistentDomain(forName: suite) }
+        try OutputFolderPreference.store(destination, defaults: defaults)
+        let reloaded = UserDefaults(suiteName: suite)!
+        let resolved = try OutputFolderPreference.resolve(defaults: reloaded)
+        XCTAssertEqual(resolved.resolvingSymlinksInPath().path, destination.resolvingSymlinksInPath().path)
+        let original = root.appendingPathComponent("original.png")
+        try Data([1, 2, 3]).write(to: original)
+        let coordinator = FileJobCoordinator(jobsURL: root.appendingPathComponent("jobs"))
+        let job = try coordinator.stage([original], id: UUID())
+        defer { coordinator.remove(job) }
+        let result = job.inputs[0].stagedURL.deletingLastPathComponent().appendingPathComponent("result.jpg")
+        try Data([9]).write(to: result)
+        try Data([7]).write(to: destination.appendingPathComponent("result.jpg"))
+        let outputs = try coordinator.publish([result.path], from: job, alternateDestination: resolved)
+        XCTAssertEqual(outputs[0].lastPathComponent, "result (1).jpg")
+        XCTAssertEqual(outputs[0].deletingLastPathComponent().resolvingSymlinksInPath().path, destination.resolvingSymlinksInPath().path)
+        XCTAssertEqual(try Data(contentsOf: destination.appendingPathComponent("result.jpg")), Data([7]))
+        XCTAssertEqual(try Data(contentsOf: original), Data([1, 2, 3]))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: root.appendingPathComponent("result.jpg").path))
+    }
+    func testMissingChoiceDoesNotSilentlyResolveToAnotherFolder() throws {
+        let defaults = UserDefaults(suiteName: "multishift.test.output." + UUID().uuidString)!
+        XCTAssertThrowsError(try OutputFolderPreference.resolve(defaults: defaults))
+    }
+    func testRemovedFolderDoesNotSilentlyResolveToAnotherFolder() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        let suite = "multishift.test.output." + UUID().uuidString
+        let defaults = UserDefaults(suiteName: suite)!
+        defer { defaults.removePersistentDomain(forName: suite); try? FileManager.default.removeItem(at: root) }
+        try OutputFolderPreference.store(root, defaults: defaults)
+        try FileManager.default.removeItem(at: root)
+        XCTAssertThrowsError(try OutputFolderPreference.resolve(defaults: defaults))
+    }
+}

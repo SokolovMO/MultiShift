@@ -11,23 +11,16 @@ final class UpdateController: NSObject, ObservableObject {
     @Published var automaticChecks = AppModel.defaults.object(forKey: "updates.checks") as? Bool ?? true {
         didSet { AppModel.defaults.set(automaticChecks, forKey: "updates.checks"); configure() }
     }
-    @Published var channel = UpdateChannel.initial(saved: AppModel.defaults.string(forKey: "updates.channel"),
-        distribution: Bundle.main.object(forInfoDictionaryKey: "MultiShiftUpdateChannel") as? String).rawValue {
-        didSet {
-            AppModel.defaults.set(channel, forKey: "updates.channel")
-            #if canImport(Sparkle)
-            controller?.updater.resetUpdateCycleAfterShortDelay()
-            #endif
-        }
-    }
     #if canImport(Sparkle)
     private var controller: SPUStandardUpdaterController?
     #endif
     var isConfigured: Bool {
         #if canImport(Sparkle)
         let info = Bundle.main.infoDictionary ?? [:]
-        return (info["SUFeedURL"] as? String) == "https://sokolovmo.github.io/multi-releases/MultiShift/appcast.xml"
-            && Data(base64Encoded: info["SUPublicEDKey"] as? String ?? "")?.count == 32
+        guard let feed = info["SUFeedURL"] as? String,
+              let url = URL(string: feed), url.scheme == "https", url.host != nil,
+              url.user == nil, url.password == nil else { return false }
+        return Data(base64Encoded: info["SUPublicEDKey"] as? String ?? "")?.count == 32
         #else
         return false
         #endif
@@ -57,8 +50,6 @@ final class UpdateController: NSObject, ObservableObject {
 }
 #if canImport(Sparkle)
 extension UpdateController: SPUUpdaterDelegate {
-    func allowedChannels(for updater: SPUUpdater) -> Set<String> { channel == "beta" ? ["beta"] : [] }
-
     @objc(updater:shouldPostponeRelaunchForUpdate:untilInvokingBlock:)
     func updater(_ updater: SPUUpdater, shouldPostponeRelaunchForUpdate item: SUAppcastItem,
                  untilInvokingBlock installHandler: @escaping () -> Void) -> Bool {
@@ -80,14 +71,10 @@ struct UpdateSettingsView: View {
     let russian: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(russian ? "обновления" : "updates").font(.headline)
+            Text(russian ? "обновления" : "updates").font(.system(size: 12, weight: .semibold))
             if updates.isConfigured {
-                Toggle(russian ? "проверять автоматически" : "check automatically", isOn: $updates.automaticChecks)
-                Picker(russian ? "канал" : "channel", selection: $updates.channel) {
-                    Text("stable").tag("stable")
-                    Text("beta").tag("beta")
-                }
-                Button(russian ? "проверить обновления" : "check for updates") { updates.checkNow() }
+                MultiNativeCheckbox(title: russian ? "проверять автоматически" : "check automatically", isOn: $updates.automaticChecks)
+                MultiNativeAction(title: russian ? "проверить обновления" : "check for updates", action: updates.checkNow)
                 Text(russian ? "установка — после подтверждения" : "installation requires confirmation")
                     .font(.caption).foregroundStyle(.secondary)
             } else {

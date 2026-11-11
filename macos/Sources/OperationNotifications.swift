@@ -61,8 +61,8 @@ final class OperationNotifications: NSObject, UNUserNotificationCenterDelegate, 
         let identifier = "test-\(UUID().uuidString)"
         NotificationDispatcher(gateway: self).send(
             id: identifier,
-            title: localized("MultiShift notification test", russian: "Проверка уведомлений MultiShift"),
-            body: localized("Notifications are connected to macOS.", russian: "Уведомления переданы macOS.")) { [weak self] result in
+            title: localized("Notification test", russian: "Проверка уведомлений"),
+            body: localized("This is a native MultiShift notification.", russian: "Это системное уведомление MultiShift.")) { [weak self] result in
                 DispatchQueue.main.async {
                     self?.handler?.notificationDeliveryChanged(result, operationID: nil)
                     self?.refreshPermission()
@@ -126,7 +126,7 @@ final class OperationNotifications: NSObject, UNUserNotificationCenterDelegate, 
         center.getNotificationSettings { settings in
             // Ask macOS to place it in Notification Center. A configured banner is also
             // requested; Focus, mirroring and other system policies remain authoritative.
-            completionHandler(settings.alertStyle == .banner ? [.banner, .list] : [.list])
+            completionHandler(settings.alertStyle == .none ? [.list] : [.banner, .list])
         }
     }
 

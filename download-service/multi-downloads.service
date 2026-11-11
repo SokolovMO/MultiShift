@@ -1,0 +1,22 @@
+[Unit]
+Description=Private download-start counter for Multi apps
+After=network.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=multi-downloads
+StateDirectoryMode=0700
+ExecStart=/usr/bin/python3 /opt/multi-downloads/server.py --database /var/lib/multi-downloads/counts.sqlite --port 8097
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+RestrictAddressFamilies=AF_INET AF_UNIX
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
