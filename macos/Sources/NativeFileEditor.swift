@@ -242,24 +242,38 @@ struct NativeFileEditor: View {
         }
     }
     private func cropField(_ title: String, axis: Int) -> some View {
-        TextField(title, value: Binding(get: {
-            let r = draft.crop
-            return [r.minX * Double(pixelWidth), r.minY * Double(pixelHeight), r.width * Double(pixelWidth), r.height * Double(pixelHeight)][axis]
-        }, set: { value in
-            var r = draft.crop
-            let v = max(0, value) / Double(axis % 2 == 0 ? pixelWidth : pixelHeight)
-            switch axis {
-            case 0: r.origin.x = min(v, 1-r.width)
-            case 1: r.origin.y = min(v, 1-r.height)
-            case 2: r.size.width = max(1/Double(pixelWidth), min(v, 1-r.minX))
-            default: r.size.height = max(1/Double(pixelHeight), min(v, 1-r.minY))
-            }
-            if draft.cropRatio > 0 {
-                if axis == 2 { r.size.height = min(1-r.minY, r.width * Double(pixelWidth) / Double(pixelHeight) / draft.cropRatio) }
-                if axis == 3 { r.size.width = min(1-r.minX, r.height * Double(pixelHeight) / Double(pixelWidth) * draft.cropRatio) }
-            }
-            draft.crop = r
-        }), format: .number.precision(.fractionLength(0)))
+        let value = Binding<Double>(
+            get: { cropPixelValue(axis: axis) },
+            set: { setCropPixelValue($0, axis: axis) }
+        )
+        return TextField(title, value: value, format: .number.precision(.fractionLength(0)))
+    }
+    private func cropPixelValue(axis: Int) -> Double {
+        let r = draft.crop
+        switch axis {
+        case 0: return Double(r.minX) * Double(pixelWidth)
+        case 1: return Double(r.minY) * Double(pixelHeight)
+        case 2: return Double(r.width) * Double(pixelWidth)
+        default: return Double(r.height) * Double(pixelHeight)
+        }
+    }
+    private func setCropPixelValue(_ value: Double, axis: Int) {
+        var r = draft.crop
+        let width = CGFloat(pixelWidth)
+        let height = CGFloat(pixelHeight)
+        let v = max(0, CGFloat(value)) / (axis % 2 == 0 ? width : height)
+        switch axis {
+        case 0: r.origin.x = min(v, 1 - r.width)
+        case 1: r.origin.y = min(v, 1 - r.height)
+        case 2: r.size.width = max(1 / width, min(v, 1 - r.minX))
+        default: r.size.height = max(1 / height, min(v, 1 - r.minY))
+        }
+        let ratio = CGFloat(draft.cropRatio)
+        if ratio > 0 {
+            if axis == 2 { r.size.height = min(1 - r.minY, r.width * width / height / ratio) }
+            if axis == 3 { r.size.width = min(1 - r.minX, r.height * height / width * ratio) }
+        }
+        draft.crop = r
     }
     private var markControls: some View {
         Group {

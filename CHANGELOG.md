@@ -5,6 +5,8 @@ work is listed separately. The project is in early 0.x development.
 
 ## Unreleased
 
+- Split crop-field numeric bindings into typed helpers for hosted Swift compiler compatibility.
+
 - Public repository documentation, English/Russian introduction, contribution and security policies.
 - Required previous-release delta generation, real Sparkle selection checks, and publication gates.
 - Removal of generated QA bundles and recordings from the current source tree.

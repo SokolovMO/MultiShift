@@ -40,4 +40,11 @@ See [delta verification](DELTA-UPDATES-2026-11-13.md): public 10 → 11 selectio
 exact old bundle, target tree match, codesign, and selftest. No installation or GUI relaunch of
 the user's app was performed. Apple notarization remains unavailable for the current build.
 
-GitHub-hosted CI and public repository availability must be checked after pushing this snapshot.
+## Hosted compiler compatibility
+
+The first GitHub build passed Python and Swift core tests but exposed a SwiftUI type-checking
+timeout in the crop field's combined numeric Binding. That expression was split into typed
+Double/CGFloat helpers without changing its coordinate and aspect-ratio rules. Whole-app
+Swift type checking then passed locally. The follow-up GitHub build must pass before public access.
+
+Public availability and the final hosted build results are checked separately after publication.
