@@ -10,7 +10,6 @@
   <a href="https://github.com/SokolovMO/MultiShift/actions/workflows/macos.yml"><img src="https://github.com/SokolovMO/MultiShift/actions/workflows/macos.yml/badge.svg?branch=main" alt="Сборка и проверки"></a>
   <img src="https://img.shields.io/badge/macOS-14%2B-1f2328?logo=apple&amp;logoColor=white" alt="macOS 14+">
   <img src="https://img.shields.io/badge/Apple_silicon-arm64-59636e" alt="Apple silicon arm64">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-59636e" alt="GNU AGPL v3"></a>
 </p>
 
 <p align="center">
@@ -75,17 +74,8 @@ HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask SokolovMO/apps/multi
 Переменная явно разрешает установку этой ненотарифицированной сборки. Подробности
 проверки подписи, установки и обновления — в [инструкции по раздаче](docs/DISTRIBUTION.md).
 
-## Обновления
-
-Sparkle проверяет обновления и запрашивает подтверждение установки. Для подходящей
-исходной версии скачивается подписанная **дельта**, полный архив остаётся резервом
-при отсутствии подходящей базы или ошибке применения.
-
-Переход **0.4.0 → 0.4.1**: **183 КиБ** вместо **124 МиБ** полного ZIP.
-Размер будущих дельт зависит от изменений. Первая установка и Homebrew используют полный пакет.
-Лента, архивы и патчи подписаны Ed25519; это отдельный механизм от нотарификации Apple.
-
-[История изменений](CHANGELOG.md) · [Проверка дельты](docs/DELTA-UPDATES-2026-11-13.md)
+Обновления доступны через Sparkle с подтверждением установки.
+[Подробности раздачи и дельта-пакетов](docs/DISTRIBUTION.md).
 
 ## Файлы обрабатываются на вашем Mac
 
@@ -133,12 +123,8 @@ bash scripts/build_macos.sh
 [**MultiSwitcher**](https://github.com/SokolovMO/MultiSwitcher) — переключение русской
 и английской раскладки, исправление текста и правила для приложений в меню macOS.
 
-## Лицензия и авторство
+## Лицензия
 
-MultiShift основан на [DragShift](https://github.com/llamaboi55/DragShift).
-Авторство и MIT-уведомления исходного проекта и адаптированных вкладов сохранены.
-Объединённый MultiShift распространяется под [GNU AGPL v3](LICENSE), в том числе
-из-за используемых PDF-компонентов. [Сторонние компоненты](THIRD-PARTY-NOTICES.md)
-сохраняют свои лицензии. Это отдельный macOS-проект, а не официальный выпуск DragShift.
+[GNU AGPL v3](LICENSE). [Уведомления о сторонних компонентах](THIRD-PARTY-NOTICES.md).
 
-Разработчик и сопровождающий — [SokolovMO](https://github.com/SokolovMO).
+Проект поддерживает [SokolovMO](https://github.com/SokolovMO).

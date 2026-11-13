@@ -10,7 +10,6 @@
   <a href="https://github.com/SokolovMO/MultiShift/actions/workflows/macos.yml"><img src="https://github.com/SokolovMO/MultiShift/actions/workflows/macos.yml/badge.svg?branch=main" alt="Build and checks"></a>
   <img src="https://img.shields.io/badge/macOS-14%2B-1f2328?logo=apple&amp;logoColor=white" alt="macOS 14+">
   <img src="https://img.shields.io/badge/Apple_silicon-arm64-59636e" alt="Apple silicon arm64">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-59636e" alt="GNU AGPL v3"></a>
 </p>
 
 <p align="center">
@@ -75,16 +74,8 @@ HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask SokolovMO/apps/multi
 The environment variable explicitly opts into installing this unnotarized build.
 Read the [distribution guide](docs/DISTRIBUTION.md) for verification and installation details.
 
-## Updates
-
-Sparkle checks for updates and asks before installation. Matching versions download a signed
-**delta patch**. The full archive remains available when the base does not match or patching fails.
-
-For **0.4.0 → 0.4.1**, the patch is **183 KiB** versus a **124 MiB** full ZIP.
-Future patch sizes depend on the changes. First installations and Homebrew use the full package.
-Feeds, archives, and patches use Ed25519 signatures, separate from Apple notarization.
-
-[Changelog](CHANGELOG.en.md) · [Delta verification](docs/DELTA-UPDATES-2026-11-13.md)
+Updates are available through Sparkle with confirmation before installation.
+[Distribution and delta-patch details](docs/DISTRIBUTION.md).
 
 ## Your files stay on your Mac
 
@@ -131,12 +122,8 @@ not public issues. See the [security policy](SECURITY.en.md).
 [**MultiSwitcher**](https://github.com/SokolovMO/MultiSwitcher) — a native macOS menu-bar app
 for Russian/English layout switching, text correction, and per-app rules.
 
-## License and credits
+## License
 
-MultiShift derives from [DragShift](https://github.com/llamaboi55/DragShift).
-Original copyright and MIT notices for the project and adapted contributions are preserved.
-The combined MultiShift project is distributed under [GNU AGPL v3](LICENSE), including its
-AGPL PDF components. Dependencies retain their [third-party licenses](THIRD-PARTY-NOTICES.md).
-This is a separate macOS project, not an official DragShift release.
+[GNU AGPL v3](LICENSE). [Third-party notices](THIRD-PARTY-NOTICES.md).
 
 Maintained by [SokolovMO](https://github.com/SokolovMO).
