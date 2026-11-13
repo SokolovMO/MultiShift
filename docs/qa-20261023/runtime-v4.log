@@ -1,2 +1,0 @@
-2026-10-23 10:12:37.914 MultiShift[18834:3473115] Using your own bundle identifier as an NSUserDefaults suite name does not make sense and will not work. Break on _NSUserDefaults_Log_Nonsensical_Suites to find this
-2026-10-23 10:14:55.340 MultiShift[18834:3473115] Warning: Window move completed without beginning

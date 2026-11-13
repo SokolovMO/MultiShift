@@ -54,7 +54,7 @@ public final class FileJobCoordinator {
         for job in jobs { try? fileManager.removeItem(at: job) }
     }
 
-    public func stage(_ sourceURLs: [URL], id: UUID) throws -> StagedJob {
+    public func stage(_ sourceURLs: [URL], id: UUID, allowFolders: Bool = false) throws -> StagedJob {
         let root = jobsURL.appendingPathComponent(id.uuidString, isDirectory: true)
         try fileManager.createDirectory(at: root, withIntermediateDirectories: true)
         var inputs: [StagedInput] = []
@@ -62,7 +62,7 @@ public final class FileJobCoordinator {
             for (index, url) in sourceURLs.enumerated() {
                 let started = url.startAccessingSecurityScopedResource()
                 defer { if started { url.stopAccessingSecurityScopedResource() } }
-                if (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
+                if !allowFolders && (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
                     throw FileJobError.unsupportedInput(index: index)
                 }
                 let inputDirectory = root.appendingPathComponent("inputs/\(index)", isDirectory: true)

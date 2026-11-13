@@ -90,9 +90,9 @@ fi
 "$SWIFTC" "${SWIFT_FLAGS[@]}" -target "$TARGET" -sdk "$SDK" \
   -disable-sandbox \
   -module-cache-path "$BUILD_CACHE/swift-module-cache" \
-  -framework AppKit -framework SwiftUI -framework CoreGraphics -framework ServiceManagement -framework UserNotifications \
-  macos/Sources/Core/MultiInterfaceMetrics.swift macos/Sources/Core/MultiAuditEnvironment.swift macos/Sources/Core/WheelGeometry.swift macos/Sources/Core/InterfaceCopy.swift macos/Sources/Core/EngineClient.swift macos/Sources/Core/FileJobCoordinator.swift macos/Sources/Core/NotificationDispatcher.swift \
-  macos/Sources/MultiDesignKit.swift macos/Sources/MultiPopoverKit.swift macos/Sources/DesignSystem.swift macos/Sources/StatusPopover.swift macos/Sources/NativeModels.swift macos/Sources/NativeViews.swift macos/Sources/OperationNotifications.swift macos/Sources/UpdateController.swift macos/Sources/AppDelegate.swift \
+  -framework AppKit -framework AVKit -framework SwiftUI -framework CoreGraphics -framework ServiceManagement -framework UserNotifications \
+  macos/Sources/Core/MultiInterfaceMetrics.swift macos/Sources/Core/MultiAuditEnvironment.swift macos/Sources/Core/WheelGeometry.swift macos/Sources/Core/InterfaceCopy.swift macos/Sources/Core/EngineClient.swift macos/Sources/Core/FileJobCoordinator.swift macos/Sources/Core/NotificationDispatcher.swift macos/Sources/Core/OutputOpening.swift \
+  macos/Sources/MultiDesignKit.swift macos/Sources/MultiPopoverKit.swift macos/Sources/DesignSystem.swift macos/Sources/StatusPopover.swift macos/Sources/NativeModels.swift macos/Sources/NativeViews.swift macos/Sources/NativeFileEditor.swift macos/Sources/ExtendedFormats.swift macos/Sources/OperationNotifications.swift macos/Sources/UpdateController.swift macos/Sources/AppDelegate.swift \
   -o "$APP/Contents/MacOS/MultiShift"
 
 cat > "$APP/Contents/Info.plist" <<PLIST

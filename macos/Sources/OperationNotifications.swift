@@ -1,4 +1,5 @@
 import Foundation
+import ImageIO
 import UserNotifications
 
 @MainActor
@@ -9,6 +10,7 @@ protocol OperationNotificationHandler: AnyObject {
 }
 
 final class OperationNotifications: NSObject, UNUserNotificationCenterDelegate, NotificationGateway {
+    static let openAction = "MULTISHIFT_OPEN"
     static let detailsAction = "MULTISHIFT_DETAILS"
     static let showFinderAction = "MULTISHIFT_SHOW_FINDER"
     static let undoAction = "MULTISHIFT_UNDO"
@@ -20,8 +22,8 @@ final class OperationNotifications: NSObject, UNUserNotificationCenterDelegate, 
 
     func install() {
         center.delegate = self
-        let details = UNNotificationAction(identifier: Self.detailsAction,
-                                           title: localized("Operation details", russian: "Подробнее"),
+        let details = UNNotificationAction(identifier: Self.openAction,
+                                           title: localized("Open result", russian: "Открыть результат"),
                                            options: [.foreground])
         let showFinder = UNNotificationAction(identifier: Self.showFinderAction,
                                               title: localized("Show in Finder", russian: "Показать в Finder"),
@@ -29,6 +31,7 @@ final class OperationNotifications: NSObject, UNUserNotificationCenterDelegate, 
         let undo = UNNotificationAction(identifier: Self.undoAction,
                                         title: localized("Undo", russian: "Отменить"), options: [])
         center.setNotificationCategories([
+            UNNotificationCategory(identifier: "MULTISHIFT_ERROR", actions: [], intentIdentifiers: [], options: []),
             UNNotificationCategory(identifier: "MULTISHIFT_RESULT",
                                    actions: [details, showFinder], intentIdentifiers: [], options: [.customDismissAction]),
             UNNotificationCategory(identifier: "MULTISHIFT_RESULT_UNDO",
@@ -47,8 +50,11 @@ final class OperationNotifications: NSObject, UNUserNotificationCenterDelegate, 
         let identifier = operation.id.uuidString
         operationLock.lock()
         operations[identifier] = operation
+        if operations.count > 40 {
+            for key in operations.sorted(by: { $0.value.date > $1.value.date }).dropFirst(40).map(\.key) { operations.removeValue(forKey: key) }
+        }
         operationLock.unlock()
-        NotificationDispatcher(gateway: self).send(id: identifier, title: operation.title,
+        NotificationDispatcher(gateway: self).send(id: identifier, title: operation.actionTitle + " · " + operation.title,
                                                    body: interfaceCopy(operation.detail, preserving: operation.inputNames + operation.outputPaths)) { [weak self] result in
             DispatchQueue.main.async {
                 self?.handler?.notificationDeliveryChanged(result, operationID: operation.id)
@@ -108,8 +114,19 @@ final class OperationNotifications: NSObject, UNUserNotificationCenterDelegate, 
         let operation = operations[id]
         operationLock.unlock()
         if let operation {
-            content.categoryIdentifier = operation.canUndo ? "MULTISHIFT_RESULT_UNDO" : "MULTISHIFT_RESULT"
+            content.categoryIdentifier = operation.outputPaths.isEmpty ? "MULTISHIFT_ERROR" : operation.canUndo ? "MULTISHIFT_RESULT_UNDO" : "MULTISHIFT_RESULT"
             content.userInfo = ["operationID": operation.id.uuidString]
+            if let path = operation.outputPaths.first, ExtendedFormats.isImage(URL(fileURLWithPath: path)),
+               let source = CGImageSourceCreateWithURL(URL(fileURLWithPath: path) as CFURL, nil),
+               let thumbnail = CGImageSourceCreateThumbnailAtIndex(source, 0, [kCGImageSourceCreateThumbnailFromImageAlways: true,
+                   kCGImageSourceThumbnailMaxPixelSize: 240, kCGImageSourceCreateThumbnailWithTransform: true] as CFDictionary) {
+                let url = FileManager.default.temporaryDirectory.appendingPathComponent("MultiShift-" + id + ".png")
+                if let destination = CGImageDestinationCreateWithURL(url as CFURL, "public.png" as CFString, 1, nil) {
+                    CGImageDestinationAddImage(destination, thumbnail, nil)
+                    if CGImageDestinationFinalize(destination), let attachment = try? UNNotificationAttachment(identifier: id, url: url) { content.attachments = [attachment] }
+                    try? FileManager.default.removeItem(at: url)
+                }
+            }
         } else {
             content.categoryIdentifier = "MULTISHIFT_RESULT"
             content.userInfo = ["testNotification": true]

@@ -6,6 +6,7 @@ windows and the menu-bar item; this process only reads files and writes result c
 from __future__ import annotations
 
 import json
+import contextlib
 import os
 import sys
 import tempfile
@@ -15,7 +16,7 @@ from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
 
-from . import convert, imaging
+from . import convert, imaging, media, documents, extensions
 from . import __version__
 from .util import CONFIG, UserError, category
 
@@ -31,6 +32,12 @@ def _failure(index: int, path: Path, error: Exception, stage: str = "convert") -
     elif isinstance(error, PermissionError) or (isinstance(error, OSError) and error.errno in (1, 13)):
         code, stage = "permission_denied", "save"
         message = "The result could not be saved. Choose another output folder."
+    elif isinstance(error, MemoryError):
+        code, stage, message = "too_large", "decode", "This file is too large for the available memory."
+    elif isinstance(error, OSError) and error.errno == 28:
+        code, stage, message = "disk_full", "save", "The disk is full. Free some space and try again."
+    elif isinstance(error, OSError) and any(x in str(error).lower() for x in ("truncated", "broken data", "cannot identify")):
+        code, stage, message = "damaged_image", "decode", "This image is damaged or incomplete."
     elif isinstance(error, FileNotFoundError):
         code, stage = "input_missing", "read"
         message = "The source file could not be found."
@@ -52,7 +59,16 @@ def _failure(index: int, path: Path, error: Exception, stage: str = "convert") -
 
 def _preview(path: Path, limit: int = 1800) -> dict[str, Any]:
     kind = category(path)
-    if kind == "image":
+    if kind == "video":
+        image = media.frame_at(path, 0, limit)
+        if image is None: raise UserError("Could not load a video frame.")
+    elif kind == "audio":
+        from PIL import ImageDraw
+        image = Image.new("RGB", (1000, 240), "#f4f4f4")
+        draw = ImageDraw.Draw(image)
+        for index, peak in enumerate(media.waveform(path, 500)):
+            draw.line((index * 2, 120 - peak * 110, index * 2, 120 + peak * 110), fill="#555555", width=2)
+    elif kind == "image":
         image = convert.open_preview(path, limit)
     elif kind == "pdf":
         doc = convert.open_pdf(path)
@@ -91,7 +107,21 @@ def _run_one(path: Path, action: str, p: dict[str, Any]) -> list[Path]:
     if kind != "tool":
         raise UserError("Неизвестное действие.")
 
+    cat = category(path)
+    if cat in ("audio", "video"):
+        if name == "Compress":
+            limit = int(p.get("target_bytes", 0)) or None
+            return [media.compress_audio(path, kbps=int(p.get("kbps", 128)), target_bytes=limit, mono=bool(p.get("mono", False))) if cat == "audio" else
+                    media.compress_video(path, preset=str(p.get("preset", "Balanced")), height=int(p.get("height", 0)) or None, target_bytes=limit, hevc=bool(p.get("hevc", False)))]
+        if name == "Trim": return [media.trim(path, float(p.get("start", 0)), float(p.get("end", 0)) or None, exact=not bool(p.get("fast_cut", False)))]
+        if name == "Metadata": return [media.strip_metadata(path)[0]]
+        if name == "Edit":
+            if cat == "audio":
+                return [media.edit_audio(path, gain_db=float(p.get("gain_db", 0)), normalize=bool(p.get("normalize", False)), speed=float(p.get("speed", 1)), fade_in=float(p.get("fade_in", 0)), fade_out=float(p.get("fade_out", 0)), mono=bool(p.get("mono", False)))]
+            return [media.edit_video(path, rotate=int(p.get("rotate", 0)), flip_h=bool(p.get("flip_h", False)), flip_v=bool(p.get("flip_v", False)), speed=float(p.get("speed", 1)), gain_db=float(p.get("gain_db", 0)), mute=bool(p.get("mute", False)), height=int(p.get("height", 0)) or None, normalize=bool(p.get("normalize", False)))]
     if name == "Compress":
+        if p.get("target_bytes") and cat == "image":
+            return [extensions.compress_under(path, int(p["target_bytes"]), int(p.get("max_side", 0)))]
         if category(path) == "pdf":
             return [imaging.compress_pdf(path, int(p.get("pdf_dpi", 150)), int(p.get("quality", 70)))]
         return [imaging.compress_to(path, int(p.get("quality", 72)),
@@ -113,12 +143,14 @@ def _run_one(path: Path, action: str, p: dict[str, Any]) -> list[Path]:
         return [imaging.resize_image(path, dims)]
     if name == "Crop":
         image = convert.open_image(path)
+        if p.get("rotate"): image = image.rotate(-int(p["rotate"]), expand=True)
         x, y, w, h = (int(p[k]) for k in ("x", "y", "width", "height"))
         x, y = max(0, min(x, image.width - 1)), max(0, min(y, image.height - 1))
         w, h = max(1, min(w, image.width - x)), max(1, min(h, image.height - y))
         return [imaging.save_like(image.crop((x, y, x + w, y + h)), path, "Cropped")]
     if name == "Edit":
         image = convert.open_image(path)
+        if p.get("auto"): image = imaging.apply_adjust(image, imaging.auto_enhance(image))
         adjust = imaging.Adjust(
             brightness=float(p.get("brightness", 1)), contrast=float(p.get("contrast", 1)),
             saturation=float(p.get("saturation", 1)), warmth=float(p.get("warmth", 0)),
@@ -136,7 +168,7 @@ def _run_one(path: Path, action: str, p: dict[str, Any]) -> list[Path]:
     if name == "Redact":
         image = convert.open_image(path)
         rects = [tuple(int(v) for v in rect) for rect in p.get("rects", [])]
-        return [imaging.save_like(imaging.redact(image, rects, str(p.get("mode", "black"))), path, "Redacted")]
+        return [imaging.save_like(imaging.redact(image, rects, str(p.get("mode", "black"))), path, "Redacted", keep_exif=False)]
     if name == "Annotate":
         image = convert.open_image(path).convert("RGBA")
         draw = ImageDraw.Draw(image)
@@ -163,11 +195,24 @@ def _run_one(path: Path, action: str, p: dict[str, Any]) -> list[Path]:
                 for offset in (-.55, .55):
                     a = theta + math.pi + offset
                     draw.line((x1, y1, x1 + length * math.cos(a), y1 + length * math.sin(a)), fill=color, width=width)
+            elif kind in ("pen", "highlight"):
+                points = [tuple(int(v) for v in point) for point in item.get("points", [])]
+                if len(points) > 1:
+                    if kind == "highlight":
+                        overlay = Image.new("RGBA", image.size)
+                        ImageDraw.Draw(overlay).line(points, fill=color + "66", width=width * 4, joint="curve")
+                        image = Image.alpha_composite(image, overlay)
+                        draw = ImageDraw.Draw(image)
+                    else: draw.line(points, fill=color, width=width, joint="curve")
+            elif kind == "step":
+                x, y = box[:2]; radius = max(14, width * 4)
+                draw.ellipse((x-radius, y-radius, x+radius, y+radius), fill=color)
+                draw.text((x, y), str(item.get("text", "1")), fill="white", font=ImageFont.load_default(size=radius), anchor="mm")
             elif kind == "text":
                 text = str(item.get("text", ""))
                 if text:
                     draw.text((box[0], box[1]), text, fill=color, font=ImageFont.load_default(size=max(12, width * 4)))
-        return [imaging.save_like(image, path, "Annotated")]
+        return [imaging.save_like(image, path, "Annotated", keep_exif=False)]
     if name == "Metadata":
         mode = str(p.get("mode", "strip"))
         if category(path) == "pdf":
@@ -196,6 +241,48 @@ def handle(request: dict[str, Any]) -> dict[str, Any]:
     operation = str(request.get("operation", ""))
     if operation == "version":
         return {**base, "ok": True}
+    if operation == "capabilities":
+        path = Path(str(request.get("path", "")))
+        cat = category(path)
+        tools = []
+        if cat in ("audio", "video") and media.available(): tools = ["Compress", "Trim", "Edit", "Metadata", "Merge"]
+        return {**base, "ok": True, "category": cat, "targets": convert.targets_for(cat, documents.full_suffix(path)) if cat else [], "tools": tools,
+                "missing_tool": documents.missing_tool(path) or ("FFmpeg" if cat in ("audio", "video") and not media.available() else "")}
+    if operation == "render":
+        import shutil
+        from PIL import ImageOps
+        path = Path(str(request.get("path", "")))
+        with tempfile.TemporaryDirectory(prefix="multishift-preview-") as td:
+            staged = Path(td) / path.name
+            shutil.copyfile(path, staged)
+            parameters = request.get("parameters", {})
+            result = _run_one(staged, str(request.get("action")), parameters)[0]
+            preview = _preview(result, max(800, min(4096, int(request.get("max_side", 1800)))))
+            return {**base, "ok": True, "preview": preview, "metrics": extensions.metrics([path], [result])}
+    if operation == "media_render":
+        import shutil
+        path = Path(str(request.get("path", "")))
+        p = request.get("parameters", {})
+        cache = Path(os.environ.get("MULTISHIFT_CACHE_DIR", str(Path.home() / "Library/Caches/MultiShift"))) / "MediaPreviews"
+        cache.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix="multishift-media-") as td:
+            staged = Path(td) / path.name
+            shutil.copyfile(path, staged)
+            info = media.probe(staged)
+            span = min(5.0, info.duration or 5.0)
+            clip = media.trim(staged, max(0, float(p.get("start", 0))), min(float(p.get("end", 0)) or span, (float(p.get("start", 0)) + span)))
+            action = str(request.get("action", "tool:Edit"))
+            result = clip if action == "tool:Trim" else _run_one(clip, action, p)[0]
+            output = cache / (uuid.uuid4().hex + result.suffix)
+            shutil.copyfile(result, output)
+            size = result.stat().st_size
+            estimate = int(size / span * info.duration) if info.duration else size
+            return {**base, "ok": True, "media_preview": str(output), "estimated_bytes": estimate}
+    if operation == "media_info":
+        path = Path(str(request.get("path", "")))
+        info = media.probe(path)
+        return {**base, "ok": info is not None, "duration": info.duration if info else 0,
+                "fields": media.read_tags(path), "waveform": media.waveform(path) if category(path) == "audio" else []}
     if operation == "preview":
         path = Path(str(request.get("path", ""))).expanduser()
         try:
@@ -209,11 +296,14 @@ def handle(request: dict[str, Any]) -> dict[str, Any]:
             fields = imaging.read_pdf_metadata(path)
             has_location = False
             count = len(fields)
+        elif category(path) in ("audio", "video"):
+            fields = media.read_tags(path)
+            count, has_location = len(fields), False
         else:
             fields = imaging.read_image_metadata(path)
             count, has_location = imaging.count_metadata(path)
         return {**base, "ok": True, "fields": fields, "metadata_count": count,
-                "has_location": has_location}
+                "has_location": has_location, "summary": imaging.metadata_summary(path) if category(path) == "image" else {}}
     settings = request.get("settings", {})
     if isinstance(settings, dict):
         CONFIG["output"] = "folder" if settings.get("output") == "folder" else "next"
@@ -233,8 +323,8 @@ def handle(request: dict[str, Any]) -> dict[str, Any]:
     parameters = parameters if isinstance(parameters, dict) else {}
     outputs = []
     failures = [_failure(index, path, FileNotFoundError(path.name), "read")
-                for index, path in enumerate(paths) if not path.is_file()]
-    selected = [(index, path) for index, path in enumerate(paths) if path.is_file()]
+                for index, path in enumerate(paths) if not (path.is_file() or path.is_dir())]
+    selected = [(index, path) for index, path in enumerate(paths) if path.is_file() or path.is_dir()]
     expected = category(selected[0][1]) if selected else ""
     compatible = [(index, path) for index, path in selected if category(path) == expected]
     failures.extend(_failure(index, path, UserError("Некоторые файлы не подходят для выбранного действия."), "validate")
@@ -243,7 +333,9 @@ def handle(request: dict[str, Any]) -> dict[str, Any]:
         if not failures and len(compatible) == len(paths):
             outputs = convert.images_to_single_pdf([path for _, path in compatible])
     elif action == "tool:Merge":
-        if len(compatible) < 2 or expected != "pdf":
+        if len(compatible) >= 2 and expected in ("audio", "video") and not failures:
+            outputs = [media.merge([path for _, path in compatible], expected)]
+        elif len(compatible) < 2 or expected != "pdf":
             failures.append({"input_index": None, "file": "", "stage": "validate",
                              "code": "invalid_selection", "message": "Choose at least two PDF files."})
         elif not failures and len(compatible) == len(paths):
@@ -255,10 +347,13 @@ def handle(request: dict[str, Any]) -> dict[str, Any]:
             except Exception as error:  # retain successful files in a mixed batch
                 failures.append(_failure(index, path, error))
     return {**base, "ok": bool(outputs) and not failures, "outputs": [str(p) for p in outputs],
-            "failures": failures, "action": action}
+            "failures": failures, "action": action, "metrics": extensions.metrics(paths, outputs)}
 
 
 def main() -> int:
+    # PyMuPDF caches its output stream at import time, before redirect_stdout.
+    if hasattr(convert.fitz, "set_messages"):
+        convert.fitz.set_messages(stream=sys.stderr)
     request: Any = None
     try:
         if "--selftest" in sys.argv:
@@ -269,6 +364,16 @@ def main() -> int:
                 response = handle({"action": "convert:WEBP", "files": [str(source)], "settings": {}})
                 if not response.get("outputs") or not Path(response["outputs"][0]).is_file():
                     raise RuntimeError("conversion did not create a result")
+                markdown_file = root / "check.md"
+                markdown_file.write_text("# Heading\n\n**Bold**\n\n- Item", encoding="utf-8")
+                markdown_pdf = documents.convert_doc(markdown_file, "markdown", "PDF")[0]
+                convert.pdf_to_docx(markdown_pdf)
+                csv_file = root / "check.csv"
+                csv_file.write_text("name,value\na,1\n", encoding="utf-8")
+                documents.convert_doc(csv_file, "sheet", "XLSX")
+                wav = root / "check.wav"
+                wav.write_bytes(media.silent_wav())
+                media.convert_media(wav, "audio", "MP3")
                 old_cache = os.environ.get("MULTISHIFT_CACHE_DIR")
                 os.environ["MULTISHIFT_CACHE_DIR"] = str(root / "cache")
                 try:
@@ -286,10 +391,15 @@ def main() -> int:
         request = json.load(sys.stdin)
         if not isinstance(request, dict):
             raise ValueError("Request must be a JSON object.")
-        response = handle(request)
+        # Third-party converters may print diagnostics; stdout is exclusively the JSON protocol.
+        with contextlib.redirect_stdout(sys.stderr):
+            response = handle(request)
         print(json.dumps(response, ensure_ascii=False))
         return 0 if response.get("ok", False) else 1
     except Exception as error:
+        if "--selftest" in sys.argv:
+            import traceback
+            traceback.print_exc()
         request_id = request.get("request_id") if isinstance(request, dict) else None
         operation = request.get("operation") if isinstance(request, dict) else None
         if operation in ("preview", "inspect"):

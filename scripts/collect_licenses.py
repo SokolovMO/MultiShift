@@ -13,7 +13,7 @@ from packaging.requirements import Requirement
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "build" / "third_party_licenses"
 REQUIREMENTS = ROOT / "requirements.txt"
-REQUIRED_LICENSES = {"pymupdf"}
+REQUIRED_LICENSES = {"pymupdf", "imageio-ffmpeg", "pdf2docx"}
 PROJECT_LICENSES = [
     ("LICENSE", "Project/AGPL-3.0.txt"),
     ("licenses/third-party-components-MIT.txt", "Components/MIT.txt"),
@@ -64,11 +64,12 @@ def _license_paths(dist: metadata.Distribution) -> list[tuple[str, Path]]:
         named_license = name in {"license", "copying", "notice", "copyright"}
         looks_like_license = named_license or (text_file and name.startswith(("license", "copying", "notice", "copyright")))
         looks_like_license = looks_like_license or (in_license_dir and text_file)
+        looks_like_license = looks_like_license or ("imageio_ffmpeg/binaries/README.md" in str(entry))
         if not looks_like_license:
             continue
         source = Path(dist.locate_file(entry))
         if source.is_file():
-            safe_rel = Path(*(part for part in rel.parts if part not in {".", ".."}))
+            safe_rel = Path(*("metadata" if part.endswith(".dist-info") else part for part in rel.parts if part not in {".", ".."}))
             if safe_rel.parts:
                 matches.append((safe_rel.as_posix(), source))
     return matches

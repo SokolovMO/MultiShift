@@ -1,7 +1,0 @@
-warning: ~/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
-warning: ~/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
-[0/1] Planning build
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'MultiSwitcherCoreTests' complete! (0.20s)
-MultiSwitcherCoreChecks: 310 checks passed

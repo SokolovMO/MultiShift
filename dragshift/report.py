@@ -137,6 +137,12 @@ def _summarize_complete(action: str, srcs: list, outs: list, extra: str = "") ->
             n = pages(o0)
             if n:
                 bits.append(f"{n} page{'s' if n != 1 else ''}")
+        if category(o0) in ("audio", "video"):
+            from . import media
+            info = media.probe(o0)
+            if info:
+                bits.append(media.human_duration(info.duration))
+                if info.has_video and not info.has_audio: bits.append("no sound")
         bits.append(human_size(after))
         return Result(title, " · ".join(bits), outs, srcs)
 

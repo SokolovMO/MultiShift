@@ -1,8 +1,0 @@
-{
-  "evidence": "fresh defaults process after functional app exit",
-  "values": {
-    "jpg_quality": "83",
-    "trigger": "ctrl"
-  },
-  "passed": true
-}

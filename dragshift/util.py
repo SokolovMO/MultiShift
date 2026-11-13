@@ -13,7 +13,13 @@ TEXT_EXTS = {".txt", ".md", ".csv", ".log", ".json", ".xml", ".html", ".htm"}
 
 
 def category(path: str | Path) -> str | None:
+    if Path(path).is_dir(): return "folder"
     ext = Path(path).suffix.lower()
+    from . import documents, media
+    document_kind = documents.category_for(path)
+    if document_kind: return document_kind
+    if ext in media.AUDIO_EXTS: return "audio"
+    if ext in media.VIDEO_EXTS: return "video"
     if ext in IMAGE_EXTS:
         return "image"
     if ext in PDF_EXTS:
@@ -22,7 +28,7 @@ def category(path: str | Path) -> str | None:
         return "docx"
     if ext in TEXT_EXTS:
         return "text"
-    return None
+    return media.kind(path)
 
 
 def resolve_shortcuts(paths: list[str]) -> list[str]:

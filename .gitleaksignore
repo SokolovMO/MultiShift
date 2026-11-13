@@ -1,0 +1,5 @@
+# Reviewed false positives: SHA256 source-file inventories, not credentials.
+# Match exact historical fingerprints; do not suppress generic-api-key globally.
+bad48692f89b31db46e364ae92f32db5a07bfa79:macos-ui-audit/baseline.json:generic-api-key:36
+bad48692f89b31db46e364ae92f32db5a07bfa79:macos-ui-audit/baseline.json:generic-api-key:76
+bad48692f89b31db46e364ae92f32db5a07bfa79:macos-ui-audit/baseline.json:generic-api-key:99

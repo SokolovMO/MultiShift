@@ -208,3 +208,24 @@ final class CustomOutputFolderTests: XCTestCase {
         XCTAssertThrowsError(try OutputFolderPreference.resolve(defaults: defaults))
     }
 }
+
+final class FolderArchiveStagingTests: XCTestCase {
+    func testDirectoriesRequireArchiveIntentAndPublishBesideSource() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let source = root.appendingPathComponent("source", isDirectory: true)
+        try FileManager.default.createDirectory(at: source, withIntermediateDirectories: true)
+        try Data("original".utf8).write(to: source.appendingPathComponent("keep.txt"))
+        let coordinator = FileJobCoordinator(jobsURL: root.appendingPathComponent("jobs"))
+        XCTAssertThrowsError(try coordinator.stage([source], id: UUID()))
+        let job = try coordinator.stage([source], id: UUID(), allowFolders: true)
+        let staged = job.inputs[0].stagedURL
+        XCTAssertEqual(try String(contentsOf: staged.appendingPathComponent("keep.txt"), encoding: .utf8), "original")
+        let archive = staged.deletingLastPathComponent().appendingPathComponent("source.zip")
+        try Data("archive".utf8).write(to: archive)
+        let outputs = try coordinator.publish([archive.path], from: job)
+        XCTAssertEqual(outputs.first?.path, root.appendingPathComponent("source.zip").path)
+        XCTAssertEqual(try String(contentsOf: source.appendingPathComponent("keep.txt"), encoding: .utf8), "original")
+        coordinator.remove(job)
+    }
+}

@@ -1,0 +1,35 @@
+name: Bug report / Ошибка
+description: Report a reproducible problem in MultiShift.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: "English / русский welcome. Use synthetic files. Security issues: see SECURITY.md."
+  - type: input
+    id: environment
+    attributes:
+      label: Version and environment / Версия и окружение
+      description: MultiShift version/build, macOS version, Mac chip, and installation method.
+      placeholder: "0.4.1 (11), macOS ..., Apple Silicon, DMG"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce / Шаги
+      description: Include input format and chosen action. Attach only safe synthetic examples.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / Ожидаемый результат
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior / Что произошло
+      description: Include the error text or a redacted screenshot if helpful.
+    validations:
+      required: true

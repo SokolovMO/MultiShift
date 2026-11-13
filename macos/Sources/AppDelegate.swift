@@ -117,6 +117,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
                 runCircleAudit(directory: directory)
                 return
             }
+            if let action = ProcessInfo.processInfo.environment["MULTISHIFT_FEATURE_REVIEW"] {
+                model.appearance = ProcessInfo.processInfo.environment["MULTISHIFT_REVIEW_THEME"] ?? "light"
+                let fixtureName = ProcessInfo.processInfo.environment["MULTISHIFT_REVIEW_FIXTURE"] ?? "fixture.png"
+                let fixture = URL(fileURLWithPath: directory).appendingPathComponent(URL(fileURLWithPath: fixtureName).lastPathComponent)
+                if action == "order" {
+                    confirmCombination(files: [fixture, fixture.deletingLastPathComponent().appendingPathComponent("second.png")],
+                                       action: ActionItem(id: "convert:PDF", title: "PDF", shortTitle: "PDF", hint: "", symbol: "doc"))
+                } else {
+                    openEditor(files: [fixture], action: ActionItem(id: "tool:" + action, title: model.text(action), shortTitle: model.text(action), hint: "", symbol: "slider.horizontal.3"))
+                }
+                return
+            }
             if ProcessInfo.processInfo.environment["MULTI_POPOVER_ONLY"] == "1" { captureEcosystemExtras(directory: directory); return }
             showSettings()
             if ProcessInfo.processInfo.environment["MULTI_AUDIT_SCENARIO"] == "native-feedback" {
@@ -399,7 +411,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         let panel = NSOpenPanel()
         setAppearance(panel)
         panel.allowsMultipleSelection = true
-        panel.canChooseDirectories = false
+        panel.canChooseDirectories = true
         panel.canChooseFiles = true
         panel.prompt = model.text("Open")
         panel.message = model.text("Select files")
@@ -562,6 +574,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
 
     func handleOperationNotification(id: UUID, action: String) {
         switch action {
+        case UNNotificationDismissActionIdentifier: return
+        case OperationNotifications.openAction:
+            if let path = model.operation(id: id)?.outputPaths.first { model.openOutput(at: path) }
         case OperationNotifications.showFinderAction:
             if let operation = model.operation(id: id) { model.showPathsInFinder(operation.outputPaths) }
         case OperationNotifications.undoAction:
@@ -674,7 +689,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
                     // A separate native viewport checks small-area reflow without
                     // weakening the editor's normal minimum on this display.
                     let small = makeWindow(title: "small-area layout review", size: NSSize(width: 700, height: 480), resizable: false,
-                        root: EditorView(model: model, files: [fixture], action: action, close: {}))
+                        root: NativeFileEditor(model: model, files: [fixture], action: action, close: {}))
                     present(small)
                     try? await Task.sleep(for: .milliseconds(450))
                     MultiEcosystemProbe.capture(small, path: directory + "/" + mode + "-editor-small-area.png")
@@ -854,7 +869,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
     func openEditor(files: [URL], action: ActionItem) {
         guard !files.isEmpty else { return }
         let panel = makeWindow(title: action.title.lowercased(), size: NSSize(width: 1000, height: 680), resizable: true,
-                               root: EditorView(model: model, files: files, action: action) { [weak self] in
+                               root: NativeFileEditor(model: model, files: files, action: action) { [weak self] in
             self?.managedWindows.values.first(where: { $0.identifier == NSUserInterfaceItemIdentifier("MultiShift.Editor") && $0.isVisible })?.close()
         })
         panel.identifier = NSUserInterfaceItemIdentifier("MultiShift.Editor")
@@ -864,6 +879,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWind
         DispatchQueue.main.async { [weak self, weak panel] in
             if let panel { self?.constrainEditorWindow(panel) }
         }
+    }
+
+    func confirmCombination(files: [URL], action: ActionItem) {
+        weak var panel: NSWindow?
+        let view = CombinationOrderView(model: model, files: files, confirm: { [weak self] ordered in
+            panel?.close()
+            self?.model.perform(action: action.id, files: ordered)
+        }, cancel: { panel?.close() })
+        let window = makeWindow(title: model.language == "ru" ? "Порядок файлов" : "File order", size: NSSize(width: 560, height: 480), resizable: true, root: view)
+        panel = window
+        present(window)
     }
 
     private func startInputMonitor() {

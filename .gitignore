@@ -14,3 +14,28 @@ e2e_*_out/
 
 # Local design inspection artifacts
 /.taste-skill/
+
+# Secrets and machine-local files
+.DS_Store
+.env
+.env.*
+!.env.example
+*.seed
+*.p12
+*.p8
+*.key
+*.pem
+
+# Generated desktop QA captures and packaged previews (preserve locally)
+/macos-ui-audit/
+/docs/ecosystem-qa/
+/docs/qa-20261023/
+/docs/qa-logs/
+/docs/popover-review-2026-10-24/
+/docs/native-settings-pool-2026-10-24/
+/docs/sidebar-review-2026-10-24/
+/docs/ui-second-pool-2026-10-24/
+/docs/final-layout-2026-10-24/
+
+# Upstream donation config retained locally, not used by MultiShift
+/.github/FUNDING.yml

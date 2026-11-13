@@ -1,9 +1,0 @@
-{
-  "installedAppsRunning": [
-    "/Applications/MultiSwitcher.app/Contents/MacOS/MultiSwitcher",
-    "/Applications/MultiShift.app/Contents/MacOS/MultiShift"
-  ],
-  "installedAppsReplaced": false,
-  "remainingOwnedPreviewPIDStopped": 77841,
-  "evidence": "process command paths checked; termination scoped to owned <TMP>/multi-ui-after-shift preview"
-}

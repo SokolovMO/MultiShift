@@ -3,13 +3,14 @@ import os
 import runpy
 import sys
 sys.path.insert(0, os.path.abspath("."))
-from PyInstaller.utils.hooks import collect_all
+from PyInstaller.utils.hooks import collect_all, collect_submodules
 from dragshift import __version__
 
 onefile = os.environ.get("ONEFILE") == "1"
 engine_only = os.environ.get("MULTISHIFT_ENGINE_ONLY") == "1"
 heif_datas, heif_bins, heif_hidden = collect_all("pillow_heif")
 license_datas = runpy.run_path("scripts/collect_licenses.py")["collect_license_data"]()
+ff_datas, ff_bins, ff_hidden = collect_all("imageio_ffmpeg")
 HIDDEN = [] if engine_only else ["PySide6.QtNetwork"]
 if sys.platform == "win32":
     HIDDEN += ["win32com.client"]
@@ -25,9 +26,9 @@ if engine_only:
 
 a = Analysis(
     ["engine_main.py" if engine_only else "run.py"],
-    datas=(heif_datas + license_datas) if engine_only else [("dragshift/assets", "dragshift/assets")] + heif_datas + license_datas,
-    binaries=heif_bins,
-    hiddenimports=HIDDEN + heif_hidden,
+    datas=(heif_datas + ff_datas + license_datas) if engine_only else [("dragshift/assets", "dragshift/assets")] + heif_datas + ff_datas + license_datas,
+    binaries=heif_bins + ff_bins,
+    hiddenimports=HIDDEN + heif_hidden + ff_hidden + collect_submodules("markdown.extensions"),
     excludes=EXCLUDES,
 )
 

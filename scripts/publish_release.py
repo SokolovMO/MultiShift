@@ -7,6 +7,7 @@ import subprocess
 import uuid
 import xml.etree.ElementTree as ET
 from build_release import NS, key_material, sign
+from release_deltas import validate_deltas, require_client_check, validate_refresh
 
 REMOTE = 'vyrex_nl_project'
 BASE = '/var/www/multishift'
@@ -42,27 +43,47 @@ def verify(directory, seed, sparkle):
             raise ValueError('installer changed after signing')
         sign(sparkle / 'bin/sign_update', key, dmg, verify=True, signature=manifest['installer_signature'])
         allowed.add(installer)
+    allowed |= validate_deltas(directory, manifest, item, URL,
+                               lambda path, signature: sign(sparkle / 'bin/sign_update', key, path, verify=True, signature=signature))
     if any(p.name not in allowed or p.is_symlink() or not p.is_file() for p in directory.iterdir()):
         raise ValueError('unexpected distribution file; refuse to upload extra files')
+    checked_names = set()
     for line in (directory / 'SHA256SUMS').read_text().splitlines():
         digest, name = line.split('  ', 1)
+        if name in checked_names: raise ValueError('Duplicate checksum entry')
+        checked_names.add(name)
         if Path(name).name != name or hashlib.sha256((directory / name).read_bytes()).hexdigest() != digest:
             raise ValueError('checksum mismatch')
+    required = {manifest['archive'], manifest['source']} | {d['archive'] for d in manifest.get('deltas', [])}
+    if manifest.get('installer'): required.add(manifest['installer'])
+    if not required <= checked_names: raise ValueError('Missing required checksums')
     return manifest
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('directory', type=Path)
+    parser.add_argument('--refresh-deltas', action='store_true', help='Publish only added delta metadata for the SAME immutable release')
     parser.add_argument('--seed', type=Path, default=Path.home() / 'Library/Application Support/MultiReleases/Signing/MultiShift.seed')
     parser.add_argument('--sparkle', type=Path, default=Path('/tmp/multishift-sparkle-2.10.0'))
     args = parser.parse_args()
     directory = args.directory.resolve()
     manifest = verify(directory, args.seed, args.sparkle)
+    snapshot_program = "import json;from pathlib import Path;p=Path('/var/www/multishift/current');print(json.dumps({'path':str(p.resolve()),'manifest':json.loads((p/'latest.json').read_text())}))"
+    snapshot = json.loads(subprocess.run(['ssh', REMOTE, 'python3', '-'], input=snapshot_program, text=True, capture_output=True, check=True).stdout)
+    previous = snapshot['manifest']
+    if args.refresh_deltas:
+        validate_refresh(previous, manifest)
+        for delta in manifest['deltas']: require_client_check(manifest, delta['from_build'])
+    else:
+        if manifest['build'] <= previous['build']: raise ValueError('Build number must increase')
+        require_client_check(manifest, previous['build'])
     identity = f"build-{int(manifest['build'])}-{manifest['sha256'][:16]}"
+    if args.refresh_deltas:
+        identity += '-deltas-' + hashlib.sha256((directory / 'appcast.xml').read_bytes()).hexdigest()[:12]
     incoming = BASE + '/incoming-' + uuid.uuid4().hex
     subprocess.run(['ssh', REMOTE, 'mkdir', '-p', incoming], check=True)
-    subprocess.run(['rsync', '-rt', str(directory) + '/', REMOTE + ':' + incoming + '/'], check=True)
+    subprocess.run(['rsync', '-rt', '--link-dest=' + snapshot['path'], str(directory) + '/', REMOTE + ':' + incoming + '/'], check=True)
     # Remote program receives no keys. All paths are generated, not arbitrary shell input.
     program = r'''
 import fcntl, hashlib, json, os
@@ -86,12 +107,24 @@ with (root / '.publish.lock').open('w') as lock:
         raise SystemExit('Release already exists; do not overwrite immutable builds')
     current = root / 'current'
     old = current.resolve() if current.is_symlink() else None
+    if str(old) != EXPECTED_CURRENT:
+        raise SystemExit('Current release changed during upload; retry against the new base')
     if old:
         previous = json.loads((old / 'latest.json').read_text())
-        if int(previous['build']) >= int(manifest['build']):
+        if REFRESH_DELTAS:
+            ignored = {'deltas', 'client_checks'}
+            if {k:v for k,v in previous.items() if k not in ignored} != {k:v for k,v in manifest.items() if k not in ignored}:
+                raise SystemExit('Delta refresh cannot replace immutable artifacts')
+            old_checksums = dict(line.split('  ',1)[::-1] for line in (old / 'SHA256SUMS').read_text().splitlines())
+            new_checksums = dict(line.split('  ',1)[::-1] for line in (incoming / 'SHA256SUMS').read_text().splitlines())
+            if any(new_checksums.get(name) != digest for name,digest in old_checksums.items()):
+                raise SystemExit('Delta refresh changed an immutable checksum')
+        elif int(previous['build']) >= int(manifest['build']):
             raise SystemExit('Build number must increase')
+        if not REFRESH_DELTAS and not any(d.get('from_build') == previous['build'] for d in manifest.get('deltas', [])):
+            raise SystemExit('Missing delta from previous published build')
         # Old ZIP/source links remain available after the directory switch.
-        for pattern in ('MultiShift-*.zip', 'MultiShift-*.dmg', 'MultiShift-*-source.tar.gz'):
+        for pattern in ('MultiShift-*.zip', 'MultiShift-*.dmg', 'MultiShift-*-source.tar.gz', 'MultiShift-*.delta'):
             for archive in old.glob(pattern):
                 destination = incoming / archive.name
                 if not destination.exists():
@@ -110,7 +143,7 @@ with (root / '.publish.lock').open('w') as lock:
     temporary.replace(current)
     print('Published', target.name)
 '''
-    program = 'INCOMING = ' + repr(incoming) + '\nIDENTITY = ' + repr(identity) + '\n' + program
+    program = 'EXPECTED_CURRENT = ' + repr(snapshot['path']) + '\nREFRESH_DELTAS = ' + repr(args.refresh_deltas) + '\n' + 'INCOMING = ' + repr(incoming) + '\nIDENTITY = ' + repr(identity) + '\n' + program
     subprocess.run(['ssh', REMOTE, 'python3', '-'], input=program, text=True, check=True)
     print(URL)
 

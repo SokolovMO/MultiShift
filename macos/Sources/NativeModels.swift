@@ -127,6 +127,7 @@ final class AppModel: ObservableObject {
     let helperURL: URL
     var hasActiveFileOperations: Bool { !activeOperations.isEmpty || !undoOperations.isEmpty }
     private var activeOperations: [UUID: [URL]] = [:]
+    private var operationSummaries: [UUID: String] = [:]
     private var operationStartTimes: [UUID: TimeInterval] = [:]
     private var progressOperations = Set<UUID>()
     private var undoOperations = Set<UUID>()
@@ -311,6 +312,7 @@ final class AppModel: ObservableObject {
             "Select region": "Выделить область",
             "Redaction area": "Область скрытия",
             "Text annotation": "Текстовая подпись",
+            "Trim": "Обрезать",
             "Annotation text": "Текст подписи",
             "Output folder": "Папка результатов",
             "Format": "Формат",
@@ -372,13 +374,17 @@ final class AppModel: ObservableObject {
         let pdf = ext == "pdf"
         let docx = ext == "docx"
         let textFile = ["txt", "md", "csv", "log", "json", "xml", "html", "htm"].contains(ext)
+        let extended = ExtendedFormats.targets(first)
+        let mediaFile = ExtendedFormats.isMedia(first)
         let targets: [String]
         if image { targets = ["PNG", "JPG", "WEBP", "HEIC", "TIFF", "AVIF", "BMP", "PDF", "ICO", "GIF"] }
-        else if pdf { targets = ["JPG", "PNG", "DOCX", "TXT"] }
-        else if docx { targets = ["PDF", "TXT"] }
-        else if textFile { targets = ["PDF", "DOCX"] }
+        else if pdf { targets = ["JPG", "PNG", "DOCX", "TXT", "MD", "HTML", "SVG"] }
+        else if docx { targets = ["PDF", "TXT", "MD", "HTML"] }
+        else if let extended { targets = extended }
+        else if textFile { targets = ["PDF", "DOCX", "MD", "HTML"] }
         else { return [] }
-        let formatItems = targets.map { target in
+        let current = ["jpeg": "JPG", "tif": "TIFF", "heif": "HEIC" ][ext] ?? ext.uppercased()
+        let formatItems = targets.filter { $0 != current }.map { target in
             ActionItem(id: "convert:\(target)", title: target.lowercased(), shortTitle: target.lowercased(),
                        hint: Self.formatHint(target, language: language), symbol: Self.formatSymbol(target))
         }
@@ -395,6 +401,11 @@ final class AppModel: ObservableObject {
                     ("Add BG", "Фон", "Add BG", "square.stack.3d.up"),
                     ("Metadata", "Данные", "Metadata", "info.circle"),
                 ]
+            } else if mediaFile {
+                names = [("Compress", "Сжать", "Compress", "arrow.down.right.and.arrow.up.left"),
+                         ("Trim", "Обрезать", "Trim", "scissors"), ("Edit", "Правка", "Edit", "slider.horizontal.3"),
+                         ("Metadata", "Данные", "Metadata", "info.circle")]
+                if paths.count > 1 { names.append(("Merge", "Объединить", "Merge", "rectangle.stack")) }
             } else if pdf {
                 names = [
                     ("Compress", "Сжать", "Compress", "arrow.down.right.and.arrow.up.left"),
@@ -432,10 +443,14 @@ final class AppModel: ObservableObject {
     func toolActions(for paths: [URL]) -> [ActionItem] { actions(for: paths, mode: "tools") }
 
     func select(_ action: ActionItem, files: [URL]) {
-        let editor = ["Crop", "Add BG", "Annotate", "Redact", "Edit", "Metadata", "Compress", "Resize", "Protect"]
+        if files.count > 1 && (action.id == "tool:Merge" || (action.id == "convert:PDF" && files.allSatisfy { ExtendedFormats.isImage($0) })) {
+            Task { @MainActor [weak self] in self?.delegate?.confirmCombination(files: files, action: action) }
+            return
+        }
+        let editor = ["Trim", "Crop", "Add BG", "Annotate", "Redact", "Edit", "Metadata", "Compress", "Resize", "Protect"]
         if action.isTool, editor.contains(action.id.replacingOccurrences(of: "tool:", with: "")) {
             let name = action.id.replacingOccurrences(of: "tool:", with: "")
-            let firstOnly = ["Crop", "Add BG", "Annotate", "Redact", "Edit", "Metadata", "Protect"].contains(name)
+            let firstOnly = ["Crop", "Add BG", "Annotate", "Redact", "Edit", "Metadata", "Protect", "Trim"].contains(name)
             let selected = firstOnly ? Array(files.prefix(1)) : files
             Task { @MainActor [weak self] in self?.delegate?.openEditor(files: selected, action: action) }
         } else {
@@ -443,8 +458,9 @@ final class AppModel: ObservableObject {
         }
     }
 
-    func perform(action: String, files: [URL], parameters: [String: Any] = [:], completion: (([String]) -> Void)? = nil) {
-        guard !files.isEmpty else { return }
+    @discardableResult
+    func perform(action: String, files: [URL], parameters: [String: Any] = [:], completion: (([String]) -> Void)? = nil) -> UUID? {
+        guard !files.isEmpty else { return nil }
         let operationID = UUID()
         recordOperation(id: operationID, action: action, files: files, outputs: [],
                         failures: [], status: .running,
@@ -460,6 +476,7 @@ final class AppModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: progress)
         executeOperation(id: operationID, action: action, files: files, parameters: parameters,
                          retriedAccessIndices: [], progress: progress, completion: completion)
+        return operationID
     }
 
     func preview(url: URL, maxSide: Int = 1800,
@@ -522,6 +539,23 @@ final class AppModel: ObservableObject {
         }
     }
 
+    @MainActor func openOutput(at path: String) {
+        let result = OutputOpening.open(path: path) { NSWorkspace.shared.open($0) }
+        switch result {
+        case .opened: return
+        case .missing:
+            delegate?.showError(title: language == "ru" ? "Файл не найден" : "File not found",
+                detail: language == "ru"
+                    ? "Файл результата больше не находится по сохранённому адресу. Его могли переместить или удалить. Запись в истории не хранит отдельную копию файла."
+                    : "The output is no longer at its saved location. It may have been moved or deleted. History does not store a separate copy of the file.")
+        case .failed:
+            delegate?.showError(title: language == "ru" ? "Не удалось открыть файл" : "Could not open file",
+                detail: language == "ru"
+                    ? "macOS не удалось открыть результат. Проверьте доступ к файлу и приложение по умолчанию для этого формата."
+                    : "macOS could not open the output. Check file access and the default application for this format.")
+        }
+    }
+
     func showPathsInFinder(_ files: [String]) {
         let urls = files.map(URL.init(fileURLWithPath:))
         NSWorkspace.shared.activateFileViewerSelecting(urls)
@@ -539,7 +573,7 @@ final class AppModel: ObservableObject {
             guard let self else { return }
             do {
                 let destination = outputMode == "custom" ? try OutputFolderPreference.resolve(defaults: Self.defaults) : nil
-                let job = try coordinator.stage(files, id: id)
+                let job = try coordinator.stage(files, id: id, allowFolders: action == "convert:ZIP" || action == "convert:TAR.GZ")
                 let request: [String: Any] = [
                     "request_id": id.uuidString, "action": action,
                     "files": job.inputs.map { $0.stagedURL.path },
@@ -547,6 +581,8 @@ final class AppModel: ObservableObject {
                     "settings": ["output": outputMode == "custom" ? "next" : outputMode, "jpg_quality": quality, "pdf_dpi": dpi],
                 ]
                 let response = try EngineClient().execute(executable: self.helperURL, request: request)
+                let summary = OperationSummary.describe(response["metrics"] as? [String: Any] ?? [:], language: self.language)
+                DispatchQueue.main.async { self.operationSummaries[id] = summary }
                 let rawOutputs = response["outputs"] as? [String] ?? []
                 let failureObjects = response["failures"] as? [[String: Any]] ?? []
                 let engineVersion = response["engine_version"] as? String
@@ -697,11 +733,12 @@ final class AppModel: ObservableObject {
         progressOperations.remove(id)
         refreshOperationState()
         let status = explicitStatus ?? (outputs.isEmpty ? .failed : (failures.isEmpty ? .completed : .partial))
+        let summary = operationSummaries.removeValue(forKey: id) ?? ""
         let detail = explicitDetail ?? (outputs.isEmpty
             ? (failures.first?.message ?? text("No files were created."))
             : (language == "ru"
                 ? "сохранено файлов: \(outputs.count) · ошибок: \(failures.count)"
-                : "saved files: \(outputs.count) · failed: \(failures.count)"))
+                : "saved files: \(outputs.count) · failed: \(failures.count)")) + (summary.isEmpty ? "" : "\n" + summary)
         recordOperation(id: id, action: action, files: files, outputs: outputs.map(\.path),
                         failures: failures, status: status, detail: detail, postNotification: notify,
                         engineVersion: engineVersion)
