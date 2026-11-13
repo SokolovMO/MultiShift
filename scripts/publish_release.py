@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import uuid
 import xml.etree.ElementTree as ET
-from build_release import NS, key_material, sign
+from build_release import ROOT, NS, key_material, sign
 from release_deltas import validate_deltas, require_client_check, validate_refresh
 
 REMOTE = 'vyrex_nl_project'
@@ -45,6 +45,14 @@ def verify(directory, seed, sparkle):
         allowed.add(installer)
     allowed |= validate_deltas(directory, manifest, item, URL,
                                lambda path, signature: sign(sparkle / 'bin/sign_update', key, path, verify=True, signature=signature))
+    # Optional public media must exactly match the reviewed repository assets.
+    for name in ('multishift-demo.mp4', 'multishift-demo-poster.png'):
+        media = directory / name
+        if media.exists():
+            expected = ROOT / 'release-site' / name
+            if not expected.is_file() or hashlib.sha256(media.read_bytes()).digest() != hashlib.sha256(expected.read_bytes()).digest():
+                raise ValueError('public media differs from reviewed asset: ' + name)
+            allowed.add(name)
     if any(p.name not in allowed or p.is_symlink() or not p.is_file() for p in directory.iterdir()):
         raise ValueError('unexpected distribution file; refuse to upload extra files')
     checked_names = set()

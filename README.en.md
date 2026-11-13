@@ -25,6 +25,12 @@ MultiShift is a native macOS app for conversion and editing right from Finder.
 Start dragging, press Shift or your configured key, and drop onto an action in the wheel.
 The result is a new copy; your original stays where it was.
 
+<a href="https://sokolovmo.ru/multishift/#video">
+  <img src=".github/assets/multishift-demo.gif" alt="multishift: photo.png → shift → webp; a new copy, with the original preserved" width="800">
+</a>
+
+<sub>A 10-second product demo. <a href="https://sokolovmo.ru/multishift/#video">watch the full video with sound</a>.</sub>
+
 - **Images.** Convert, resize, crop, reflect, annotate, redact, remove metadata,
   and compress toward a size limit. Preview before saving.
 - **Documents.** PDF, Word, Markdown, HTML, spreadsheets, presentations, ebooks,

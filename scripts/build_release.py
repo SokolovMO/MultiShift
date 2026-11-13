@@ -173,6 +173,11 @@ def main():
                              '@SOURCE@': source.name, '@RELEASE_URL@': base.rstrip('/')}.items():
             page = page.replace(token, value)
         (output / 'index.html').write_text(page)
+        # Keep the product demo available after a future application release.
+        for name in ('multishift-demo.mp4', 'multishift-demo-poster.png'):
+            asset = ROOT / 'release-site' / name
+            if asset.is_file():
+                shutil.copyfile(asset, output / name)
         for name in ['LICENSE', 'THIRD-PARTY-NOTICES.md']:
             shutil.copyfile(ROOT / name, output / name)
         (output / 'SHA256SUMS').write_text(''.join(f'{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.name}\n' for p in [archive, dmg, source] + [output / d["archive"] for d in manifest["deltas"]]))

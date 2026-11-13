@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 import plistlib
+import shutil
 import xml.etree.ElementTree as ET
 from pathlib import Path
 import subprocess
@@ -70,6 +71,18 @@ class DistributionTests(unittest.TestCase):
             appcast.write_bytes(feed('0.3.0', '2', 'https://sokolovmo.ru/multishift/', archive.name, signature, archive.stat().st_size, source.name))
             sign(SPARKLE / 'bin/sign_update', key, appcast)
             self.assertEqual(verify(directory, seed, SPARKLE)['build'], 2)
+            media = directory / 'multishift-demo.mp4'
+            shutil.copyfile(scripts.parent / 'release-site' / media.name, media)
+            self.assertEqual(verify(directory, seed, SPARKLE)['build'], 2)
+            media.write_bytes(b'changed public video')
+            with self.assertRaisesRegex(ValueError, 'public media differs'):
+                verify(directory, seed, SPARKLE)
+            media.unlink()
+            unexpected = directory / 'unreviewed-video.mp4'
+            unexpected.write_bytes(b'unreviewed extra')
+            with self.assertRaisesRegex(ValueError, 'unexpected distribution file'):
+                verify(directory, seed, SPARKLE)
+            unexpected.unlink()
             original_dmg = dmg.read_bytes()
             dmg.write_bytes(b'changed installer')
             with self.assertRaises(ValueError):

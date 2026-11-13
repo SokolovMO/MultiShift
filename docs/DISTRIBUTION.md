@@ -143,3 +143,25 @@ HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew upgrade --cask SokolovMO/apps/multi
 из репозитория homebrew-apps, проверить diff и опубликовать cask. Обычный выпуск
 приложения сам по себе не обновляет tap. `auto_updates true` оставляет плановые
 обновления Sparkle; явно названный cask обновляется и через Homebrew.
+
+## Видео на странице продукта
+
+Готовые публичные материалы — `release-site/multishift-demo.mp4` и
+`release-site/multishift-demo-poster.png`. Исходники видеопроизводства, записи,
+сэмплы и отчёты остаются локально в игнорируемой папке `marketing/remotion/`.
+README на обоих языках содержит GIF-превью с переходом к видео на сайте.
+
+Точечная публикация страницы и медиа без выпуска приложения:
+
+```sh
+python3 scripts/publish_site.py multishift release-site/index.html \
+  --asset release-site/multishift-demo.mp4 \
+  --asset release-site/multishift-demo-poster.png
+```
+
+Скрипт проверяет снимок текущей публикации, загружает и сверяет медиа по SHA256,
+сохраняет прежние файлы выпуска hardlink-копиями и атомарно переключает `current`.
+`previous` сохраняет прежнюю страницу для возврата. `latest.json`, `appcast.xml`,
+ZIP, DMG и дельты остаются прежними; nginx не перезапускается. Сборщик будущих
+выпусков переносит эти два файла, а проверка выпуска принимает их только при
+точном совпадении с материалами из `release-site/`.

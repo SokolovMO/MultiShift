@@ -39,3 +39,6 @@ e2e_*_out/
 
 # Upstream donation config retained locally, not used by MultiShift
 /.github/FUNDING.yml
+
+# Local product video: sources, recordings and reports
+/marketing/remotion/
