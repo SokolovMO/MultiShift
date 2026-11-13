@@ -49,5 +49,5 @@ See [DISTRIBUTION.md](docs/DISTRIBUTION.md) for the signing, client checks, and 
 
 By submitting a contribution, you agree that it may be distributed under the project's
 [GNU AGPL v3 license](LICENSE), preserving any required third-party notices.
-Please follow the [code of conduct](CODE_OF_CONDUCT.md).
-Report security issues privately as described in [SECURITY.md](SECURITY.md).
+Please follow the [code of conduct](CODE_OF_CONDUCT.en.md).
+Report security issues privately as described in [SECURITY.md](SECURITY.en.md).

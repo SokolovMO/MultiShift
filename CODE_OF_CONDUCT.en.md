@@ -23,6 +23,6 @@ when doing so does not expose private information or increase harm.
 For a conduct concern, contact the maintainer through an available contact listed on
 [their GitHub profile](https://github.com/SokolovMO). If no private channel is available, open an
 issue requesting a private contact without identifying affected people or publishing details.
-Security vulnerabilities have a separate [private reporting process](SECURITY.md).
+Security vulnerabilities have a separate [private reporting process](SECURITY.en.md).
 
 These expectations apply to issues, pull requests, discussions, and other project-managed spaces.

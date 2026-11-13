@@ -16,7 +16,7 @@
 <p align="center">
   <b><a href="https://sokolovmo.ru/multishift/">Download for macOS</a></b> &nbsp;·&nbsp;
   <a href="#install">Install</a> &nbsp;·&nbsp;
-  <a href="SUPPORT.md">Get help</a> &nbsp;·&nbsp;
+  <a href="SUPPORT.en.md">Get help</a> &nbsp;·&nbsp;
   <a href="https://github.com/SokolovMO/MultiShift/issues/new/choose">Report a bug</a>
 </p>
 
@@ -84,7 +84,7 @@ For **0.4.0 → 0.4.1**, the patch is **183 KiB** versus a **124 MiB** full ZIP.
 Future patch sizes depend on the changes. First installations and Homebrew use the full package.
 Feeds, archives, and patches use Ed25519 signatures, separate from Apple notarization.
 
-[Changelog](CHANGELOG.md) · [Delta verification](docs/DELTA-UPDATES-2026-11-13.md)
+[Changelog](CHANGELOG.en.md) · [Delta verification](docs/DELTA-UPDATES-2026-11-13.md)
 
 ## Your files stay on your Mac
 
@@ -93,7 +93,7 @@ MultiShift reads drag/shortcut state to show the action wheel and can request no
 
 Update checks contact the release server. Choosing to open an image location sends coordinates
 to OpenStreetMap in your browser. Keep private file names, documents, and raw logs out of public
-reports. Read [Privacy](docs/PRIVACY.md) and [Security](SECURITY.md).
+reports. Read [Privacy](docs/PRIVACY.md) and [Security](SECURITY.en.md).
 
 ## Build from source
 
@@ -119,12 +119,12 @@ update checking is disabled by default in development builds.
 
 [Report a bug](https://github.com/SokolovMO/MultiShift/issues/new?template=bug_report.yml),
 [suggest a feature](https://github.com/SokolovMO/MultiShift/issues/new?template=feature_request.yml),
-or read [Contributing](CONTRIBUTING.md) before sending a pull request.
+or read [Contributing](CONTRIBUTING.en.md) before sending a pull request.
 English and Russian are welcome. Use synthetic examples and remove private data from captures
-and logs. [Help](SUPPORT.md) · [Code of conduct](CODE_OF_CONDUCT.md)
+and logs. [Help](SUPPORT.en.md) · [Code of conduct](CODE_OF_CONDUCT.en.md)
 
 Security concerns belong in [private vulnerability reports](https://github.com/SokolovMO/MultiShift/security/advisories/new),
-not public issues. See the [security policy](SECURITY.md).
+not public issues. See the [security policy](SECURITY.en.md).
 
 ## Other apps
 
