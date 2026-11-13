@@ -1,31 +1,32 @@
-# Security policy
+<p align="right"><b>Русский</b> · <a href="SECURITY.en.md">English</a></p>
 
-## Supported builds
+# Политика безопасности
 
-Security fixes target the latest published MultiShift version. Older versions should be updated.
-MultiShift is an early-stage project; there is no guaranteed response or remediation deadline.
+## Поддерживаемые сборки
 
-## Report a vulnerability privately
+Исправления безопасности предназначены для последней опубликованной версии MultiShift.
+Старые версии следует обновить. Проект ранний; гарантированного срока ответа или исправления нет.
 
-Use GitHub's **Security → Report a vulnerability** on this repository:
+## Сообщить об уязвимости
 
-https://github.com/SokolovMO/MultiShift/security/advisories/new
+Используйте **Security → Report a vulnerability**:
 
-Include the affected version/build, macOS version, impact, and minimal reproduction steps.
-Use synthetic files. Do not post credentials, private documents, or exploit details in a public issue.
-If private reporting is temporarily unavailable, open a public issue asking the maintainer to
-provide a private reporting channel, without disclosing the vulnerability itself.
+[Отправить приватный отчёт](https://github.com/SokolovMO/MultiShift/security/advisories/new).
 
-## Trust model
+Укажите версию/build, macOS, последствия и минимальные шаги воспроизведения.
+Используйте синтетические файлы. Не публикуйте секреты, личные документы и детали
+эксплуатации в открытых Issues. Если приватный канал недоступен, создайте Issue с просьбой
+предоставить канал связи, без раскрытия уязвимости.
 
-- The current app is ad-hoc signed and is not notarized by Apple.
-- Distributed update archives, delta patches, and the appcast use a persistent Ed25519 key.
-  Update signatures and Apple code signing/notarization serve different purposes.
-- Full archives remain available if a matching delta is absent or patching fails.
-- Local development builds do not enable the production updater by default.
-- Production signing seeds and server credentials must never be committed or uploaded to CI.
-- Converters parse complex, potentially untrusted formats. Avoid opening unknown files until
-  you trust their origin; conversion is not a malware-sanitization guarantee.
+## Модель доверия
 
-The automated checks cover secret patterns, tests, bundle integrity, and release validation.
-They do not constitute a complete security audit. See [privacy notes](docs/PRIVACY.md).
+- Приложение подписано ad-hoc и пока не нотарифицировано Apple.
+- Архивы, дельты и appcast подписываются постоянным ключом Ed25519.
+  Подпись обновлений и нотарификация Apple решают разные задачи.
+- Полный архив остаётся резервом при отсутствии подходящей дельты или ошибке применения.
+- Локальная сборка для разработки по умолчанию не включает production-updater.
+- Ключ издателя и серверные доступы не должны попадать в Git или CI.
+- Конвертеры читают сложные форматы. Конвертация не гарантирует очистку файла от вредоносного содержимого.
+
+Автоматические проверки охватывают шаблоны секретов, тесты, целостность bundle и выпуск.
+Это не полный аудит безопасности. [Приватность](docs/PRIVACY.md).

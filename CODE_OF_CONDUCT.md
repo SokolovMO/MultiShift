@@ -1,26 +1,27 @@
-# Code of conduct
+<p align="right"><b>Русский</b> · <a href="CODE_OF_CONDUCT.en.md">English</a></p>
 
-MultiShift welcomes participation in English and Russian. Help make the project useful and
-approachable for people with different experience levels and backgrounds.
+# Правила общения
 
-## Expected behavior
+MultiShift открыт для участников с разным опытом. Русский и английский приветствуются.
 
-Be respectful, discuss ideas and behavior rather than attacking people, give actionable feedback,
-and accept corrections. Credit other people's work. Protect people's privacy when sharing examples,
-logs, and screenshots.
+## Ожидания
 
-Harassment, discrimination, threats, sexualized attention, personal attacks, spam, and publishing
-someone's private information without consent are not acceptable in project spaces.
+Общайтесь уважительно, обсуждайте идеи и поведение, давайте конкретную обратную связь
+и принимайте исправления. Указывайте авторство чужой работы и защищайте приватность
+людей при публикации примеров, журналов и снимков.
 
-## Moderation
+Недопустимы травля, дискриминация, угрозы, нежелательное сексуализированное внимание,
+личные нападки, спам и публикация чужой личной информации без согласия.
 
-Maintainers may edit or remove contributions that violate these expectations, close discussions,
-and temporarily or permanently limit participation. They should explain moderation decisions
-when doing so does not expose private information or increase harm.
+## Модерация
 
-For a conduct concern, contact the maintainer through an available contact listed on
-[their GitHub profile](https://github.com/SokolovMO). If no private channel is available, open an
-issue requesting a private contact without identifying affected people or publishing details.
-Security vulnerabilities have a separate [private reporting process](SECURITY.md).
+Сопровождающие могут редактировать или удалять нарушающие эти правила материалы,
+закрывать обсуждения и ограничивать участие временно или постоянно. Причину следует
+объяснять, когда это не раскрывает личные данные и не увеличивает вред.
 
-These expectations apply to issues, pull requests, discussions, and other project-managed spaces.
+Для обращения о поведении используйте доступный контакт из
+[профиля сопровождающего](https://github.com/SokolovMO). Если приватного канала нет,
+создайте Issue с просьбой предоставить его, без имён участников и деталей происшествия.
+Для уязвимостей существует отдельный [приватный процесс](SECURITY.md).
+
+Правила действуют в Issues, PR и других пространствах проекта.

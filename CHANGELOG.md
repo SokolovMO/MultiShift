@@ -1,9 +1,13 @@
-# Changelog
+# История изменений / Changelog
 
 User-facing changes to MultiShift. Versions refer to the published macOS app; repository-only
 work is listed separately. The project is in early 0.x development.
 
-## Unreleased
+## Не выпущено / Unreleased
+
+- Общее оформление с MultiSwitcher: русский README по умолчанию, английский по ссылке,
+  светлая/тёмная обложки, помощь и шаблоны участия. Только документация и ассеты;
+  код приложения, опубликованные пакеты и дельта-обновления не менялись.
 
 - Split crop-field numeric bindings into typed helpers for hosted Swift compiler compatibility.
 

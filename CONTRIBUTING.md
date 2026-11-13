@@ -1,14 +1,16 @@
-# Contributing to MultiShift
+<p align="right"><b>Русский</b> · <a href="CONTRIBUTING.en.md">English</a></p>
 
-Thank you for helping improve MultiShift. English and Russian reports and pull requests are welcome.
-Start with an [issue](https://github.com/SokolovMO/MultiShift/issues/new/choose) for a substantial
-feature so the interaction and scope can be discussed before implementation.
+# Участие в MultiShift
 
-## Set up
+Принимаем Issues и PR на русском и английском. Для крупных изменений сначала
+[опишите задачу](https://github.com/SokolovMO/MultiShift/issues/new/choose), чтобы согласовать
+сценарий и объём работы. [Архитектура](docs/ARCHITECTURE.md) · [Правила проекта](AGENTS.md)
 
-Use macOS 14+, Xcode with its macOS SDK, and Python 3.12. Install dependencies as shown in the
-[README](README.md#build-from-source). You do not need production credentials, an Apple
-Developer account, or the maintainer's release signing key. Local builds disable update checks.
+## Окружение и проверки
+
+Нужны macOS 14+, Xcode с macOS SDK и Python 3.12. Установка зависимостей — в
+[README](README.md#сборка-из-исходников). Для разработки не нужны доступ к серверу,
+Apple Developer или ключ издателя; обновления в локальной сборке отключены.
 
 ```sh
 QT_QPA_PLATFORM=offscreen python -m pytest -q
@@ -16,36 +18,34 @@ swift test --package-path macos
 bash scripts/build_macos.sh
 ```
 
-The native core tests run without driving the desktop. Tests requiring optional external tools
-can skip when those tools are unavailable. A successful unit run does not establish that Finder
-dragging, notification clicks, or a full GUI update works; verify relevant interactions on a Mac
-and describe what you actually observed.
+Swift-тесты ядра не управляют рабочим столом. Проверки необязательных внешних
+инструментов могут пропускаться. Успешный тест не подтверждает перетаскивание из Finder,
+нажатие уведомления или полный GUI-переход обновления: проверяйте затронутые сценарии
+на Mac и указывайте, что действительно наблюдали.
 
-## Make a change
+## Изменения и PR
 
-- Keep pull requests focused. Describe the user-visible problem and resulting behavior.
-- Preserve original files. Process outputs in private staging and publish copies only after success.
-- Use system components for native windows, dialogs, settings, and notifications. Support both
-  appearances, keyboard operation, and English/Russian text.
-- Add meaningful tests for changed behavior. Document required optional tools and conversion limits.
-- Preserve dependency copyright notices. Explain the origin and license of reused code or assets.
-- Do not include private documents, history, credentials, signing seeds, compiled apps, or QA recordings.
-  Use synthetic fixtures; crop or redact reports before sharing.
-- Follow [AGENTS.md](AGENTS.md), especially the verified-delta requirements for releases.
+- Одна понятная задача на PR: проблема, новое поведение, выполненные проверки и ограничения.
+- Оригиналы файлов сохраняются; промежуточные данные обрабатываются в приватной папке,
+  результат публикуется как копия после успешной операции.
+- Используйте нативные компоненты macOS, поддерживайте клавиатуру, обе темы и оба языка.
+- Добавляйте содержательные тесты поведения; документируйте внешние зависимости и границы форматов.
+- Сохраняйте copyright и лицензии; указывайте происхождение заимствованного кода и ассетов.
+- Не добавляйте личные документы, историю, ключи, секреты, приложения и QA-записи в Git.
+  Используйте синтетические примеры и проверяйте снимки перед отправкой.
+- Соблюдайте [AGENTS.md](AGENTS.md), особенно обязательные проверки дельта-обновлений.
 
-Use a branch such as `fix/result-opening` and a clear commit title such as
-`fix: explain when an output file is missing`. In the pull request include the validation
-performed and any limitations. The default CI builds the app without production secrets.
+Пример ветки: `fix/result-opening`. Пример коммита: `fix: explain missing output files`.
+CI собирает приложение без production-секретов.
 
-## Release changes
+## Выпуски
 
-Only maintainers publish production artifacts. Do not replace an archive under an existing
-build number. Preserve old signed bases and generate a delta from the previous public build.
-See [DISTRIBUTION.md](docs/DISTRIBUTION.md) for the signing, client checks, and rollback process.
+Production-выпуски публикует сопровождающий. Не заменяйте архив под уже выпущенным build.
+Сохраняйте подписанную исходную сборку и создавайте дельту от предыдущего публичного выпуска.
+[Сборка, подпись, клиентские проверки и возврат](docs/DISTRIBUTION.md).
 
-## Licensing and conduct
+## Лицензия и общение
 
-By submitting a contribution, you agree that it may be distributed under the project's
-[GNU AGPL v3 license](LICENSE), preserving any required third-party notices.
-Please follow the [code of conduct](CODE_OF_CONDUCT.md).
-Report security issues privately as described in [SECURITY.md](SECURITY.md).
+Вклад распространяется под [GNU AGPL v3](LICENSE) с сохранением обязательных сторонних
+уведомлений. Соблюдайте [правила общения](CODE_OF_CONDUCT.md).
+Уязвимости сообщайте [приватно](SECURITY.md).

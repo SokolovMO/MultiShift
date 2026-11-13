@@ -2,7 +2,10 @@ blank_issues_enabled: false
 contact_links:
   - name: Security vulnerability / Уязвимость
     url: https://github.com/SokolovMO/MultiShift/security/advisories/new
-    about: Report sensitive security details privately.
+    about: Сообщите об уязвимости приватно / Report security details privately.
   - name: Installation and updates / Установка и обновления
     url: https://sokolovmo.ru/multishift/
     about: Download the current macOS version.
+  - name: Помощь / Get help
+    url: https://github.com/SokolovMO/MultiShift/blob/main/SUPPORT.md
+    about: Установка, форматы, результаты и обновления / Installation and troubleshooting.

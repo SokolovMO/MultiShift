@@ -1,110 +1,106 @@
-<p align="center">
-  <img src="docs/assets/banner.svg" alt="MultiShift — file actions, right where you work" width="100%">
-</p>
-
-<p align="center">
-  <a href="https://sokolovmo.ru/multishift/"><strong>Download for macOS</strong></a> ·
-  <a href="#how-it-works">How it works</a> ·
-  <a href="docs/DISTRIBUTION.md">Build &amp; release</a> ·
-  <a href="docs/README.ru.md">Русский</a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/SokolovMO/MultiShift/actions/workflows/macos.yml"><img src="https://github.com/SokolovMO/MultiShift/actions/workflows/macos.yml/badge.svg" alt="Build and tests"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-242428" alt="AGPL-3.0 license"></a>
-  <img src="https://img.shields.io/badge/macOS-14%2B-242428" alt="macOS 14 or later">
-  <img src="https://img.shields.io/badge/Apple-Silicon-242428" alt="Apple Silicon">
-</p>
-
-MultiShift puts conversion and editing one gesture away in Finder. Start dragging a file,
-press your chosen shortcut, and drop it onto an action. The result is a new copy;
-your original stays where it was.
-
-A native SwiftUI/AppKit interface, a local Python conversion engine, and a small menu bar
-companion. English and Russian, light and dark appearances, batch jobs, and operation history.
-
-## How it works
-
-1. **Drag** a file or a selection from Finder.
-2. **Press Shift** (or your configured key) to open the action wheel.
-3. **Drop** onto a format or tool. Review, edit, or save the resulting copy.
-
-Open the result, reveal it in Finder, or undo a completed operation by moving its output
-to the Trash. A missing output produces an explanation instead of a silent Open button.
-
-<details>
-<summary><strong>See the interface</strong></summary>
-
-Project screenshots illustrating the workflow; individual controls may differ in newer builds.
+<p align="right"><b>Русский</b> · <a href="README.en.md">English</a></p>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/onboarding-dark.png">
-  <img src="docs/screenshots/onboarding-light.png" alt="MultiShift introduction showing drag, shortcut, and action selection" width="760">
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/header-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset=".github/assets/header-light.svg">
+  <img src=".github/assets/header-light.svg" alt="MultiShift — photo.png → photo.webp: обработайте копию, сохраните оригинал" width="1280">
 </picture>
+
+<p align="center">
+  <a href="https://github.com/SokolovMO/MultiShift/actions/workflows/macos.yml"><img src="https://github.com/SokolovMO/MultiShift/actions/workflows/macos.yml/badge.svg?branch=main" alt="Сборка и проверки"></a>
+  <img src="https://img.shields.io/badge/macOS-14%2B-1f2328?logo=apple&amp;logoColor=white" alt="macOS 14+">
+  <img src="https://img.shields.io/badge/Apple_silicon-arm64-59636e" alt="Apple silicon arm64">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-59636e" alt="GNU AGPL v3"></a>
+</p>
+
+<p align="center">
+  <b><a href="https://sokolovmo.ru/multishift/">Скачать для macOS</a></b> &nbsp;·&nbsp;
+  <a href="#установка">Установка</a> &nbsp;·&nbsp;
+  <a href="SUPPORT.md">Помощь</a> &nbsp;·&nbsp;
+  <a href="https://github.com/SokolovMO/MultiShift/issues/new/choose">Сообщить об ошибке</a>
+</p>
+
+## Перетащите файл. Обработайте копию.
+
+MultiShift — нативное macOS-приложение для конвертации и обработки файлов прямо из Finder.
+Начните перетаскивание, нажмите Shift или выбранную клавишу и отпустите файл на действии
+в круговом меню. Результат сохраняется как копия, оригинал остаётся на месте.
+
+- **Изображения.** Форматы, размер, обрезка, отражение, разметка, скрытие областей,
+  удаление метаданных и сжатие до лимита с предпросмотром.
+- **Документы.** PDF, Word, Markdown, HTML, таблицы, презентации, электронные книги,
+  SVG и субтитры. Объединение файлов с выбором порядка.
+- **Аудио и видео.** Конвертация, извлечение звука, обрезка, скорость, громкость,
+  сжатие и метаданные. FFmpeg включён в приложение.
+- **Архивы.** Создание ZIP/TAR.GZ из файлов и папок.
+- **Рабочий процесс.** Пакетные задачи, история, папка результатов, системные уведомления,
+  открытие результата в Finder и отмена через Корзину.
+- **Нативный интерфейс.** SwiftUI/AppKit, русский и английский, светлая и тёмная темы.
+
+Доступные действия зависят от формата. Старые DOC/XLS/PPT требуют LibreOffice отдельно;
+сложные преобразования документов могут требовать ручной правки. OCR сканированных PDF
+не включён. [Возможности и границы проверки](docs/NATIVE-FEATURES-2026-11-12.md).
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/chooser-dark.png">
-  <img src="docs/screenshots/chooser-light.png" alt="Native action chooser with file formats and tools" width="540">
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/screenshot-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset=".github/assets/screenshot-light.png">
+  <img src=".github/assets/screenshot-light.png" alt="Выбор формата и инструментов для изображения в MultiShift" width="620">
 </picture>
-</details>
 
-## What you can do
+<sub>Реальный снимок интерфейса из проверки проекта. Отдельные элементы в новых сборках могут отличаться; снимок следует выбранной теме.</sub>
 
-- **Images:** convert formats; resize, crop, rotate, reflect, annotate, redact, remove metadata,
-  and compress toward a size limit. Preview edits before saving.
-- **PDFs and documents:** combine files in a chosen order; work with PDF, Word, Markdown,
-  HTML, spreadsheets, presentations, ebooks, SVG, and subtitles. Routes depend on the input format.
-- **Audio and video:** convert, extract audio, trim, compress, adjust speed or volume,
-  and edit metadata. FFmpeg is included in the distributed app.
-- **Archives:** package files and folders as ZIP or TAR.GZ copies.
-- **Everyday workflow:** batch processing, history, custom output locations, native result
-  notifications, Finder actions, and safe undo of generated files.
+## Установка
 
-Legacy DOC/XLS/PPT routes require a separately installed LibreOffice. Complex document
-conversions can need manual corrections; scanned PDF OCR is not included.
-See [feature and verification notes](docs/NATIVE-FEATURES-2026-11-12.md).
+**Нужны macOS 14+ и Mac с Apple Silicon.** Выпуски для Intel здесь не предоставляются.
 
-## Install
+### Скачать приложение
 
-**macOS 14 or later · Apple Silicon**
+1. Скачайте DMG с [официальной страницы](https://sokolovmo.ru/multishift/)
+   или из [GitHub Releases](https://github.com/SokolovMO/MultiShift/releases/latest).
+2. Перенесите **MultiShift** в **«Программы»** и откройте.
+3. Начните перетаскивать файл и нажмите Shift; клавишу можно изменить в настройках.
 
-[Download the DMG](https://sokolovmo.ru/multishift/) and drag MultiShift to Applications.
-The app is currently **ad-hoc signed and not notarized by Apple**. macOS may require an
-explicit opening approval in System Settings → Privacy & Security. This is an early 0.x release.
+> [!IMPORTANT]
+> Это ранняя версия 0.x с независимой раздачей. Приложение подписано **ad-hoc** и пока
+> **без нотарификации Apple**. macOS может потребовать разрешить первый запуск в
+> «Системных настройках → Конфиденциальность и безопасность».
 
-Prefer Homebrew?
+### Homebrew
 
 ```sh
 brew tap SokolovMO/apps
 HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask SokolovMO/apps/multishift
 ```
 
-The opt-in permits installation of this unnotarized app. See the
-[distribution guide](docs/DISTRIBUTION.md) for verification and installation details.
+Переменная явно разрешает установку этой ненотарифицированной сборки. Подробности
+проверки подписи, установки и обновления — в [инструкции по раздаче](docs/DISTRIBUTION.md).
 
-### Small updates
+## Обновления
 
-Sparkle checks for updates and asks before installing. Matching versions download a signed
-**delta patch**, with the full archive available as a recovery fallback. For **0.4.0 → 0.4.1**,
-the patch is **183 KiB**, compared with a **124 MiB** full ZIP. Future patch sizes depend on
-what changes. First installations and Homebrew upgrades use the full package.
+Sparkle проверяет обновления и запрашивает подтверждение установки. Для подходящей
+исходной версии скачивается подписанная **дельта**, полный архив остаётся резервом
+при отсутствии подходящей базы или ошибке применения.
 
-The feed, archives, and patches use Ed25519 signatures. This update signing is separate
-from Apple notarization. [How delta updates are verified](docs/DELTA-UPDATES-2026-11-13.md).
+Переход **0.4.0 → 0.4.1**: **183 КиБ** вместо **124 МиБ** полного ZIP.
+Размер будущих дельт зависит от изменений. Первая установка и Homebrew используют полный пакет.
+Лента, архивы и патчи подписаны Ed25519; это отдельный механизм от нотарификации Apple.
 
-## Privacy and permissions
+[История изменений](CHANGELOG.md) · [Проверка дельты](docs/DELTA-UPDATES-2026-11-13.md)
 
-File processing runs on your Mac. No conversion account or cloud upload is required.
-MultiShift monitors drag/shortcut state to display its action wheel and can request notification
-permission. Update checks contact the configured release server; opening a location in a map
-opens OpenStreetMap in your browser. Keep private file names out of public bug reports.
+## Файлы обрабатываются на вашем Mac
 
-Read the [privacy notes](docs/PRIVACY.md) and [security policy](SECURITY.md).
+Для конвертации не нужны аккаунт или облачная загрузка. История операций и настройки
+хранятся локально. MultiShift отслеживает состояние перетаскивания и клавиши для меню,
+может запросить разрешение на системные уведомления.
 
-## Build from source
+Проверка обновлений обращается к серверу раздачи. Открытие геометки передаёт координаты
+OpenStreetMap через браузер. Не публикуйте личные имена файлов, документы и необработанные
+журналы в Issues. [Приватность](docs/PRIVACY.md) · [Безопасность](SECURITY.md)
 
-Use macOS 14+, Xcode with the macOS SDK, and Python 3.12. This repository contains the native
-macOS app plus its inherited Python engine; Windows and Linux releases are not maintained here.
+## Сборка из исходников
+
+Нужны macOS 14+, Xcode с macOS SDK и Python 3.12. Здесь поддерживается нативный выпуск
+macOS; унаследованные исходники Windows/Linux не означают поддержку этих платформ.
 
 ```sh
 git clone --depth 1 https://github.com/SokolovMO/MultiShift.git
@@ -117,22 +113,32 @@ swift test --package-path macos
 bash scripts/build_macos.sh
 ```
 
-The local app is written to `dist/MultiShift.app`; update checking is disabled by default for
-independent development builds. No release signing key or server access is needed.
+Приложение появится в `dist/MultiShift.app`. Для локальной сборки не нужны серверные
+доступы или ключ обновлений; обновления по умолчанию отключены в сборке для разработки.
+[Архитектура](docs/ARCHITECTURE.md) · [Публикация](docs/DISTRIBUTION.md)
 
-- [Contributing and checks](CONTRIBUTING.md)
-- [Architecture](docs/ARCHITECTURE.md)
-- [Release and delta-update workflow](docs/DISTRIBUTION.md)
-- [Changes](CHANGELOG.md)
-- [Report a bug or suggest a feature](https://github.com/SokolovMO/MultiShift/issues/new/choose)
+## Участие
 
-## Credits and license
+[Сообщите об ошибке](https://github.com/SokolovMO/MultiShift/issues/new?template=bug_report.yml),
+[предложите возможность](https://github.com/SokolovMO/MultiShift/issues/new?template=feature_request.yml)
+или прочитайте [правила участия](CONTRIBUTING.md) перед отправкой PR.
+Принимаем русский и английский. Используйте синтетические примеры и удаляйте личные
+данные из снимков и журналов. [Помощь](SUPPORT.md) · [Правила общения](CODE_OF_CONDUCT.md)
 
-MultiShift is a macOS-focused derivative of [DragShift](https://github.com/llamaboi55/DragShift)
-by its contributors. The original project and adapted contributions retain their MIT notices.
-MultiShift adds the native macOS shell, Finder workflow, result notifications, history,
-editing tools, and independently hosted signed updates.
+Уязвимости направляйте через [приватный отчёт](https://github.com/SokolovMO/MultiShift/security/advisories/new),
+а не в публичный Issue. Подробнее — [политика безопасности](SECURITY.md).
 
-The combined MultiShift project is distributed under [GNU AGPL v3](LICENSE), including its
-AGPL PDF dependencies. See [third-party notices](THIRD-PARTY-NOTICES.md) for component licenses
-and contribution provenance. Maintained by [SokolovMO](https://github.com/SokolovMO).
+## Другие приложения
+
+[**MultiSwitcher**](https://github.com/SokolovMO/MultiSwitcher) — переключение русской
+и английской раскладки, исправление текста и правила для приложений в меню macOS.
+
+## Лицензия и авторство
+
+MultiShift основан на [DragShift](https://github.com/llamaboi55/DragShift).
+Авторство и MIT-уведомления исходного проекта и адаптированных вкладов сохранены.
+Объединённый MultiShift распространяется под [GNU AGPL v3](LICENSE), в том числе
+из-за используемых PDF-компонентов. [Сторонние компоненты](THIRD-PARTY-NOTICES.md)
+сохраняют свои лицензии. Это отдельный macOS-проект, а не официальный выпуск DragShift.
+
+Разработчик и сопровождающий — [SokolovMO](https://github.com/SokolovMO).
