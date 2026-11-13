@@ -1,13 +1,13 @@
-## Problem and resulting behavior
+## Проблема и новое поведение / Problem and behavior
 
-Describe the concrete trigger and what changes for the user.
+Опишите конкретный сценарий и результат изменения. English is welcome.
 
-## Validation
+## Проверка / Validation
 
-List checks actually performed, including relevant manual interaction checks and limitations.
-Use synthetic fixtures; redact private paths and content.
+Перечислите выполненные проверки, ручные сценарии и ограничения.
+Используйте синтетические файлы; удалите личные пути и данные из материалов.
 
-## Review notes
+## Для ревью / Review notes
 
-Mention dependencies, licenses, migration or release requirements when applicable.
-For updater changes include base/target builds, actual downloaded bytes, and patch verification.
+Укажите зависимости, лицензии, миграции и требования к выпуску, если применимо.
+Для изменений updater нужны исходный/целевой build, реальные байты загрузки и проверка патча.

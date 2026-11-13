@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-labelledby="title desc">
+  <title id="title">MultiShift</title>
+  <desc id="desc">Native file actions for macOS. Convert photo.png into a photo.webp copy and keep the original.</desc>
+  <rect width="1280" height="400" fill="#ffffff"/>
+  <rect x="48" y="44" width="84" height="84" rx="21" fill="#f6f8fa" stroke="#d1d9e0"/>
+  <path d="M90 107V65M71 84l19-19 19 19" fill="none" stroke="#1f2328" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="158" y="103" font-family="Helvetica,Arial,sans-serif" font-size="56" font-weight="700" letter-spacing="-2" fill="#1f2328">MultiShift</text>
+  <text x="50" y="255" font-family="Menlo,Consolas,monospace" font-size="64" fill="#59636e">photo.png</text>
+  <path d="M465 230h76m-20-20 20 20-20 20" fill="none" stroke="#59636e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="583" y="255" font-family="Menlo,Consolas,monospace" font-size="64" font-weight="600" letter-spacing="-2" fill="#1f2328">photo.webp</text>
+  <text x="50" y="340" font-family="Helvetica,Arial,sans-serif" font-size="25" fill="#59636e">Drag a file. Choose an action. Keep the original.</text>
+
+</svg>

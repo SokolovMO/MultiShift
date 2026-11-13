@@ -1,5 +1,5 @@
-name: Bug report / Ошибка
-description: Report a reproducible problem in MultiShift.
+name: Ошибка / Bug report
+description: Сообщите о воспроизводимой проблеме / Report a reproducible problem.
 title: "[Bug]: "
 body:
   - type: markdown
@@ -8,7 +8,7 @@ body:
   - type: input
     id: environment
     attributes:
-      label: Version and environment / Версия и окружение
+      label: Версия и окружение / Version and environment
       description: MultiShift version/build, macOS version, Mac chip, and installation method.
       placeholder: "0.4.1 (11), macOS ..., Apple Silicon, DMG"
     validations:
@@ -16,20 +16,20 @@ body:
   - type: textarea
     id: reproduce
     attributes:
-      label: Steps to reproduce / Шаги
+      label: Шаги / Steps to reproduce
       description: Include input format and chosen action. Attach only safe synthetic examples.
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
-      label: Expected behavior / Ожидаемый результат
+      label: Ожидаемый результат / Expected behavior
     validations:
       required: true
   - type: textarea
     id: actual
     attributes:
-      label: Actual behavior / Что произошло
+      label: Что произошло / Actual behavior
       description: Include the error text or a redacted screenshot if helpful.
     validations:
       required: true

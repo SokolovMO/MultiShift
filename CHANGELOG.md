@@ -1,37 +1,42 @@
-# Changelog
+<p align="right"><b>Русский</b> · <a href="CHANGELOG.en.md">English</a></p>
 
-User-facing changes to MultiShift. Versions refer to the published macOS app; repository-only
-work is listed separately. The project is in early 0.x development.
+# История изменений
 
-## Unreleased
+Изменения MultiShift для пользователей. Версии относятся к опубликованному macOS-приложению;
+изменения только репозитория отмечены отдельно. Проект находится в ранней стадии 0.x.
 
-- Split crop-field numeric bindings into typed helpers for hosted Swift compiler compatibility.
+## Не выпущено
 
-- Public repository documentation, English/Russian introduction, contribution and security policies.
-- Required previous-release delta generation, real Sparkle selection checks, and publication gates.
-- Removal of generated QA bundles and recordings from the current source tree.
+- Общее оформление с MultiSwitcher: русский README по умолчанию, английский по ссылке,
+  светлая/тёмная обложки, помощь и шаблоны участия. Только документация и ассеты;
+  код приложения, опубликованные пакеты и дельта-обновления не менялись.
+- Типизированные функции поля обрезки для совместимости с компилятором Swift на GitHub.
+- Публичная документация, описание на двух языках, правила участия и безопасности.
+- Обязательная генерация дельты от предыдущей версии, проверка выбора настоящим Sparkle
+  и запрет публикации без подтверждённого перехода.
+- Сгенерированные QA-сборки и записи убраны из актуального дерева исходников.
 
 ## 0.4.1 · build 11 · 2026-11-13
 
-- Explain why a result cannot be opened when its file was removed or cannot be opened.
-- Route result-opening actions through a shared native handler.
-- Add a signed 0.4.0 → 0.4.1 delta to the existing release feed: 187,494 bytes instead of
-  a 130,291,174-byte full archive. Existing ZIP, DMG, and source archive are unchanged.
+- Понятное сообщение, если результат удалён или не может быть открыт.
+- Общий нативный обработчик открытия результатов.
+- Подписанная дельта 0.4.0 → 0.4.1: 187494 байта вместо полного архива 130291174 байта.
+  Ранее опубликованные ZIP, DMG и архив исходников не изменялись.
 
-See [release verification](docs/RELEASE-0.4.1-11.md) and
-[delta verification](docs/DELTA-UPDATES-2026-11-13.md).
+[Проверка выпуска](docs/RELEASE-0.4.1-11.md) · [Проверка дельты](docs/DELTA-UPDATES-2026-11-13.md)
 
 ## 0.4.0 · build 10 · 2026-11-12
 
-- Native operation notifications with output actions and undo.
-- Image editing previews, size-limited compression, annotations, redaction, and crop tools.
-- Ordered combining and additional document, media, subtitle, and archive operations.
-- Bundled FFmpeg and expanded conversion-quality checks.
+- Нативные уведомления операций с открытием результата и отменой.
+- Предпросмотр изображений, сжатие до лимита, разметка, скрытие областей и обрезка.
+- Объединение с выбором порядка; дополнительные операции документов, медиа, субтитров и архивов.
+- Встроенный FFmpeg и расширенные проверки качества конвертации.
 
-See [feature scope](docs/NATIVE-FEATURES-2026-11-12.md) and
-[release verification](docs/RELEASE-0.4.0-10.md) for limits and evidence.
+[Возможности и ограничения](docs/NATIVE-FEATURES-2026-11-12.md) ·
+[Проверка выпуска](docs/RELEASE-0.4.0-10.md)
 
-## Earlier development
+## Ранняя разработка
 
-The project evolved from MIT-licensed DragShift into a native macOS application.
-Earlier native UI, output-folder, history, and signed-update work is recorded in the Git history.
+Проект вырос из MIT-лицензированного DragShift в нативное macOS-приложение.
+Ранние изменения интерфейса, папки результатов, истории и подписанных обновлений
+сохранены в истории Git.
